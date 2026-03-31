@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useCallback } from 'react';
 
 const USERS = {
-  'jean@carbot.online': {
+  'jeancarlosgf13@gmail.com': {
     password: import.meta.env.VITE_JEAN_PASSWORD || 'admin123',
     role: 'admin',
     name: 'Jean',
