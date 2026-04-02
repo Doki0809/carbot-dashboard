@@ -2,12 +2,12 @@ import { createContext, useContext, useState, useCallback } from 'react';
 
 const USERS = {
   'jeancarlosgf13@gmail.com': {
-    password: import.meta.env.VITE_JEAN_PASSWORD || 'Jean1301@',
+    password: (import.meta.env.VITE_JEAN_PASSWORD || 'Jean1301@').trim(),
     role: 'admin',
     name: 'Jean',
   },
   'equipo@carbot.online': {
-    password: import.meta.env.VITE_EQUIPO_PASSWORD || 'viewer123',
+    password: (import.meta.env.VITE_EQUIPO_PASSWORD || 'viewer123').trim(),
     role: 'viewer',
     name: 'Equipo',
   },
