@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useCallback } from 'react';
 
 const USERS = {
   'jeancarlosgf13@gmail.com': {
-    password: import.meta.env.VITE_JEAN_PASSWORD || 'admin123',
+    password: import.meta.env.VITE_JEAN_PASSWORD || 'Jean1301@',
     role: 'admin',
     name: 'Jean',
   },
