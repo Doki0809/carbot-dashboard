@@ -4,6 +4,8 @@ import { useAuth } from '../context/AuthContext';
 const NAV_LINKS = [
   { to: '/dealers', label: 'Dealers', icon: '🏢' },
   { to: '/analytics', label: 'Analytics', icon: '📊' },
+  { to: '/playground', label: 'Playground', icon: '🧪' },
+  { to: '/skills', label: 'Skills', icon: '⚡' },
 ];
 
 export default function Layout({ children }) {

@@ -6,6 +6,8 @@ import Dealers from './pages/Dealers';
 import DealerDetail from './pages/dealer/DealerDetail';
 import DealerLogs from './pages/dealer/DealerLogs';
 import Analytics from './pages/Analytics';
+import Playground from './pages/Playground';
+import Skills from './pages/Skills';
 
 function RequireAuth({ children }) {
   const { user } = useAuth();
@@ -29,6 +31,8 @@ export default function App() {
                 <Route path="dealer/:id" element={<DealerDetail />} />
                 <Route path="dealer/:id/logs" element={<DealerLogs />} />
                 <Route path="analytics" element={<Analytics />} />
+                <Route path="playground" element={<Playground />} />
+                <Route path="skills" element={<Skills />} />
                 <Route path="*" element={<Navigate to="/dealers" replace />} />
               </Routes>
             </Layout>
