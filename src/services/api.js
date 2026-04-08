@@ -46,3 +46,22 @@ export async function getHealth() {
   if (!res.ok) throw new Error('Bot offline');
   return res.json();
 }
+
+// ─── Analytics ───────────────────────────────────────────────────────────────
+
+export async function getAnalyticsSummary() {
+  return request('GET', '/api/analytics/summary');
+}
+
+// ─── Playground ───────────────────────────────────────────────────────────────
+
+export async function playgroundChat(message, dealerId) {
+  const start = Date.now();
+  const data = await request('POST', '/api/playground/chat', {
+    message,
+    dealer_id: dealerId ?? null,
+  });
+  const ms = Date.now() - start;
+  const response = data.response ?? data.message ?? JSON.stringify(data);
+  return { response, ms };
+}

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { listDealers, getLogs } from '../services/api';
+import { listDealers, getLogs, getAnalyticsSummary } from '../services/api';
 import Spinner from '../components/Spinner';
 import ErrorMessage from '../components/ErrorMessage';
 import { timeAgo } from '../utils/format';
@@ -23,6 +23,7 @@ const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'
 export default function Analytics() {
   const [dealers, setDealers] = useState([]);
   const [allLogs, setAllLogs] = useState([]);
+  const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -30,8 +31,12 @@ export default function Analytics() {
     setLoading(true);
     setError('');
     try {
-      const dealerList = await listDealers();
+      const [dealerList, summaryData] = await Promise.all([
+        listDealers(),
+        getAnalyticsSummary(),
+      ]);
       setDealers(dealerList);
+      setSummary(summaryData);
 
       // Fetch last 100 logs from each dealer (up to 5 dealers to avoid hammering)
       const top5 = dealerList.slice(0, 5);
@@ -60,22 +65,32 @@ export default function Analytics() {
 
   const activeCount = dealers.filter((d) => d.status === 'active').length;
   const pausedCount = dealers.filter((d) => d.status === 'paused').length;
-  const totalMessages = dealers.reduce((s, d) => s + (d.message_count || 0), 0);
-  const totalEscalated = allLogs.filter((l) => l.escalated).length;
+  const totalMessages = summary?.totalMessages ?? dealers.reduce((s, d) => s + (d.message_count || 0), 0);
+  const totalEscalated = summary?.totalEscalated ?? allLogs.filter((l) => l.escalated).length;
+  const avgResponseMs = summary?.avgResponseMs ?? null;
+  const estimatedCostUSD = summary?.estimatedCostUSD ?? 0;
+  const totalInputTokens = summary?.totalInputTokens ?? 0;
+  const totalOutputTokens = summary?.totalOutputTokens ?? 0;
 
-  // Messages per day (last 14 days from combined logs)
-  const last14 = Array.from({ length: 14 }, (_, i) => {
-    const d = subDays(new Date(), 13 - i);
+  // Messages per day (last 30 days from summary or combined logs)
+  const last30 = Array.from({ length: 30 }, (_, i) => {
+    const d = subDays(new Date(), 29 - i);
     return format(d, 'yyyy-MM-dd');
   });
   const msgByDay = {};
-  last14.forEach((d) => { msgByDay[d] = 0; });
-  allLogs.forEach((log) => {
-    if (!log.timestamp) return;
-    const day = log.timestamp.slice(0, 10);
-    if (msgByDay[day] !== undefined) msgByDay[day]++;
-  });
-  const dailyData = last14.map((d) => ({
+  last30.forEach((d) => { msgByDay[d] = 0; });
+  if (summary?.messagesByDay) {
+    Object.entries(summary.messagesByDay).forEach(([day, count]) => {
+      if (msgByDay[day] !== undefined) msgByDay[day] = count;
+    });
+  } else {
+    allLogs.forEach((log) => {
+      if (!log.timestamp) return;
+      const day = log.timestamp.slice(0, 10);
+      if (msgByDay[day] !== undefined) msgByDay[day]++;
+    });
+  }
+  const dailyData = last30.map((d) => ({
     date: format(parseISO(d), 'dd MMM', { locale: es }),
     messages: msgByDay[d],
   }));
@@ -95,13 +110,6 @@ export default function Analytics() {
     { name: 'Activos', value: activeCount },
     { name: 'Pausados', value: pausedCount },
   ].filter((d) => d.value > 0);
-
-  // Average response time
-  const logsWithTime = allLogs.filter((l) => l.response_time_ms != null);
-  const avgResponseMs =
-    logsWithTime.length > 0
-      ? Math.round(logsWithTime.reduce((s, l) => s + l.response_time_ms, 0) / logsWithTime.length)
-      : null;
 
   return (
     <div className="space-y-6">
@@ -129,7 +137,7 @@ export default function Analytics() {
         </div>
       ) : (
         <>
-          {/* KPIs */}
+          {/* KPIs row 1 */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <KPI label="Total dealers" value={dealers.length} icon="🏢" />
             <KPI label="Dealers activos" value={activeCount} icon="✅" color="emerald" />
@@ -144,6 +152,33 @@ export default function Analytics() {
               value={avgResponseMs != null ? `${avgResponseMs}ms` : '—'}
               icon="⚡"
               color="purple"
+            />
+          </div>
+
+          {/* KPIs row 2 — AI usage */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <KPI
+              label="Costo estimado"
+              value={`$${estimatedCostUSD.toFixed(4)}`}
+              icon="💰"
+              color="amber"
+            />
+            <KPI
+              label="Tokens entrada"
+              value={totalInputTokens.toLocaleString()}
+              icon="📥"
+            />
+            <KPI
+              label="Tokens salida"
+              value={totalOutputTokens.toLocaleString()}
+              icon="📤"
+              color="blue"
+            />
+            <KPI
+              label="Escalaciones"
+              value={totalEscalated.toLocaleString()}
+              icon="⚠️"
+              color="red"
             />
           </div>
 
@@ -284,6 +319,10 @@ function KPI({ label, value, icon, color }) {
       ? 'ring-blue-100'
       : color === 'purple'
       ? 'ring-purple-100'
+      : color === 'amber'
+      ? 'ring-amber-100'
+      : color === 'red'
+      ? 'ring-red-100'
       : 'ring-slate-100';
   return (
     <div className={`bg-white rounded-xl border border-slate-200 p-4 ring-1 ${ring} shadow-sm`}>
