@@ -47,6 +47,25 @@ export async function getHealth() {
   return res.json();
 }
 
+// ─── Skills ───────────────────────────────────────────────────────────────────
+
+export async function listSkills(includeDisabled = true) {
+  const data = await request('GET', `/api/skills?includeDisabled=${includeDisabled}`);
+  return data.skills;
+}
+
+export async function createSkill(skill) {
+  return request('POST', '/api/skills', skill);
+}
+
+export async function updateSkill(id, fields) {
+  return request('PATCH', `/api/skills/${id}`, fields);
+}
+
+export async function deleteSkill(id) {
+  return request('DELETE', `/api/skills/${id}`);
+}
+
 // ─── Analytics ───────────────────────────────────────────────────────────────
 
 export async function getAnalyticsSummary() {
