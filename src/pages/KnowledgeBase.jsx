@@ -196,7 +196,7 @@ export default function KnowledgeBase() {
     setLoading(true);
     setError('');
     try {
-      const data = await listGlobalKnowledge(true);
+      const data = await listGlobalKnowledge(); // Fetch only active entries to match "Delete" mental model
       setEntries(data);
     } catch (err) {
       setError(err.message);
