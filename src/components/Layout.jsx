@@ -4,41 +4,41 @@ import { useAuth } from '../context/AuthContext';
 
 /* ── SVG Icons ─────────────────────────────────────────────────────────── */
 const IconDealers = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
     <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
     <polyline points="9 22 9 12 15 12 15 22"/>
   </svg>
 );
 const IconAnalytics = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
     <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
     <line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/>
   </svg>
 );
 const IconPlayground = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
   </svg>
 );
 const IconChannels = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
   </svg>
 );
 const IconAPIs = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
     <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
     <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
   </svg>
 );
 const IconSkills = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/>
     <path d="M15.54 8.46a5 5 0 010 7.07M8.46 8.46a5 5 0 000 7.07"/>
   </svg>
 );
 const IconKnowledge = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
     <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
   </svg>
 );
@@ -49,14 +49,24 @@ const IconBot = () => (
   </svg>
 );
 const IconChevron = ({ open }) => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
     style={{ transform: open ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 220ms cubic-bezier(0.25,0.46,0.45,0.94)' }}>
     <polyline points="6 9 12 15 18 9"/>
   </svg>
 );
 const IconLogout = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
     <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+  </svg>
+);
+const IconCollapse = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+    <path d="M11 17l-5-5 5-5"/><path d="M18 17l-5-5 5-5"/>
+  </svg>
+);
+const IconExpand = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+    <path d="M13 17l5-5-5-5"/><path d="M6 17l5-5-5-5"/>
   </svg>
 );
 
@@ -72,7 +82,7 @@ const NAV_LINKS = [
     Icon: IconBot,
     prefix: '/assistant',
     children: [
-      { to: '/assistant/skills',    label: 'Skills',            Icon: IconSkills },
+      { to: '/assistant/skills',    label: 'Skills',              Icon: IconSkills },
       { to: '/assistant/knowledge', label: 'Base de conocimiento', Icon: IconKnowledge },
     ],
   },
@@ -97,20 +107,24 @@ function DropdownNav({ link, currentPath, collapsed }) {
       <button
         onClick={() => setOpen((v) => !v)}
         title={collapsed ? link.label : undefined}
-        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-medium transition-all duration-200 ease-smooth cursor-pointer ${
+        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-medium transition-all duration-200 cursor-pointer ${
           isActive
-            ? 'bg-brand-gradient text-white shadow-float'
-            : 'text-slate-600 hover:bg-white/60 hover:shadow-glass-sm'
+            ? 'text-white'
+            : 'text-white/45 hover:text-white/75 hover:bg-white/[0.04]'
         }`}
-        style={isActive ? { background: 'linear-gradient(135deg, #4f78ff, #a78bfa)' } : {}}
+        style={isActive ? {
+          background: 'linear-gradient(135deg, rgba(230,48,48,0.25), rgba(180,20,20,0.15))',
+          border: '1px solid rgba(230,48,48,0.25)',
+          boxShadow: '0 2px 12px rgba(230,48,48,0.15), inset 0 1px 0 rgba(255,255,255,0.06)',
+        } : { border: '1px solid transparent' }}
       >
-        <span className={`shrink-0 ${isActive ? 'text-white' : 'text-slate-500'}`}>
+        <span className={`shrink-0 transition-colors ${isActive ? 'text-brand-400' : 'text-white/35'}`}>
           <link.Icon />
         </span>
         {!collapsed && (
           <>
             <span className="flex-1 text-left truncate">{link.label}</span>
-            <span className={isActive ? 'text-white/70' : 'text-slate-400'}>
+            <span className={isActive ? 'text-brand-400/70' : 'text-white/25'}>
               <IconChevron open={open} />
             </span>
           </>
@@ -128,11 +142,12 @@ function DropdownNav({ link, currentPath, collapsed }) {
                 onClick={() => setOpen(false)}
                 className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm transition-all duration-200 ${
                   childActive
-                    ? 'text-brand-600 font-semibold bg-brand-50/80'
-                    : 'text-slate-500 hover:text-slate-700 hover:bg-white/50'
+                    ? 'text-brand-400 font-semibold'
+                    : 'text-white/40 hover:text-white/70 hover:bg-white/[0.03]'
                 }`}
+                style={childActive ? { background: 'rgba(230,48,48,0.12)', border: '1px solid rgba(230,48,48,0.18)' } : {}}
               >
-                <span className={childActive ? 'text-brand-500' : 'text-slate-400'}>
+                <span className={childActive ? 'text-brand-400' : 'text-white/30'}>
                   <child.Icon />
                 </span>
                 <span className="truncate">{child.label}</span>
@@ -142,6 +157,31 @@ function DropdownNav({ link, currentPath, collapsed }) {
         </div>
       )}
     </div>
+  );
+}
+
+/* ── Single nav item ───────────────────────────────────────────────────── */
+function NavItem({ link, active, collapsed }) {
+  return (
+    <Link
+      to={link.to}
+      title={collapsed ? link.label : undefined}
+      className={`flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-medium transition-all duration-200 ${
+        active
+          ? 'text-white'
+          : 'text-white/45 hover:text-white/75 hover:bg-white/[0.04]'
+      } ${collapsed ? 'justify-center' : ''}`}
+      style={active ? {
+        background: 'linear-gradient(135deg, rgba(230,48,48,0.25), rgba(180,20,20,0.15))',
+        border: '1px solid rgba(230,48,48,0.25)',
+        boxShadow: '0 2px 12px rgba(230,48,48,0.15), inset 0 1px 0 rgba(255,255,255,0.06)',
+      } : { border: '1px solid transparent' }}
+    >
+      <span className={`shrink-0 transition-colors ${active ? 'text-brand-400' : 'text-white/35'}`}>
+        <link.Icon />
+      </span>
+      {!collapsed && <span className="truncate">{link.label}</span>}
+    </Link>
   );
 }
 
@@ -157,83 +197,100 @@ export default function Layout({ children }) {
     navigate('/login');
   }
 
-  const sidebarWidth = collapsed ? '72px' : '240px';
+  const sidebarWidth = collapsed ? '68px' : '236px';
   const initial = (user?.name || 'U').charAt(0).toUpperCase();
 
   return (
-    <div className="flex min-h-screen" style={{ background: 'var(--bg-base)', backgroundImage: 'var(--bg-mesh)', backgroundAttachment: 'fixed' }}>
-
+    <div
+      className="flex min-h-screen"
+      style={{ background: 'var(--bg-base)', backgroundImage: 'var(--bg-mesh)', backgroundAttachment: 'fixed' }}
+    >
       {/* ── Sidebar ─────────────────────────────────────────────────── */}
       <aside
         style={{
           width: sidebarWidth,
           minWidth: sidebarWidth,
-          transition: 'width 280ms cubic-bezier(0.25, 0.46, 0.45, 0.94), min-width 280ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          transition: 'width 280ms cubic-bezier(0.25,0.46,0.45,0.94), min-width 280ms cubic-bezier(0.25,0.46,0.45,0.94)',
         }}
         className="sticky top-0 h-screen flex flex-col z-30 overflow-hidden"
       >
-        {/* Glass panel behind sidebar */}
+        {/* Glass backdrop */}
         <div
           className="absolute inset-0"
           style={{
-            background: 'var(--glass-bg-strong)',
-            backdropFilter: 'var(--glass-blur)',
-            WebkitBackdropFilter: 'var(--glass-blur)',
-            borderRight: '1px solid var(--glass-border)',
-            boxShadow: '4px 0 24px rgba(0,0,0,0.06)',
+            background: 'rgba(12, 12, 12, 0.88)',
+            backdropFilter: 'blur(24px) saturate(160%)',
+            WebkitBackdropFilter: 'blur(24px) saturate(160%)',
+            borderRight: '1px solid rgba(255,255,255,0.06)',
+            boxShadow: '4px 0 32px rgba(0,0,0,0.5)',
           }}
+        />
+        {/* Red top accent */}
+        <div
+          className="absolute top-0 left-0 right-0 h-px"
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(230,48,48,0.5), transparent)' }}
         />
 
         <div className="relative flex flex-col h-full p-3 gap-1">
-          {/* Brand + collapse toggle */}
+          {/* Brand header */}
           <div className="flex items-center justify-between px-1 py-2 mb-2">
             {!collapsed && (
-              <Link to="/dealers" className="flex items-center gap-2.5 group">
+              <Link to="/dealers" className="flex items-center gap-2.5 group min-w-0">
                 <div
-                  className="w-8 h-8 rounded-xl flex items-center justify-center shadow-float shrink-0"
-                  style={{ background: 'linear-gradient(135deg, #4f78ff, #a78bfa)' }}
+                  className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 overflow-hidden"
+                  style={{ boxShadow: '0 2px 12px rgba(230,48,48,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}
                 >
-                  <span className="text-xs font-bold text-white tracking-wide">C</span>
+                  <img src="/3.png" alt="Logo" className="w-full h-full object-cover" />
                 </div>
-                <span className="font-bold text-slate-800 text-sm tracking-tight">Carbot</span>
+                <span
+                  className="font-bold text-sm tracking-tight truncate"
+                  style={{ color: 'rgba(255,255,255,0.90)' }}
+                >
+                  Carbot
+                </span>
               </Link>
             )}
             {collapsed && (
               <Link to="/dealers" className="mx-auto">
                 <div
-                  className="w-8 h-8 rounded-xl flex items-center justify-center shadow-float"
-                  style={{ background: 'linear-gradient(135deg, #4f78ff, #a78bfa)' }}
+                  className="w-8 h-8 rounded-xl overflow-hidden shrink-0"
+                  style={{ boxShadow: '0 2px 12px rgba(230,48,48,0.4)' }}
                 >
-                  <span className="text-xs font-bold text-white">C</span>
+                  <img src="/3.png" alt="Logo" className="w-full h-full object-cover" />
                 </div>
               </Link>
             )}
             {!collapsed && (
               <button
                 onClick={() => setCollapsed(true)}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-white/60 transition-all"
+                className="p-1.5 rounded-lg transition-all"
+                style={{ color: 'rgba(255,255,255,0.25)' }}
+                onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.6)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.25)'}
                 title="Colapsar"
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                  <path d="M11 17l-5-5 5-5"/><path d="M18 17l-5-5 5-5"/>
-                </svg>
+                <IconCollapse />
               </button>
             )}
             {collapsed && (
               <button
                 onClick={() => setCollapsed(false)}
-                className="absolute -right-3 top-16 w-6 h-6 rounded-full bg-white shadow-glass-sm border border-white/80 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-all"
+                className="absolute -right-3 top-16 w-6 h-6 rounded-full flex items-center justify-center transition-all"
+                style={{
+                  background: '#1a1a1a',
+                  border: '1px solid rgba(230,48,48,0.3)',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.5)',
+                  color: 'rgba(255,255,255,0.5)',
+                }}
                 title="Expandir"
               >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                  <path d="M13 17l5-5-5-5"/><path d="M6 17l5-5-5-5"/>
-                </svg>
+                <IconExpand />
               </button>
             )}
           </div>
 
           {/* Divider */}
-          <div className="h-px mx-1 mb-2 rounded-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(79,120,255,0.2), transparent)' }} />
+          <div className="divider-red mx-1 mb-2" />
 
           {/* Nav items */}
           <nav className="flex-1 flex flex-col gap-0.5 overflow-y-auto overflow-x-hidden">
@@ -257,21 +314,30 @@ export default function Layout({ children }) {
           </nav>
 
           {/* Divider */}
-          <div className="h-px mx-1 mt-2 mb-3 rounded-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(79,120,255,0.2), transparent)' }} />
+          <div className="divider-red mx-1 mt-2 mb-3" />
 
           {/* User footer */}
           <div className={`flex items-center gap-2.5 px-1 ${collapsed ? 'justify-center' : ''}`}>
             <div
-              className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 shadow-glass-sm"
-              style={{ background: 'linear-gradient(135deg, #4f78ff22, #a78bfa22)', border: '1px solid rgba(79,120,255,0.2)' }}
+              className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+              style={{
+                background: 'rgba(230,48,48,0.12)',
+                border: '1px solid rgba(230,48,48,0.2)',
+                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)',
+              }}
             >
-              <span className="text-xs font-bold text-brand-600">{initial}</span>
+              <span className="text-xs font-bold" style={{ color: '#e63030' }}>{initial}</span>
             </div>
             {!collapsed && (
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold text-slate-700 truncate">{user?.name || 'Usuario'}</p>
+                <p className="text-xs font-semibold truncate" style={{ color: 'rgba(255,255,255,0.75)' }}>
+                  {user?.name || 'Usuario'}
+                </p>
                 {isAdmin && (
-                  <span className="inline-block text-[10px] font-medium px-1.5 py-0.5 rounded-md bg-brand-50 text-brand-600 leading-none mt-0.5">
+                  <span
+                    className="inline-block text-[10px] font-medium px-1.5 py-0.5 rounded-md leading-none mt-0.5"
+                    style={{ background: 'rgba(230,48,48,0.15)', color: '#e63030', border: '1px solid rgba(230,48,48,0.25)' }}
+                  >
                     admin
                   </span>
                 )}
@@ -281,7 +347,10 @@ export default function Layout({ children }) {
               <button
                 onClick={handleLogout}
                 title="Cerrar sesión"
-                className="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-all cursor-pointer"
+                className="p-1.5 rounded-lg transition-all cursor-pointer"
+                style={{ color: 'rgba(255,255,255,0.25)' }}
+                onMouseEnter={e => { e.currentTarget.style.color = '#e63030'; e.currentTarget.style.background = 'rgba(230,48,48,0.10)'; }}
+                onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.25)'; e.currentTarget.style.background = 'transparent'; }}
               >
                 <IconLogout />
               </button>
@@ -291,7 +360,10 @@ export default function Layout({ children }) {
             <button
               onClick={handleLogout}
               title="Cerrar sesión"
-              className="mt-1 mx-auto p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-all cursor-pointer"
+              className="mt-1 mx-auto p-1.5 rounded-lg transition-all cursor-pointer"
+              style={{ color: 'rgba(255,255,255,0.25)' }}
+              onMouseEnter={e => { e.currentTarget.style.color = '#e63030'; e.currentTarget.style.background = 'rgba(230,48,48,0.10)'; }}
+              onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.25)'; e.currentTarget.style.background = 'transparent'; }}
             >
               <IconLogout />
             </button>
@@ -304,26 +376,5 @@ export default function Layout({ children }) {
         {children}
       </main>
     </div>
-  );
-}
-
-/* ── Single nav item ───────────────────────────────────────────────────── */
-function NavItem({ link, active, collapsed }) {
-  return (
-    <Link
-      to={link.to}
-      title={collapsed ? link.label : undefined}
-      className={`flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-medium transition-all duration-200 ease-smooth ${
-        active
-          ? 'text-white shadow-float'
-          : 'text-slate-600 hover:bg-white/60 hover:shadow-glass-sm hover:text-slate-800'
-      } ${collapsed ? 'justify-center' : ''}`}
-      style={active ? { background: 'linear-gradient(135deg, #4f78ff, #a78bfa)' } : {}}
-    >
-      <span className={`shrink-0 ${active ? 'text-white' : 'text-slate-400 group-hover:text-slate-600'}`}>
-        <link.Icon />
-      </span>
-      {!collapsed && <span className="truncate">{link.label}</span>}
-    </Link>
   );
 }

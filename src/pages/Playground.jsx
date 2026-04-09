@@ -90,15 +90,15 @@ export default function Playground() {
   return (
     <div className="flex flex-col" style={{ height: 'calc(100vh - 3.5rem - 3rem)' }}>
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 float-in">
         <div>
-          <h1 className="text-xl font-bold text-slate-800">Playground</h1>
-          <p className="text-sm text-slate-500 mt-0.5">Prueba el bot en tiempo real</p>
+          <h1 className="text-xl font-bold" style={{ color: 'rgba(255,255,255,0.95)' }}>Playground</h1>
+          <p className="text-sm mt-0.5" style={{ color: 'rgba(255,255,255,0.65)' }}>Prueba el bot en tiempo real</p>
         </div>
         {messages.length > 0 && (
           <button
             onClick={clearChat}
-            className="text-xs text-slate-500 hover:text-red-600 border border-slate-200 hover:border-red-200 px-3 py-1.5 rounded-lg transition"
+            className="btn-ghost flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-medium"
           >
             🗑 Limpiar chat
           </button>
@@ -106,40 +106,43 @@ export default function Playground() {
       </div>
 
       {/* Dealer ID config */}
-      <div className="flex items-center gap-2 mb-4 bg-white border border-slate-200 rounded-xl px-4 py-2.5 shadow-sm">
-        <span className="text-sm text-slate-500">Dealer ID:</span>
-        <input
-          type="text"
-          placeholder="opcional — vacío = default"
-          value={dealerId}
-          onChange={(e) => setDealerId(e.target.value)}
-          className="flex-1 text-sm outline-none placeholder:text-slate-400 text-slate-700"
-        />
-        <span className="flex items-center gap-1.5 text-xs text-emerald-600 font-medium">
-          <span className="inline-block w-2 h-2 rounded-full bg-emerald-500" />
-          Bot conectado
-        </span>
+      <div className="flex items-center gap-2 mb-4">
+        <div className="glass-card flex-1 flex items-center gap-3 px-4 py-2.5 float-in">
+          <span className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>Dealer ID:</span>
+          <input
+            type="text"
+            placeholder="opcional — vacío = default"
+            value={dealerId}
+            onChange={(e) => setDealerId(e.target.value)}
+            className="flex-1 text-sm bg-transparent outline-none placeholder-white/40"
+            style={{ color: 'rgba(255,255,255,0.95)' }}
+          />
+        </div>
+        <div className="glass-card px-4 py-2.5 float-in flex items-center gap-2">
+          <span className="inline-block w-2 h-2 rounded-full" style={{ background: '#10b981', boxShadow: '0 0 8px rgba(16,185,129,0.4)' }} />
+          <span className="text-xs font-medium" style={{ color: '#10b981' }}>Conectado</span>
+        </div>
       </div>
 
       {/* Chat window */}
-      <div className="flex flex-col flex-1 overflow-hidden bg-white rounded-xl border border-slate-200 shadow-sm">
+      <div className="glass-card flex flex-col flex-1 overflow-hidden float-in stagger-2">
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.length === 0 && (
-            <div className="flex flex-col items-center justify-center h-full gap-4 text-center py-8">
-              <div className="text-4xl">🤖</div>
+            <div className="flex flex-col items-center justify-center h-full gap-4 text-center py-8 float-in">
+              <div className="text-4xl filter drop-shadow-lg">🤖</div>
               <div>
-                <p className="font-semibold text-slate-700">Missy está lista</p>
-                <p className="text-sm text-slate-400 mt-1">
+                <p className="font-semibold text-lg" style={{ color: 'rgba(255,255,255,0.9)' }}>Missy está lista</p>
+                <p className="text-sm mt-1" style={{ color: 'rgba(255,255,255,0.6)' }}>
                   Escribe un mensaje o usa un preset para comenzar
                 </p>
               </div>
-              <div className="flex flex-wrap justify-center gap-2 max-w-md">
+              <div className="flex flex-wrap justify-center gap-2 max-w-md mt-2">
                 {PRESETS.map((p) => (
                   <button
                     key={p}
                     onClick={() => send(p)}
-                    className="text-xs border border-slate-200 hover:border-brand-300 hover:text-brand-700 text-slate-600 rounded-full px-3 py-1.5 transition"
+                    className="text-xs btn-ghost rounded-full px-4 py-2 transition"
                   >
                     {p}
                   </button>
@@ -155,9 +158,12 @@ export default function Playground() {
             >
               {/* Avatar */}
               <div
-                className={`w-8 h-8 mt-0.5 rounded-full flex items-center justify-center text-sm shrink-0 ${
-                  msg.role === 'user' ? 'bg-brand-100' : 'bg-emerald-100'
-                }`}
+                className={`w-8 h-8 mt-0.5 rounded-full flex items-center justify-center text-sm shrink-0`}
+                style={{
+                  background: msg.role === 'user' ? 'rgba(255,255,255,0.1)' : 'rgba(230,48,48,0.15)',
+                  border: msg.role === 'user' ? '1px solid rgba(255,255,255,0.2)' : '1px solid rgba(230,48,48,0.3)',
+                  boxShadow: msg.role !== 'user' ? '0 0 12px rgba(230,48,48,0.2)' : 'none'
+                }}
               >
                 {msg.role === 'user' ? '👤' : '🤖'}
               </div>
@@ -165,18 +171,22 @@ export default function Playground() {
               {/* Bubble */}
               <div className={`flex flex-col gap-1 max-w-[72%] ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
                 <div
-                  className={`px-4 py-3 rounded-2xl text-sm leading-relaxed ${
+                  className={`px-4 py-3 text-sm leading-relaxed ${
                     msg.role === 'user'
-                      ? 'bg-brand-600 text-white rounded-tr-sm'
-                      : 'bg-slate-100 text-slate-800 rounded-tl-sm'
+                      ? 'rounded-2xl rounded-tr-sm border border-white/10'
+                      : 'rounded-2xl rounded-tl-sm border border-red-500/30'
                   }`}
+                  style={{
+                    color: 'rgba(255,255,255,0.95)',
+                    background: msg.role === 'user' ? 'rgba(255,255,255,0.08)' : 'rgba(230,48,48,0.12)'
+                  }}
                 >
                   <p className="whitespace-pre-wrap break-words">{msg.text}</p>
                 </div>
-                <div className={`flex items-center gap-2 text-[10px] text-slate-400 px-1 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
+                <div className={`flex items-center gap-2 text-[10px] px-1 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`} style={{ color: 'rgba(255,255,255,0.5)' }}>
                   <span>{formatTime(msg.ts)}</span>
                   {msg.ms != null && (
-                    <span className="text-emerald-500">{msg.ms}ms</span>
+                    <span style={{ color: '#10b981' }}>{msg.ms}ms</span>
                   )}
                 </div>
               </div>
@@ -185,17 +195,20 @@ export default function Playground() {
 
           {/* Typing indicator */}
           {loading && (
-            <div className="flex gap-3">
-              <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-sm shrink-0">
+            <div className="flex gap-3 float-in">
+              <div
+                className="w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0"
+                style={{ background: 'rgba(230,48,48,0.15)', border: '1px solid rgba(230,48,48,0.3)', boxShadow: '0 0 12px rgba(230,48,48,0.2)' }}
+              >
                 🤖
               </div>
-              <div className="bg-slate-100 rounded-2xl rounded-tl-sm px-4 py-3">
+              <div className="rounded-2xl rounded-tl-sm px-4 py-3 border border-red-500/30" style={{ background: 'rgba(230,48,48,0.12)' }}>
                 <div className="flex gap-1 items-center h-4">
                   {[0, 1, 2].map((i) => (
                     <span
                       key={i}
-                      className="inline-block w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce"
-                      style={{ animationDelay: `${i * 0.15}s` }}
+                      className="inline-block w-1.5 h-1.5 rounded-full animate-bounce"
+                      style={{ background: 'rgba(255,255,255,0.6)', animationDelay: `${i * 0.15}s` }}
                     />
                   ))}
                 </div>
@@ -214,24 +227,27 @@ export default function Playground() {
         )}
 
         {/* Input bar */}
-        <div className="border-t border-slate-100 p-4">
-          {/* Presets toggle (when chat active) */}
+        <div className="p-4" style={{ background: 'rgba(0,0,0,0.2)', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          {/* Presets toggle */}
           {messages.length > 0 && (
             <div className="mb-3">
               <button
                 onClick={() => setShowPresets((v) => !v)}
-                className="text-xs text-slate-400 hover:text-slate-600 transition flex items-center gap-1"
+                className="text-xs transition flex items-center gap-1"
+                style={{ color: 'rgba(255,255,255,0.6)' }}
+                onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.9)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.6)'}
               >
                 {showPresets ? '▲' : '▼'} Mensajes de prueba
               </button>
               {showPresets && (
-                <div className="mt-2 flex flex-wrap gap-1.5">
+                <div className="mt-2 flex flex-wrap gap-1.5 float-in">
                   {PRESETS.map((p) => (
                     <button
                       key={p}
                       onClick={() => send(p)}
                       disabled={loading}
-                      className="text-xs border border-slate-200 hover:border-brand-300 hover:text-brand-700 text-slate-600 rounded-full px-3 py-1 transition disabled:opacity-40"
+                      className="text-xs btn-ghost rounded-full px-3 py-1 transition disabled:opacity-40"
                     >
                       {p}
                     </button>
@@ -250,13 +266,13 @@ export default function Playground() {
               onKeyDown={handleKeyDown}
               placeholder="Escribe un mensaje… (Enter envía, Shift+Enter salto de línea)"
               disabled={loading}
-              className="flex-1 resize-none overflow-hidden border border-slate-200 focus:border-brand-400 rounded-xl px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 disabled:opacity-50"
+              className="input-dark flex-1 resize-none overflow-hidden rounded-xl px-4 py-3 text-sm transition disabled:opacity-50"
               style={{ minHeight: '44px' }}
             />
             <button
               onClick={() => send(input)}
               disabled={loading || !input.trim()}
-              className="w-11 h-11 flex items-center justify-center rounded-xl bg-brand-600 hover:bg-brand-700 text-white transition disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+              className="btn-red w-11 h-11 flex items-center justify-center rounded-xl transition shrink-0 disabled:opacity-40"
             >
               {loading ? <Spinner size="sm" /> : '↑'}
             </button>

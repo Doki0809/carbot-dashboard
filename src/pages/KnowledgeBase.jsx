@@ -1,179 +1,193 @@
 import { useState, useEffect, useCallback } from 'react';
 import {
-  listGlobalKnowledge,
-  getGlobalKnowledgeEntry,
-  createGlobalKnowledge,
-  updateGlobalKnowledge,
-  deleteGlobalKnowledge,
+  listGlobalKnowledge, getGlobalKnowledgeEntry,
+  createGlobalKnowledge, updateGlobalKnowledge, deleteGlobalKnowledge,
 } from '../services/api';
 import Spinner from '../components/Spinner';
 import ErrorMessage from '../components/ErrorMessage';
 
+/* ── Constants ───────────────────────────────────────────────────────────── */
 const SOURCE_TYPES = ['text', 'pdf', 'table', 'scraping', 'url'];
-
-const SOURCE_COLORS = {
-  text: 'bg-blue-100 text-blue-700',
-  pdf: 'bg-red-100 text-red-700',
-  table: 'bg-purple-100 text-purple-700',
-  scraping: 'bg-amber-100 text-amber-700',
-  url: 'bg-cyan-100 text-cyan-700',
+const SOURCE_STYLES = {
+  text:     { bg: 'rgba(79,120,255,0.12)', color: '#818cf8',  border: 'rgba(79,120,255,0.25)' },
+  pdf:      { bg: 'rgba(230,48,48,0.12)',  color: '#ff8080',  border: 'rgba(230,48,48,0.25)' },
+  table:    { bg: 'rgba(139,92,246,0.12)', color: '#a78bfa',  border: 'rgba(139,92,246,0.25)' },
+  scraping: { bg: 'rgba(245,158,11,0.12)', color: '#fbbf24',  border: 'rgba(245,158,11,0.20)' },
+  url:      { bg: 'rgba(6,182,212,0.12)',  color: '#22d3ee',  border: 'rgba(6,182,212,0.20)' },
 };
 
 function emptyEntry() {
   return { title: '', content: '', source_type: 'text', source_url: '', tags: '' };
 }
 
-// ─── Editor ───────────────────────────────────────────────────────────────────
+/* ── Icons ───────────────────────────────────────────────────────────────── */
+const IconPlus  = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>;
+const IconEdit  = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>;
+const IconTrash = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>;
+const IconChevron = ({ open }) => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+    style={{ transform: open ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 200ms ease' }}>
+    <polyline points="6 9 12 15 18 9"/>
+  </svg>
+);
 
+function FieldLabel({ children }) {
+  return (
+    <label className="block text-[10px] font-semibold uppercase tracking-wider mb-1.5" style={{ color: 'rgba(255,255,255,0.35)' }}>
+      {children}
+    </label>
+  );
+}
+
+/* ── Entry editor ─────────────────────────────────────────────────────────── */
 function EntryEditor({ entry, onSave, onCancel, saving }) {
   const [draft, setDraft] = useState({
-    title: entry.title || '',
-    content: entry.content || '',
+    title:       entry.title       || '',
+    content:     entry.content     || '',
     source_type: entry.source_type || 'text',
-    source_url: entry.source_url || '',
-    tags: Array.isArray(entry.tags) ? entry.tags.join(', ') : (entry.tags || ''),
+    source_url:  entry.source_url  || '',
+    tags:        Array.isArray(entry.tags) ? entry.tags.join(', ') : (entry.tags || ''),
   });
 
-  function set(key, val) {
-    setDraft((prev) => ({ ...prev, [key]: val }));
-  }
+  const set     = (k, v) => setDraft(prev => ({ ...prev, [k]: v }));
+  const isValid = draft.title.trim() && draft.content.trim();
 
   function handleSave() {
-    const tags = draft.tags.split(',').map((t) => t.trim()).filter(Boolean);
+    const tags = draft.tags.split(',').map(t => t.trim()).filter(Boolean);
     onSave({ ...draft, tags, source_url: draft.source_url || null });
   }
 
-  const isValid = draft.title.trim() && draft.content.trim();
+  const inputCls = 'input-dark w-full rounded-xl px-3 py-2.5 text-sm';
 
   return (
-    <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-6 space-y-5">
-      <div className="space-y-1">
-        <label className="text-xs font-semibold uppercase tracking-wide text-slate-400">Título</label>
-        <input
-          value={draft.title}
-          onChange={(e) => set('title', e.target.value)}
-          placeholder="Nombre de la entrada"
-          className="w-full border border-slate-200 focus:border-blue-400 rounded-lg px-3 py-2.5 text-sm outline-none transition"
-        />
+    <div className="glass-card p-6 space-y-5 float-in">
+      {/* Title */}
+      <div>
+        <FieldLabel>Título</FieldLabel>
+        <input value={draft.title} onChange={e => set('title', e.target.value)}
+          placeholder="Nombre de la entrada" className={inputCls} />
       </div>
 
+      {/* Source type + URL */}
       <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-1">
-          <label className="text-xs font-semibold uppercase tracking-wide text-slate-400">Tipo de fuente</label>
-          <select
-            value={draft.source_type}
-            onChange={(e) => set('source_type', e.target.value)}
-            className="w-full border border-slate-200 focus:border-blue-400 rounded-lg px-3 py-2.5 text-sm outline-none transition bg-white"
-          >
-            {SOURCE_TYPES.map((t) => (
-              <option key={t} value={t}>{t}</option>
-            ))}
+        <div>
+          <FieldLabel>Tipo de fuente</FieldLabel>
+          <select value={draft.source_type} onChange={e => set('source_type', e.target.value)}
+            className="select-dark w-full rounded-xl px-3 py-2.5 text-sm">
+            {SOURCE_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
           </select>
         </div>
-        <div className="space-y-1">
-          <label className="text-xs font-semibold uppercase tracking-wide text-slate-400">URL fuente (opcional)</label>
-          <input
-            value={draft.source_url}
-            onChange={(e) => set('source_url', e.target.value)}
-            placeholder="https://..."
-            className="w-full border border-slate-200 focus:border-blue-400 rounded-lg px-3 py-2.5 text-sm outline-none transition"
-          />
+        <div>
+          <FieldLabel>URL fuente (opcional)</FieldLabel>
+          <input value={draft.source_url} onChange={e => set('source_url', e.target.value)}
+            placeholder="https://…" className={inputCls} />
         </div>
       </div>
 
-      <div className="space-y-1">
-        <label className="text-xs font-semibold uppercase tracking-wide text-slate-400">Tags (separados por coma)</label>
-        <input
-          value={draft.tags}
-          onChange={(e) => set('tags', e.target.value)}
-          placeholder="identity, precios, horarios"
-          className="w-full border border-slate-200 focus:border-blue-400 rounded-lg px-3 py-2.5 text-sm outline-none transition"
-        />
-        <p className="text-[10px] text-slate-400">
-          Usa el tag <code className="bg-slate-100 px-1 rounded">identity</code> para que esta entrada siempre esté disponible para el bot.
+      {/* Tags */}
+      <div>
+        <FieldLabel>Tags (separados por coma)</FieldLabel>
+        <input value={draft.tags} onChange={e => set('tags', e.target.value)}
+          placeholder="identity, precios, horarios" className={inputCls} />
+        <p className="text-[10px] mt-1" style={{ color: 'rgba(255,255,255,0.25)' }}>
+          Usa el tag <span className="font-mono px-1 rounded" style={{ background: 'rgba(230,48,48,0.12)', color: '#e63030' }}>identity</span> para que esta entrada siempre esté disponible.
         </p>
       </div>
 
-      <div className="space-y-1">
-        <div className="flex items-center justify-between">
-          <label className="text-xs font-semibold uppercase tracking-wide text-slate-400">Contenido</label>
-          <span className="text-[10px] text-slate-400">{draft.content.length} caracteres</span>
+      {/* Content */}
+      <div>
+        <div className="flex items-center justify-between mb-1.5">
+          <FieldLabel>Contenido</FieldLabel>
+          <span className="text-[10px]" style={{ color: 'rgba(255,255,255,0.25)' }}>{draft.content.length} caracteres</span>
         </div>
-        <textarea
-          rows={8}
-          value={draft.content}
-          onChange={(e) => set('content', e.target.value)}
+        <textarea rows={8} value={draft.content} onChange={e => set('content', e.target.value)}
           placeholder="Escribe aquí el conocimiento que el bot debe usar…"
-          className="w-full resize-y border border-slate-200 focus:border-blue-400 rounded-lg px-3 py-2.5 text-sm leading-relaxed outline-none transition"
-        />
+          className="textarea-dark w-full rounded-xl px-3 py-2.5 text-sm leading-relaxed" />
       </div>
 
-      <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
-        <button onClick={onCancel} className="border border-slate-200 text-slate-600 hover:bg-slate-50 px-4 py-2 rounded-lg text-sm font-medium transition">
-          Cancelar
-        </button>
-        <button
-          onClick={handleSave}
-          disabled={!isValid || saving}
-          className="px-5 py-2 rounded-lg text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 transition disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
-        >
-          {saving ? <Spinner size="sm" /> : '💾'} Guardar
+      {/* Actions */}
+      <div className="flex items-center justify-end gap-3 pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+        <button onClick={onCancel} className="btn-ghost px-4 py-2 rounded-xl text-sm font-medium">Cancelar</button>
+        <button onClick={handleSave} disabled={!isValid || saving}
+          className="btn-red flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold">
+          {saving ? <Spinner size="sm" /> : null} Guardar
         </button>
       </div>
     </div>
   );
 }
 
-// ─── Card ─────────────────────────────────────────────────────────────────────
-
+/* ── Entry card ───────────────────────────────────────────────────────────── */
 function EntryCard({ entry, onEdit, onDelete, deleting }) {
   const [expanded, setExpanded] = useState(false);
+  const sStyle = SOURCE_STYLES[entry.source_type] || { bg: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.5)', border: 'rgba(255,255,255,0.10)' };
 
   return (
-    <div className={`bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden ${!entry.is_active ? 'opacity-50' : ''}`}>
+    <div className="glass-card overflow-hidden" style={!entry.is_active ? { opacity: 0.45 } : {}}>
       <div className="flex items-center gap-4 px-5 py-4">
-        <div className="w-9 h-9 rounded-lg bg-blue-100 flex items-center justify-center text-base shrink-0">📚</div>
+        <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+          style={{ background: 'rgba(79,120,255,0.10)', border: '1px solid rgba(79,120,255,0.18)' }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2" strokeLinecap="round">
+            <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+          </svg>
+        </div>
+
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-semibold text-slate-800 truncate">{entry.title}</span>
-            <span className={`text-[10px] font-semibold rounded-full px-2 py-0.5 ${SOURCE_COLORS[entry.source_type] || 'bg-slate-100 text-slate-500'}`}>
+            <span className="font-semibold truncate" style={{ color: 'rgba(255,255,255,0.85)' }}>{entry.title}</span>
+            <span className="text-[10px] font-semibold rounded-full px-2 py-0.5"
+              style={{ background: sStyle.bg, color: sStyle.color, border: `1px solid ${sStyle.border}` }}>
               {entry.source_type}
             </span>
-            {!entry.is_active && <span className="text-[10px] font-medium rounded-full px-2 py-0.5 bg-slate-100 text-slate-400">Inactiva</span>}
+            {!entry.is_active && (
+              <span className="text-[10px] rounded-full px-2 py-0.5"
+                style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.30)' }}>Inactiva</span>
+            )}
           </div>
-          {entry.tags && entry.tags.length > 0 && (
+          {entry.tags?.length > 0 && (
             <div className="flex gap-1 mt-1 flex-wrap">
-              {entry.tags.map((tag) => (
-                <span key={tag} className="font-mono text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">
+              {entry.tags.map(tag => (
+                <span key={tag} className="font-mono text-[10px] px-1.5 py-0.5 rounded"
+                  style={{ background: tag === 'identity' ? 'rgba(230,48,48,0.12)' : 'rgba(255,255,255,0.05)',
+                    color: tag === 'identity' ? '#e63030' : 'rgba(255,255,255,0.40)',
+                    border: tag === 'identity' ? '1px solid rgba(230,48,48,0.20)' : '1px solid rgba(255,255,255,0.07)' }}>
                   {tag}
                 </span>
               ))}
             </div>
           )}
         </div>
+
         <div className="flex items-center gap-1 shrink-0">
-          <button onClick={onEdit} className="text-sm px-2 py-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition">✎</button>
-          <button onClick={onDelete} disabled={deleting} className="text-sm px-2 py-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition disabled:opacity-40">
-            {deleting ? '…' : '🗑'}
-          </button>
-          <button onClick={() => setExpanded((v) => !v)} className="text-sm px-2 py-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition">
-            {expanded ? '▲' : '▼'}
-          </button>
+          {[
+            { onClick: onEdit,   icon: <IconEdit />,   title: 'Editar' },
+            { onClick: onDelete, icon: deleting ? '…' : <IconTrash />, title: 'Eliminar', danger: true, disabled: deleting },
+            { onClick: () => setExpanded(v => !v), icon: <IconChevron open={expanded} />, title: 'Expandir' },
+          ].map((btn, i) => (
+            <button key={i} onClick={btn.onClick} disabled={btn.disabled} title={btn.title}
+              className="flex items-center justify-center w-8 h-8 rounded-xl transition-all disabled:opacity-40"
+              style={{ color: 'rgba(255,255,255,0.35)' }}
+              onMouseEnter={e => { e.currentTarget.style.background = btn.danger ? 'rgba(230,48,48,0.10)' : 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = btn.danger ? '#e63030' : 'rgba(255,255,255,0.70)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(255,255,255,0.35)'; }}>
+              {btn.icon}
+            </button>
+          ))}
         </div>
       </div>
+
       {expanded && (
-        <div className="border-t border-slate-100 px-5 pb-4 pt-3 space-y-3">
+        <div className="px-5 pb-4 pt-3 space-y-3" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
           {entry.source_url && (
             <div>
-              <span className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">Fuente</span>
-              <p className="mt-1 text-xs text-blue-600 truncate">{entry.source_url}</p>
+              <p className="text-[10px] font-semibold uppercase tracking-wide mb-1" style={{ color: 'rgba(255,255,255,0.28)' }}>Fuente</p>
+              <p className="text-xs truncate" style={{ color: '#22d3ee' }}>{entry.source_url}</p>
             </div>
           )}
           <div>
-            <span className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">Contenido</span>
-            <p className="mt-1 text-xs text-slate-600 leading-relaxed line-clamp-6 whitespace-pre-wrap">{entry.content}</p>
+            <p className="text-[10px] font-semibold uppercase tracking-wide mb-1" style={{ color: 'rgba(255,255,255,0.28)' }}>Contenido</p>
+            <p className="text-xs leading-relaxed line-clamp-6 whitespace-pre-wrap" style={{ color: 'rgba(255,255,255,0.55)' }}>{entry.content}</p>
           </div>
-          <p className="text-[10px] text-slate-400">
+          <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.25)' }}>
             Creado: {new Date(entry.created_at).toLocaleString('es-MX')}
           </p>
         </div>
@@ -182,138 +196,118 @@ function EntryCard({ entry, onEdit, onDelete, deleting }) {
   );
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
-
+/* ── Page ─────────────────────────────────────────────────────────────────── */
 export default function KnowledgeBase() {
-  const [entries, setEntries] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [editing, setEditing] = useState(null);
-  const [saving, setSaving] = useState(false);
+  const [entries,    setEntries]    = useState([]);
+  const [loading,    setLoading]    = useState(true);
+  const [error,      setError]      = useState('');
+  const [editing,    setEditing]    = useState(null);
+  const [saving,     setSaving]     = useState(false);
   const [deletingId, setDeletingId] = useState(null);
 
   const load = useCallback(async () => {
-    setLoading(true);
-    setError('');
-    try {
-      const data = await listGlobalKnowledge(); // Fetch only active entries to match "Delete" mental model
-      setEntries(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true); setError('');
+    try   { setEntries(await listGlobalKnowledge()); }
+    catch (err) { setError(err.message); }
+    finally { setLoading(false); }
   }, []);
 
   useEffect(() => { load(); }, [load]);
 
-  const startNew = () => setEditing({ entry: emptyEntry(), isNew: true });
-  const cancelEdit = () => setEditing(null);
-
   const handleSave = async (draft) => {
     setSaving(true);
     try {
-      if (editing.isNew) {
-        await createGlobalKnowledge(draft);
-      } else {
-        await updateGlobalKnowledge(editing.entry.id, draft);
-      }
-      setEditing(null);
-      await load();
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setSaving(false);
-    }
+      editing.isNew ? await createGlobalKnowledge(draft) : await updateGlobalKnowledge(editing.entry.id, draft);
+      setEditing(null); await load();
+    } catch (err) { setError(err.message); }
+    finally { setSaving(false); }
   };
 
   const handleEdit = async (entry) => {
-    try {
-      const full = await getGlobalKnowledgeEntry(entry.id);
-      setEditing({ entry: full, isNew: false });
-    } catch (err) {
-      setError(err.message);
-    }
+    try { setEditing({ entry: await getGlobalKnowledgeEntry(entry.id), isNew: false }); }
+    catch (err) { setError(err.message); }
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm('¿Eliminar esta entrada de la base de conocimiento?')) return;
     setDeletingId(id);
-    try {
-      await deleteGlobalKnowledge(id);
-      setEntries((prev) => prev.filter((e) => e.id !== id));
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setDeletingId(null);
-    }
+    try { await deleteGlobalKnowledge(id); setEntries(prev => prev.filter(e => e.id !== id)); }
+    catch (err) { setError(err.message); }
+    finally { setDeletingId(null); }
   };
 
-  const activeCount = entries.filter((e) => e.is_active).length;
+  const activeCount = entries.filter(e => e.is_active).length;
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      {/* Header */}
+      <div className="flex items-center justify-between float-in">
         <div>
-          <h1 className="text-xl font-bold text-slate-800">Base de conocimiento</h1>
-          <p className="text-sm text-slate-500 mt-0.5">Información global que Missy usa al responder</p>
+          <h1 className="text-xl font-bold" style={{ color: 'rgba(255,255,255,0.92)' }}>Base de conocimiento</h1>
+          <p className="text-sm mt-0.5" style={{ color: 'rgba(255,255,255,0.38)' }}>Información global que Missy usa al responder</p>
         </div>
-        <button
-          onClick={startNew}
-          disabled={!!editing}
-          className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition disabled:opacity-40 disabled:cursor-not-allowed"
-        >
-          + Nueva entrada
+        <button onClick={() => setEditing({ entry: emptyEntry(), isNew: true })} disabled={!!editing}
+          className="btn-red flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold disabled:opacity-40">
+          <IconPlus /> Nueva entrada
         </button>
       </div>
 
-      <div className="grid grid-cols-3 gap-3">
+      {/* Stats */}
+      <div className="grid grid-cols-3 gap-3 float-in stagger-1">
         {[
-          { label: 'Entradas totales', value: entries.length, color: 'text-slate-800' },
-          { label: 'Activas', value: activeCount, color: 'text-emerald-600' },
-          { label: 'Inactivas', value: entries.length - activeCount, color: 'text-amber-600' },
-        ].map(({ label, value, color }) => (
-          <div key={label} className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
-            <p className={`text-2xl font-bold ${color}`}>{value}</p>
-            <p className="text-xs text-slate-500 mt-0.5">{label}</p>
+          { label: 'Entradas totales', value: entries.length,                accent: undefined },
+          { label: 'Activas',          value: activeCount,                   accent: '#10b981' },
+          { label: 'Inactivas',        value: entries.length - activeCount,  accent: '#f59e0b' },
+        ].map(({ label, value, accent }) => (
+          <div key={label} className="glass-card p-5 flex flex-col gap-2" style={accent ? { borderColor: `${accent}28` } : {}}>
+            <div className="w-1.5 h-1.5 rounded-full" style={{ background: accent || 'rgba(255,255,255,0.20)' }} />
+            <p className="text-2xl font-bold tabular-nums" style={{ color: accent || 'rgba(255,255,255,0.90)' }}>{value}</p>
+            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.38)' }}>{label}</p>
           </div>
         ))}
       </div>
 
-      <div className="bg-blue-50 border border-blue-100 rounded-xl px-5 py-3 text-sm text-blue-700">
-        <strong>¿Cómo funciona?</strong> El bot busca automáticamente en esta base para cada mensaje e inyecta el contexto más relevante en su prompt. Usa el tag <code className="bg-blue-100 px-1 rounded text-xs">identity</code> en entradas que deben estar siempre disponibles (ej. descripción del negocio, horarios).
+      {/* Info banner */}
+      <div className="rounded-xl px-5 py-3 text-sm float-in stagger-2"
+        style={{ background: 'rgba(79,120,255,0.07)', border: '1px solid rgba(79,120,255,0.18)', color: 'rgba(255,255,255,0.60)' }}>
+        <strong style={{ color: 'rgba(255,255,255,0.80)' }}>¿Cómo funciona?</strong> El bot busca automáticamente en esta base para cada mensaje e inyecta el contexto más relevante.
+        Usa el tag <span className="font-mono px-1 rounded text-xs" style={{ background: 'rgba(230,48,48,0.12)', color: '#e63030' }}>identity</span> en entradas que deben estar siempre disponibles.
       </div>
 
       {error && <ErrorMessage message={error} onRetry={load} />}
 
       {editing && (
         <div>
-          <p className="text-sm font-medium text-amber-600 mb-3">
-            ⚠ {editing.isNew ? 'Creando nueva entrada' : `Editando: ${editing.entry.title || 'sin título'}`}
+          <p className="text-sm font-medium mb-3" style={{ color: '#f59e0b' }}>
+            {editing.isNew ? 'Creando nueva entrada' : `Editando: ${editing.entry.title || 'sin título'}`}
           </p>
-          <EntryEditor entry={editing.entry} onSave={handleSave} onCancel={cancelEdit} saving={saving} />
+          <EntryEditor entry={editing.entry} onSave={handleSave} onCancel={() => setEditing(null)} saving={saving} />
         </div>
       )}
 
       {loading ? (
         <div className="flex justify-center py-16"><Spinner size="lg" /></div>
       ) : entries.length === 0 ? (
-        <div className="bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col items-center gap-4 py-16 text-center">
-          <div className="text-4xl">📚</div>
-          <div>
-            <p className="font-semibold text-slate-700">No hay entradas en la base de conocimiento</p>
-            <p className="text-sm text-slate-400 mt-1">Agrega información para que Missy pueda responder con contexto</p>
+        <div className="glass-card flex flex-col items-center gap-4 py-16 text-center float-in">
+          <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
+            style={{ background: 'rgba(79,120,255,0.10)', border: '1px solid rgba(79,120,255,0.18)' }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="1.8" strokeLinecap="round">
+              <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+            </svg>
           </div>
-          <button onClick={startNew} className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition">
-            + Crear primera entrada
+          <div>
+            <p className="font-semibold" style={{ color: 'rgba(255,255,255,0.75)' }}>No hay entradas en la base de conocimiento</p>
+            <p className="text-sm mt-1" style={{ color: 'rgba(255,255,255,0.35)' }}>Agrega información para que Missy pueda responder con contexto</p>
+          </div>
+          <button onClick={() => setEditing({ entry: emptyEntry(), isNew: true })}
+            className="btn-red flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold">
+            <IconPlus /> Crear primera entrada
           </button>
         </div>
       ) : (
-        <div className="space-y-3">
-          {entries.map((entry) => (
-            <EntryCard
-              key={entry.id}
-              entry={entry}
+        <div className="space-y-3 float-in stagger-3">
+          {entries.map(entry => (
+            <EntryCard key={entry.id} entry={entry}
               onEdit={() => handleEdit(entry)}
               onDelete={() => handleDelete(entry.id)}
               deleting={deletingId === entry.id}
