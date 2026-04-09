@@ -156,8 +156,8 @@ export default function Login() {
         <div style={{
           position: 'relative', zIndex: 10,
           display: 'flex',
-          width: 900, maxWidth: 'calc(100vw - 32px)',
-          minHeight: 560,
+          width: 1050, maxWidth: 'calc(100vw - 32px)',
+          minHeight: 600,
           borderRadius: 28,
           border: '1px solid rgba(255,255,255,0.07)',
           background: 'rgba(255,255,255,0.025)',
@@ -176,7 +176,7 @@ export default function Login() {
 
           {/* LEFT PANEL */}
           <div style={{
-            width: '46%',
+            width: '50%',
             display: 'flex', flexDirection: 'column',
             alignItems: 'center', justifyContent: 'center',
             padding: '48px 40px', gap: 28,
@@ -185,17 +185,18 @@ export default function Login() {
             background: 'linear-gradient(145deg, rgba(230,48,48,0.06) 0%, transparent 60%)',
           }}>
             {/* Logo */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, marginBottom: 20 }}>
               <div style={{
-                width: 80, height: 80, borderRadius: 22,
-                overflow: 'hidden',
-                boxShadow: '0 0 32px rgba(230,48,48,0.45), 0 8px 24px rgba(0,0,0,0.6)',
+                width: 140, height: 140,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
                 animation: 'logoFloat 5s ease-in-out infinite',
               }}>
-                <img src="/3.png" alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src="/3.png" alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', filter: 'drop-shadow(0 15px 35px rgba(230,48,48,0.7))' }} />
               </div>
-              <p style={{ fontSize: 22, fontWeight: 700, color: '#fff', letterSpacing: '-0.4px', textAlign: 'center' }}>Missy</p>
-              <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', textAlign: 'center', marginTop: -4 }}>by CarBot · Tu super asistente IA</p>
+              <div>
+                <p style={{ fontSize: 26, fontWeight: 800, color: '#fff', letterSpacing: '-0.5px', textAlign: 'center', marginBottom: 2 }}>Missy</p>
+                <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', textAlign: 'center' }}>by CarBot · Tu super asistente IA</p>
+              </div>
             </div>
 
             {/* Carousel */}
@@ -257,8 +258,8 @@ export default function Login() {
           }}>
             {/* Mobile logo — hidden on desktop via inline style */}
             <div style={{ display: 'none', flexDirection: 'column', alignItems: 'center', gap: 8, marginBottom: 24 }} className="mobile-logo-login">
-              <div style={{ width: 52, height: 52, borderRadius: 14, overflow: 'hidden', boxShadow: '0 0 24px rgba(230,48,48,0.4)' }}>
-                <img src="/3.png" alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div style={{ width: 80, height: 80 }}>
+                <img src="/3.png" alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', filter: 'drop-shadow(0 10px 20px rgba(230,48,48,0.5))' }} />
               </div>
               <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.35)' }}>CarBot System</p>
             </div>

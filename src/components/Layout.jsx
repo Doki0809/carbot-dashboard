@@ -130,9 +130,9 @@ export default function Layout({ children }) {
       <aside className="sticky top-0 h-screen w-[95px] min-w-[95px] flex flex-col z-30 overflow-hidden bg-[#0e1015] border-r border-transparent shadow-2xl">
         <div className="relative flex flex-col h-full items-center py-6 gap-2">
           {/* Brand header */}
-          <Link to="/dealers" className="flex items-center justify-center mb-8">
-            <div className="w-12 h-12 flex items-center justify-center">
-               <img src="/3.png" alt="Logo" className="w-[80%] h-[80%] object-contain" style={{ filter: 'drop-shadow(0px 4px 6px rgba(255,0,0,0.4))' }} />
+          <Link to="/dealers" className="flex items-center justify-center mb-8 hover:scale-110 transition-transform duration-300">
+            <div className="w-[72px] h-[72px] flex items-center justify-center">
+               <img src="/3.png" alt="Logo" className="w-full h-full object-contain" style={{ filter: 'drop-shadow(0px 6px 10px rgba(255,0,0,0.5))' }} />
             </div>
           </Link>
 
