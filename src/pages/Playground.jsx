@@ -107,8 +107,9 @@ export default function Playground() {
 
       {/* Dealer ID config */}
       <div className="flex items-center gap-2 mb-4">
-        <div className="glass-card flex-1 flex items-center gap-3 px-4 py-2.5 float-in">
-          <span className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>Dealer ID:</span>
+        <div className="glass-card flex-1 flex items-center gap-3 px-4 py-2.5 float-in transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(255,255,255,0.05)] group relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+          <span className="text-sm relative z-10" style={{ color: 'rgba(255,255,255,0.7)' }}>Dealer ID:</span>
           <input
             type="text"
             placeholder="opcional — vacío = default"
@@ -118,16 +119,18 @@ export default function Playground() {
             style={{ color: 'rgba(255,255,255,0.95)' }}
           />
         </div>
-        <div className="glass-card px-4 py-2.5 float-in flex items-center gap-2">
-          <span className="inline-block w-2 h-2 rounded-full" style={{ background: '#10b981', boxShadow: '0 0 8px rgba(16,185,129,0.4)' }} />
+        <div className="glass-card px-4 py-2.5 float-in flex items-center gap-2 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(16,185,129,0.1)] group relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+          <span className="inline-block w-2 h-2 rounded-full relative z-10 transition-transform duration-300 group-hover:scale-150" style={{ background: '#10b981', boxShadow: '0 0 8px rgba(16,185,129,0.4)' }} />
           <span className="text-xs font-medium" style={{ color: '#10b981' }}>Conectado</span>
         </div>
       </div>
 
       {/* Chat window */}
-      <div className="glass-card flex flex-col flex-1 overflow-hidden float-in stagger-2">
+      <div className="glass-card flex flex-col flex-1 overflow-hidden float-in stagger-2 transition-all duration-500 hover:shadow-[0_15px_40px_rgba(255,255,255,0.03)] focus-within:shadow-[0_15px_40px_rgba(230,48,48,0.08)] group relative border border-transparent focus-within:border-red-500/20">
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-red-500/5 to-transparent opacity-0 focus-within:opacity-100 transition-opacity duration-700 pointer-events-none z-0" />
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 relative z-10">
           {messages.length === 0 && (
             <div className="flex flex-col items-center justify-center h-full gap-4 text-center py-8 float-in">
               <div className="text-4xl filter drop-shadow-lg">🤖</div>

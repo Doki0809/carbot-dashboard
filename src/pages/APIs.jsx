@@ -273,14 +273,15 @@ function ApiCard({ api, onEdit, onDelete, onToggle, onTest, deleting, testing })
 
   return (
     <div
-      className="glass-card overflow-hidden transition-opacity"
+      className="glass-card overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(255,255,255,0.05)] group relative"
       style={!api.enabled ? { opacity: 0.45 } : {}}
     >
-      <div className="flex items-center gap-4 px-5 py-4">
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none" style={{ background: `linear-gradient(to right, ${mStyle.color}, transparent)`, zIndex: 0 }} />
+      <div className="flex items-center gap-4 px-5 py-4 relative z-10">
         {/* Icon */}
-        <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-          style={{ background: 'rgba(230,48,48,0.12)', border: '1px solid rgba(230,48,48,0.20)' }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e63030" strokeWidth="2" strokeLinecap="round">
+        <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110"
+          style={{ background: mStyle.bg, border: `1px solid ${mStyle.border}` }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={mStyle.color} strokeWidth="2" strokeLinecap="round">
             <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
             <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
           </svg>
@@ -288,8 +289,8 @@ function ApiCard({ api, onEdit, onDelete, onToggle, onTest, deleting, testing })
 
         {/* Info */}
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-semibold truncate" style={{ color: 'rgba(255,255,255,0.85)' }}>{api.name}</span>
+          <div className="flex items-center gap-2 flex-wrap mb-1">
+            <span className="font-semibold truncate transition-colors duration-300 group-hover:text-white" style={{ color: 'rgba(255,255,255,0.85)' }}>{api.name}</span>
             <span className="text-[10px] font-bold rounded-md px-1.5 py-0.5"
               style={{ background: mStyle.bg, color: mStyle.color, border: `1px solid ${mStyle.border}` }}>
               {api.method}
@@ -463,11 +464,12 @@ export default function APIs() {
           { label: 'Habilitadas',      value: activeCount,                   accent: '#10b981' },
           { label: 'Deshabilitadas',   value: apis.length - activeCount,     accent: '#f59e0b' },
         ].map(({ label, value, accent }) => (
-          <div key={label} className="glass-card float-in p-5 flex flex-col gap-2"
+          <div key={label} className="glass-card float-in p-5 flex flex-col gap-2 group transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(255,255,255,0.06)] relative overflow-hidden"
             style={accent ? { borderColor: `${accent}28` } : {}}>
-            <div className="w-1.5 h-1.5 rounded-full" style={{ background: accent || 'rgba(255,255,255,0.20)' }} />
-            <p className="text-2xl font-bold tabular-nums" style={{ color: accent || 'rgba(255,255,255,0.90)' }}>{value}</p>
-            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.38)' }}>{label}</p>
+            {accent && <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none" style={{ background: `linear-gradient(to right, ${accent}, transparent)` }} />}
+            <div className="w-1.5 h-1.5 rounded-full transition-transform duration-300 group-hover:scale-150" style={{ background: accent || 'rgba(255,255,255,0.20)', boxShadow: accent ? `0 0 8px ${accent}` : 'none' }} />
+            <p className="text-2xl font-bold tabular-nums transition-transform duration-300 group-hover:scale-105 origin-left" style={{ color: accent || 'rgba(255,255,255,0.90)' }}>{value}</p>
+            <p className="text-xs transition-colors duration-300 group-hover:text-white" style={{ color: 'rgba(255,255,255,0.38)' }}>{label}</p>
           </div>
         ))}
       </div>

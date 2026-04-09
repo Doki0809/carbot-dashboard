@@ -123,18 +123,19 @@ function EntryCard({ entry, onEdit, onDelete, deleting }) {
   const sStyle = SOURCE_STYLES[entry.source_type] || { bg: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.5)', border: 'rgba(255,255,255,0.10)' };
 
   return (
-    <div className="glass-card overflow-hidden" style={!entry.is_active ? { opacity: 0.45 } : {}}>
-      <div className="flex items-center gap-4 px-5 py-4">
-        <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-          style={{ background: 'rgba(79,120,255,0.10)', border: '1px solid rgba(79,120,255,0.18)' }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2" strokeLinecap="round">
+    <div className="glass-card overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(255,255,255,0.05)] group relative" style={!entry.is_active ? { opacity: 0.45 } : {}}>
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none" style={{ background: `linear-gradient(to right, ${sStyle.color}, transparent)`, zIndex: 0 }} />
+      <div className="flex items-center gap-4 px-5 py-4 relative z-10">
+        <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110"
+          style={{ background: sStyle.bg, border: `1px solid ${sStyle.border}` }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={sStyle.color} strokeWidth="2" strokeLinecap="round">
             <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
           </svg>
         </div>
 
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-semibold truncate" style={{ color: 'rgba(255,255,255,0.85)' }}>{entry.title}</span>
+          <div className="flex items-center gap-2 flex-wrap mb-1">
+            <span className="font-semibold truncate transition-colors duration-300 group-hover:text-white" style={{ color: 'rgba(255,255,255,0.85)' }}>{entry.title}</span>
             <span className="text-[10px] font-semibold rounded-full px-2 py-0.5"
               style={{ background: sStyle.bg, color: sStyle.color, border: `1px solid ${sStyle.border}` }}>
               {entry.source_type}
@@ -259,10 +260,13 @@ export default function KnowledgeBase() {
           { label: 'Activas',          value: activeCount,                   accent: '#10b981' },
           { label: 'Inactivas',        value: entries.length - activeCount,  accent: '#f59e0b' },
         ].map(({ label, value, accent }) => (
-          <div key={label} className="glass-card p-5 flex flex-col gap-2" style={accent ? { borderColor: `${accent}28` } : {}}>
-            <div className="w-1.5 h-1.5 rounded-full" style={{ background: accent || 'rgba(255,255,255,0.20)' }} />
-            <p className="text-2xl font-bold tabular-nums" style={{ color: accent || 'rgba(255,255,255,0.90)' }}>{value}</p>
-            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.38)' }}>{label}</p>
+          <div key={label} 
+               className="glass-card p-5 flex flex-col gap-2 group transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(255,255,255,0.06)] relative overflow-hidden" 
+               style={accent ? { borderColor: `${accent}28` } : {}}>
+            {accent && <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none" style={{ background: `linear-gradient(to right, ${accent}, transparent)` }} />}
+            <div className="w-1.5 h-1.5 rounded-full transition-transform duration-300 group-hover:scale-150" style={{ background: accent || 'rgba(255,255,255,0.20)', boxShadow: accent ? `0 0 8px ${accent}` : 'none' }} />
+            <p className="text-2xl font-bold tabular-nums transition-transform duration-300 group-hover:scale-105 origin-left" style={{ color: accent || 'rgba(255,255,255,0.90)' }}>{value}</p>
+            <p className="text-xs transition-colors duration-300 group-hover:text-white" style={{ color: 'rgba(255,255,255,0.38)' }}>{label}</p>
           </div>
         ))}
       </div>

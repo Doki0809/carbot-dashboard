@@ -167,17 +167,20 @@ function SkillCard({ skill, onEdit, onDelete, onToggle, deleting }) {
   const tStyle = TRIGGER_STYLES[skill.trigger] || { bg: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.5)', border: 'rgba(255,255,255,0.10)' };
 
   return (
-    <div className="glass-card overflow-hidden transition-opacity" style={!skill.enabled ? { opacity: 0.45 } : {}}>
-      <div className="flex items-center gap-4 px-5 py-4">
-        <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+    <div className="glass-card overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(255,255,255,0.05)] group relative" style={!skill.enabled ? { opacity: 0.45 } : {}}>
+      {/* Background glow base on hover */}
+      <div className="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      
+      <div className="flex items-center gap-4 px-5 py-4 relative z-10">
+        <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(230,48,48,0.3)]"
           style={{ background: 'rgba(230,48,48,0.10)', border: '1px solid rgba(230,48,48,0.18)' }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e63030" strokeWidth="2" strokeLinecap="round">
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
           </svg>
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-semibold truncate" style={{ color: 'rgba(255,255,255,0.85)' }}>{skill.name}</span>
+          <div className="flex items-center gap-2 flex-wrap mb-1">
+            <span className="font-semibold truncate transition-colors duration-300 group-hover:text-white" style={{ color: 'rgba(255,255,255,0.85)' }}>{skill.name}</span>
             <span className="text-[10px] font-semibold rounded-full px-2 py-0.5"
               style={{ background: tStyle.bg, color: tStyle.color, border: `1px solid ${tStyle.border}` }}>
               {TRIGGER_LABELS[skill.trigger] || skill.trigger}
@@ -305,10 +308,13 @@ export default function Skills() {
           { label: 'Habilitadas',     value: activeCount,                    accent: '#10b981' },
           { label: 'Deshabilitadas',  value: skills.length - activeCount,    accent: '#f59e0b' },
         ].map(({ label, value, accent }) => (
-          <div key={label} className="glass-card p-5 flex flex-col gap-2" style={accent ? { borderColor: `${accent}28` } : {}}>
-            <div className="w-1.5 h-1.5 rounded-full" style={{ background: accent || 'rgba(255,255,255,0.20)' }} />
-            <p className="text-2xl font-bold tabular-nums" style={{ color: accent || 'rgba(255,255,255,0.90)' }}>{value}</p>
-            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.38)' }}>{label}</p>
+          <div key={label} 
+               className="glass-card p-5 flex flex-col gap-2 group transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(255,255,255,0.06)] relative overflow-hidden" 
+               style={accent ? { borderColor: `${accent}28` } : {}}>
+            {accent && <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none" style={{ background: `linear-gradient(to right, ${accent}, transparent)` }} />}
+            <div className="w-1.5 h-1.5 rounded-full transition-transform duration-300 group-hover:scale-150" style={{ background: accent || 'rgba(255,255,255,0.20)', boxShadow: accent ? `0 0 8px ${accent}` : 'none' }} />
+            <p className="text-2xl font-bold tabular-nums transition-transform duration-300 group-hover:scale-105 origin-left" style={{ color: accent || 'rgba(255,255,255,0.90)' }}>{value}</p>
+            <p className="text-xs transition-colors duration-300 group-hover:text-white" style={{ color: 'rgba(255,255,255,0.38)' }}>{label}</p>
           </div>
         ))}
       </div>
