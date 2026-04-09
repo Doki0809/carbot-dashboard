@@ -125,11 +125,14 @@ function ChannelCard({ type, channel, onSelect, selected }) {
   return (
     <button
       onClick={() => onSelect(isSelected ? null : type)}
-      className="w-full text-left glass-card p-4 transition-all"
-      style={isSelected ? {
-        borderColor: `${meta.accent}35`,
-        boxShadow: `0 0 0 1px ${meta.accent}25, var(--shadow-card)`,
-      } : {}}
+      className="w-full text-left p-4 transition-all"
+      style={{
+        background: '#0e1015', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.03)',
+        ...(isSelected ? {
+          borderColor: `${meta.accent}35`,
+          boxShadow: `0 0 0 1px ${meta.accent}25, var(--shadow-card)`,
+        } : {})
+      }}
     >
       <div className="flex items-center gap-3">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
@@ -207,7 +210,7 @@ function ChannelForm({ type, channel, onDone }) {
   }
 
   return (
-    <div className="glass-card mt-2 p-5 space-y-5 animate-slide-down">
+    <div className="mt-2 p-5 space-y-5 animate-slide-down" style={{ background: '#0e1015', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.03)' }}>
       {/* Status banner */}
       <div className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm"
         style={isConnected
@@ -409,7 +412,7 @@ export default function Channels() {
 
       {/* Channel list */}
       {loading ? (
-        <div className="glass-card flex items-center justify-center py-14">
+        <div className="flex items-center justify-center py-14" style={{ background: '#0e1015', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.03)' }}>
           <p className="text-sm" style={{ color: 'rgba(255,255,255,0.28)' }}>Cargando canales…</p>
         </div>
       ) : (

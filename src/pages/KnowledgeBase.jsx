@@ -60,7 +60,7 @@ function EntryEditor({ entry, onSave, onCancel, saving }) {
   const inputCls = 'input-dark w-full rounded-xl px-3 py-2.5 text-sm';
 
   return (
-    <div className="glass-card p-6 space-y-5 float-in">
+    <div className="p-6 space-y-5 float-in" style={{ background: '#0e1015', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.03)' }}>
       {/* Title */}
       <div>
         <FieldLabel>Título</FieldLabel>
@@ -123,7 +123,8 @@ function EntryCard({ entry, onEdit, onDelete, deleting }) {
   const sStyle = SOURCE_STYLES[entry.source_type] || { bg: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.5)', border: 'rgba(255,255,255,0.10)' };
 
   return (
-    <div className="glass-card overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(255,255,255,0.05)] group relative" style={!entry.is_active ? { opacity: 0.45 } : {}}>
+    <div className="overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(255,255,255,0.05)] group relative" 
+         style={{ background: '#0e1015', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.03)', opacity: entry.is_active ? 1 : 0.45 }}>
       <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none" style={{ background: `linear-gradient(to right, ${sStyle.color}, transparent)`, zIndex: 0 }} />
       <div className="flex items-center gap-4 px-5 py-4 relative z-10">
         <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110"
@@ -308,7 +309,7 @@ export default function KnowledgeBase() {
       {loading ? (
         <div className="flex justify-center py-16"><Spinner size="lg" /></div>
       ) : entries.length === 0 ? (
-        <div className="glass-card flex flex-col items-center gap-4 py-16 text-center float-in">
+        <div className="flex flex-col items-center gap-4 py-16 text-center float-in" style={{ background: '#0e1015', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.03)' }}>
           <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
             style={{ background: 'rgba(79,120,255,0.10)', border: '1px solid rgba(79,120,255,0.18)' }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="1.8" strokeLinecap="round">

@@ -98,7 +98,7 @@ function ApiEditor({ api, onSave, onCancel, saving }) {
   const selectCls = 'select-dark w-full rounded-xl px-3 py-2.5 text-sm';
 
   return (
-    <div className="glass-card p-6 space-y-5 float-in">
+    <div className="p-6 space-y-5 float-in" style={{ background: '#0e1015', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.03)' }}>
       {/* Name + enabled */}
       <div className="flex items-start gap-4">
         <div className="flex-1">
@@ -273,8 +273,8 @@ function ApiCard({ api, onEdit, onDelete, onToggle, onTest, deleting, testing })
 
   return (
     <div
-      className="glass-card overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(255,255,255,0.05)] group relative"
-      style={!api.enabled ? { opacity: 0.45 } : {}}
+      className="overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(255,255,255,0.05)] group relative"
+      style={{ background: '#0e1015', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.03)', opacity: api.enabled ? 1 : 0.45 }}
     >
       <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none" style={{ background: `linear-gradient(to right, ${mStyle.color}, transparent)`, zIndex: 0 }} />
       <div className="flex items-center gap-4 px-5 py-4 relative z-10">
@@ -507,7 +507,7 @@ export default function APIs() {
       {loading ? (
         <div className="flex justify-center py-16"><Spinner size="lg" /></div>
       ) : apis.length === 0 ? (
-        <div className="glass-card flex flex-col items-center gap-4 py-16 text-center float-in">
+        <div className="flex flex-col items-center gap-4 py-16 text-center float-in" style={{ background: '#0e1015', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.03)' }}>
           <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
             style={{ background: 'rgba(230,48,48,0.10)', border: '1px solid rgba(230,48,48,0.20)' }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e63030" strokeWidth="1.8" strokeLinecap="round">
