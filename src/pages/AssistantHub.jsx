@@ -100,7 +100,7 @@ export default function AssistantHub() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full px-4 sm:px-0">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full px-4 sm:px-0">
         {modules.map((mod) => (
           <Link
             key={mod.to}
