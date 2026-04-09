@@ -19,22 +19,18 @@ const Icons = {
 /* ── Stat card ──────────────────────────────────────────────────────────── */
 function StatCard({ label, value, accent, icon }) {
   return (
-    <div
-      className="glass-card float-in p-8 flex flex-col gap-6 relative overflow-hidden group transition-all"
-    >
-      <div className="absolute -bottom-6 -right-6 opacity-[0.03] pointer-events-none group-hover:scale-110 group-hover:rotate-6 transition-all duration-700" style={{ color: accent || '#fff' }}>
-        <div style={{ transform: 'scale(5)' }}>{icon}</div>
+    <div className="glass-card float-in flex flex-col relative overflow-hidden group transition-all" style={{ background: '#13151c', padding: '1.5rem', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.05)' }}>
+      <div className="absolute bottom-2 right-2 pointer-events-none transition-transform duration-700" style={{ color: 'rgba(255,255,255,0.04)' }}>
+        <div style={{ transform: 'scale(4.5)', transformOrigin: 'bottom right' }}>{icon}</div>
       </div>
       
-      <div className="flex items-center gap-3">
-        <div className="flex items-center justify-center w-12 h-12 rounded-full shadow-inner" style={{ background: accent ? `${accent}12` : 'rgba(255,255,255,0.05)', color: accent || 'rgba(255,255,255,0.8)' }}>
-          {icon}
-        </div>
+      <div className="w-11 h-11 rounded-full flex items-center justify-center relative z-10" style={{ background: '#1c1f2b', border: '1px solid rgba(255,255,255,0.05)', color: accent || 'rgba(255,255,255,0.8)' }}>
+        {icon}
       </div>
       
-      <div className="flex flex-col mt-auto relative z-10">
-        <p className="text-[11px] font-bold uppercase tracking-[0.2em] mb-1.5" style={{ color: 'rgba(255,255,255,0.5)' }}>{label}</p>
-        <p className="text-5xl font-black tabular-nums tracking-tighter" style={{ color: 'rgba(255,255,255,0.95)' }}>{value}</p>
+      <div className="flex flex-col mt-6 relative z-10">
+        <p className="text-[10px] font-[800] uppercase tracking-widest mb-1" style={{ color: 'rgba(255,255,255,0.5)' }}>{label}</p>
+        <p className="text-[44px] font-[900] tabular-nums tracking-tighter leading-none" style={{ color: 'rgba(255,255,255,0.95)' }}>{value}</p>
       </div>
     </div>
   );
@@ -94,29 +90,32 @@ export default function Dealers() {
     <div className="space-y-8 pb-10">
       {/* Mega Hero Banner */}
       <div 
-        className="w-full rounded-[2rem] p-10 sm:p-14 float-in relative overflow-hidden flex flex-col sm:flex-row shadow-2xl items-center justify-between"
+        className="w-full float-in relative overflow-hidden py-10 px-10 sm:px-12 mb-8 shadow-2xl flex flex-col sm:flex-row items-center justify-between"
         style={{ 
-          background: 'linear-gradient(135deg, #f42c2c 0%, #e61d1d 100%)',
-          boxShadow: '0 24px 48px rgba(230,48,48,0.25), inset 0 2px 0 rgba(255,255,255,0.2)'
+          background: 'linear-gradient(90deg, #ff3b45 0%, #ff1a2b 100%)',
+          borderRadius: '2.5rem',
+          boxShadow: '0 20px 40px rgba(255,59,69,0.3), inset 0 1px 0 rgba(255,255,255,0.3)'
         }}
       >
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-white opacity-5 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-black opacity-[0.08] rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-black opacity-[0.06] rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
         
         <div className="relative z-10 w-full sm:w-2/3">
-          <h1 className="text-4xl sm:text-[44px] font-black tracking-tight mb-3 text-white drop-shadow-md leading-tight">
-            Bienvenido a CarBot System
+          <h1 className="text-[40px] font-[900] tracking-tight text-white leading-[1.1]">
+            Bienvenido al mundo de Missy para<br/>
+            <span className="italic opacity-90">PANEL ADMINISTRATIVO</span>
           </h1>
-          <p className="text-white/90 text-lg sm:text-xl font-medium tracking-wide">
-            Panel administrativo. <span className="font-light">Supervisa tu red de dealers con calidad élite.</span>
+          <p className="text-white/95 text-base font-medium tracking-wide mt-4">
+            Hola, <span className="font-bold">Jean</span>. Listos para supervisar a Missy y su equipo hoy.
           </p>
         </div>
         
-        <div className="relative z-10 w-full sm:w-1/3 mt-8 sm:mt-0 flex justify-end">
-           <button
+        <div className="relative z-10 w-full sm:w-1/3 mt-6 sm:mt-0 flex justify-end gap-3">
+          <button
             onClick={load}
             disabled={loading}
-            className="flex items-center gap-3 px-8 py-4 rounded-full text-sm font-bold bg-white/10 hover:bg-white/20 text-white transition-all backdrop-blur-md shadow-[0_8px_32px_rgba(0,0,0,0.15)] border border-white/20 hover:scale-[1.02]"
+            className="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl text-[11px] font-[800] uppercase tracking-wider text-white transition-all shadow-[0_8px_20px_rgba(255,0,0,0.3)] hover:scale-105"
+            style={{ background: '#ff5555', border: '1px solid rgba(255,255,255,0.2)' }}
           >
             {loading ? <Spinner size="sm" /> : Icons.refresh}
             ACTUALIZAR DATOS
@@ -126,10 +125,10 @@ export default function Dealers() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard label="Inventario Dealers" value={dealers.length}                 icon={Icons.users} accent="#3b82f6" />
-        <StatCard label="Dealers Activos"    value={activeCount}    accent="#10b981" icon={Icons.dollar} />
-        <StatCard label="Dealers Inactivos"  value={pausedCount}    accent="#f59e0b" icon={Icons.box} />
-        <StatCard label="Mensajes Emitidos"  value={totalMessages.toLocaleString()} accent="#e63030" icon={Icons.message} />
+        <StatCard label="INVENTARIO DEALERS" value={dealers.length}                 icon={Icons.users} accent="#4287f5" />
+        <StatCard label="DEALERS ACTIVOS"    value={activeCount}    accent="#22c55e" icon={Icons.dollar} />
+        <StatCard label="DEALERS INACTIVOS"  value={pausedCount}    accent="#f59e0b" icon={Icons.box} />
+        <StatCard label="MENSAJES EMITIDOS"  value={totalMessages.toLocaleString()} accent="#e63030" icon={Icons.message} />
       </div>
 
       {/* Search area */}

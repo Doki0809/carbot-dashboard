@@ -72,67 +72,46 @@ const IconExpand = () => (
 
 /* ── Nav config ────────────────────────────────────────────────────────── */
 const NAV_LINKS = [
-  { to: '/dealers',    label: 'Dealers',    Icon: IconDealers },
-  { to: '/analytics',  label: 'Analytics',  Icon: IconAnalytics },
-  { to: '/channels',   label: 'Canales',    Icon: IconChannels },
-  { to: '/apis',       label: 'APIs',       Icon: IconAPIs },
+  { to: '/dealers',    label: 'DEALERS',    Icon: IconDealers },
+  { to: '/analytics',  label: 'METRICS',    Icon: IconAnalytics },
+  { to: '/channels',   label: 'CANALES',    Icon: IconChannels },
+  { to: '/apis',       label: 'APIS',       Icon: IconAPIs },
   {
-    label: 'Asistente',
+    label: 'ASISTEN',
     Icon: IconBot,
     prefix: '/assistant',
     children: [
-      { to: '/assistant/playground', label: 'Área de prueba',       Icon: IconPlayground },
-      { to: '/assistant/skills',    label: 'Skills',              Icon: IconSkills },
-      { to: '/assistant/knowledge', label: 'Base de conocimiento', Icon: IconKnowledge },
+      { to: '/assistant/playground', label: 'PRUEBA',       Icon: IconPlayground },
+      { to: '/assistant/skills',     label: 'SKILLS',       Icon: IconSkills },
+      { to: '/assistant/knowledge',  label: 'CONOCIM',      Icon: IconKnowledge },
     ],
   },
 ];
 
 /* ── Dropdown item ─────────────────────────────────────────────────────── */
-function DropdownNav({ link, currentPath, collapsed }) {
+function DropdownNav({ link, currentPath }) {
   const [open, setOpen] = useState(false);
-  const ref = useRef(null);
   const isActive = currentPath.startsWith(link.prefix);
 
-  useEffect(() => {
-    function handleClickOutside(e) {
-      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
   return (
-    <div className="relative" ref={ref}>
+    <div className="relative mb-3 flex flex-col items-center">
       <button
         onClick={() => setOpen((v) => !v)}
-        title={collapsed ? link.label : undefined}
-        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-medium transition-all duration-200 cursor-pointer ${
+        className={`w-[85px] h-[85px] flex flex-col items-center justify-center gap-2 rounded-3xl transition-all duration-300 shadow-md border ${
           isActive
-            ? 'text-white'
-            : 'text-white/45 hover:text-white/75 hover:bg-white/[0.04]'
+            ? 'bg-gradient-to-br from-[#f42c2c] to-[#e61d1d] text-white border-transparent'
+            : 'bg-[#171a23] text-white/40 border-white/5 hover:text-white/90 hover:bg-[#1a1d27] hover:border-white/10'
         }`}
-        style={isActive ? {
-          background: 'linear-gradient(135deg, rgba(230,48,48,0.25), rgba(180,20,20,0.15))',
-          border: '1px solid rgba(230,48,48,0.25)',
-          boxShadow: '0 2px 12px rgba(230,48,48,0.15), inset 0 1px 0 rgba(255,255,255,0.06)',
-        } : { border: '1px solid transparent' }}
+        style={isActive ? { boxShadow: '0 8px 24px rgba(230,48,48,0.3), inset 0 2px 0 rgba(255,255,255,0.2)' } : {}}
       >
-        <span className={`shrink-0 transition-colors ${isActive ? 'text-brand-400' : 'text-white/35'}`}>
+        <span className={`shrink-0 transition-transform duration-300 ${isActive ? 'scale-125 drop-shadow-md' : ''}`}>
           <link.Icon />
         </span>
-        {!collapsed && (
-          <>
-            <span className="flex-1 text-left truncate">{link.label}</span>
-            <span className={isActive ? 'text-brand-400/70' : 'text-white/25'}>
-              <IconChevron open={open} />
-            </span>
-          </>
-        )}
+        <span className="text-[10px] font-black uppercase tracking-widest mt-1">{link.label}</span>
       </button>
 
-      {open && !collapsed && (
-        <div className="mt-1 ml-3 space-y-0.5 animate-slide-down">
+      {open && (
+        <div className="flex flex-col gap-2 mt-3 animate-slide-down items-center w-full">
           {link.children.map((child) => {
             const childActive = currentPath.startsWith(child.to);
             return (
@@ -140,17 +119,16 @@ function DropdownNav({ link, currentPath, collapsed }) {
                 key={child.to}
                 to={child.to}
                 onClick={() => setOpen(false)}
-                className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm transition-all duration-200 ${
+                className={`flex flex-col items-center justify-center w-[75px] h-[75px] rounded-2xl transition-all duration-200 border ${
                   childActive
-                    ? 'text-brand-400 font-semibold'
-                    : 'text-white/40 hover:text-white/70 hover:bg-white/[0.03]'
+                    ? 'bg-red-500/10 text-brand-400 border-red-500/20'
+                    : 'bg-[#12141a] text-white/30 hover:text-white/70 border-transparent hover:bg-white/5'
                 }`}
-                style={childActive ? { background: 'rgba(230,48,48,0.12)', border: '1px solid rgba(230,48,48,0.18)' } : {}}
               >
-                <span className={childActive ? 'text-brand-400' : 'text-white/30'}>
+                <span className={`mb-1 transition-transform ${childActive ? 'scale-110 drop-shadow-md text-brand-400' : ''}`}>
                   <child.Icon />
                 </span>
-                <span className="truncate">{child.label}</span>
+                <span className="text-[9px] font-bold uppercase tracking-widest">{child.label}</span>
               </Link>
             );
           })}
@@ -161,26 +139,21 @@ function DropdownNav({ link, currentPath, collapsed }) {
 }
 
 /* ── Single nav item ───────────────────────────────────────────────────── */
-function NavItem({ link, active, collapsed }) {
+function NavItem({ link, active }) {
   return (
     <Link
       to={link.to}
-      title={collapsed ? link.label : undefined}
-      className={`flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-medium transition-all duration-200 ${
+      className={`mb-3 w-[85px] h-[85px] flex flex-col items-center justify-center gap-2 rounded-3xl transition-all duration-300 shadow-md border ${
         active
-          ? 'text-white'
-          : 'text-white/45 hover:text-white/75 hover:bg-white/[0.04]'
-      } ${collapsed ? 'justify-center' : ''}`}
-      style={active ? {
-        background: 'linear-gradient(135deg, rgba(230,48,48,0.25), rgba(180,20,20,0.15))',
-        border: '1px solid rgba(230,48,48,0.25)',
-        boxShadow: '0 2px 12px rgba(230,48,48,0.15), inset 0 1px 0 rgba(255,255,255,0.06)',
-      } : { border: '1px solid transparent' }}
+          ? 'bg-gradient-to-br from-[#f42c2c] to-[#e61d1d] text-white border-transparent'
+          : 'bg-[#171a23] text-white/40 border-white/5 hover:text-white/90 hover:bg-[#1a1d27] hover:border-white/10'
+      }`}
+      style={active ? { boxShadow: '0 8px 24px rgba(230,48,48,0.3), inset 0 2px 0 rgba(255,255,255,0.2)' } : {}}
     >
-      <span className={`shrink-0 transition-colors ${active ? 'text-brand-400' : 'text-white/35'}`}>
+      <span className={`shrink-0 transition-transform duration-300 ${active ? 'scale-125 drop-shadow-md' : ''}`}>
         <link.Icon />
       </span>
-      {!collapsed && <span className="truncate">{link.label}</span>}
+      <span className="text-[10px] font-black uppercase tracking-widest mt-1">{link.label}</span>
     </Link>
   );
 }
@@ -190,189 +163,66 @@ export default function Layout({ children }) {
   const { user, logout, isAdmin } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const [collapsed, setCollapsed] = useState(false);
 
   function handleLogout() {
     logout();
     navigate('/login');
   }
 
-  const sidebarWidth = collapsed ? '68px' : '236px';
-  const initial = (user?.name || 'U').charAt(0).toUpperCase();
-
   return (
-    <div
-      className="flex min-h-screen"
-      style={{ background: 'var(--bg-base)', backgroundImage: 'var(--bg-mesh)', backgroundAttachment: 'fixed' }}
-    >
-      {/* ── Sidebar ─────────────────────────────────────────────────── */}
-      <aside
-        style={{
-          width: sidebarWidth,
-          minWidth: sidebarWidth,
-          transition: 'width 280ms cubic-bezier(0.25,0.46,0.45,0.94), min-width 280ms cubic-bezier(0.25,0.46,0.45,0.94)',
-        }}
-        className="sticky top-0 h-screen flex flex-col z-30 overflow-hidden"
-      >
-        {/* Glass backdrop */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'rgba(12, 12, 12, 0.88)',
-            backdropFilter: 'blur(24px) saturate(160%)',
-            WebkitBackdropFilter: 'blur(24px) saturate(160%)',
-            borderRight: '1px solid rgba(255,255,255,0.06)',
-            boxShadow: '4px 0 32px rgba(0,0,0,0.5)',
-          }}
-        />
-        {/* Red top accent */}
-        <div
-          className="absolute top-0 left-0 right-0 h-px"
-          style={{ background: 'linear-gradient(90deg, transparent, rgba(230,48,48,0.5), transparent)' }}
-        />
-
-        <div className="relative flex flex-col h-full p-3 gap-1">
+    <div className="flex min-h-screen bg-[#0f1117] relative text-white">
+      {/* ── Sidebar estrecha CRM ────────────────────────────────────── */}
+      <aside className="sticky top-0 h-screen w-[120px] min-w-[120px] flex flex-col z-30 overflow-hidden bg-[#08090d] border-r border-[#1a1d28] shadow-2xl">
+        <div className="relative flex flex-col h-full items-center py-6 gap-2">
           {/* Brand header */}
-          <div className="flex items-center justify-between px-1 py-2 mb-2">
-            {!collapsed && (
-              <Link to="/dealers" className="flex items-center gap-2.5 group min-w-0">
-                <div
-                  className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 overflow-hidden"
-                  style={{ boxShadow: '0 2px 12px rgba(230,48,48,0.4), inset 0 1px 0 rgba(255,255,255,0.1)' }}
-                >
-                  <img src="/3.png" alt="Logo" className="w-full h-full object-cover" />
-                </div>
-                <span
-                  className="font-bold text-sm tracking-tight truncate"
-                  style={{ color: 'rgba(255,255,255,0.90)' }}
-                >
-                  Carbot
-                </span>
-              </Link>
-            )}
-            {collapsed && (
-              <Link to="/dealers" className="mx-auto">
-                <div
-                  className="w-8 h-8 rounded-xl overflow-hidden shrink-0"
-                  style={{ boxShadow: '0 2px 12px rgba(230,48,48,0.4)' }}
-                >
-                  <img src="/3.png" alt="Logo" className="w-full h-full object-cover" />
-                </div>
-              </Link>
-            )}
-            {!collapsed && (
-              <button
-                onClick={() => setCollapsed(true)}
-                className="p-1.5 rounded-lg transition-all"
-                style={{ color: 'rgba(255,255,255,0.25)' }}
-                onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.6)'}
-                onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.25)'}
-                title="Colapsar"
-              >
-                <IconCollapse />
-              </button>
-            )}
-            {collapsed && (
-              <button
-                onClick={() => setCollapsed(false)}
-                className="absolute -right-3 top-16 w-6 h-6 rounded-full flex items-center justify-center transition-all"
-                style={{
-                  background: '#1a1a1a',
-                  border: '1px solid rgba(230,48,48,0.3)',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.5)',
-                  color: 'rgba(255,255,255,0.5)',
-                }}
-                title="Expandir"
-              >
-                <IconExpand />
-              </button>
-            )}
-          </div>
+          <Link to="/dealers" className="flex items-center justify-center mb-8">
+            <div className="w-14 h-14 rounded-3xl flex items-center justify-center overflow-hidden bg-[#151720] border border-white/10 shadow-lg relative group transition-transform hover:scale-105">
+               <div className="absolute inset-0 bg-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+               <img src="/3.png" alt="Logo" className="w-[60%] h-[60%] object-contain drop-shadow-lg" />
+            </div>
+          </Link>
 
-          {/* Divider */}
-          <div className="divider-red mx-1 mb-2" />
-
-          {/* Nav items */}
-          <nav className="flex-1 flex flex-col gap-0.5 overflow-y-auto overflow-x-hidden">
+          {/* Menú Scrollable Oculto */}
+          <nav className="flex-1 flex flex-col items-center w-full px-2 overflow-y-auto scrollbar-hide py-1">
             {NAV_LINKS.map((link) =>
               link.children ? (
                 <DropdownNav
                   key={link.label}
                   link={link}
                   currentPath={location.pathname}
-                  collapsed={collapsed}
                 />
               ) : (
                 <NavItem
                   key={link.to}
                   link={link}
                   active={location.pathname.startsWith(link.to)}
-                  collapsed={collapsed}
                 />
               )
             )}
           </nav>
 
-          {/* Divider */}
-          <div className="divider-red mx-1 mt-2 mb-3" />
-
           {/* User footer */}
-          <div className={`flex items-center gap-2.5 px-1 ${collapsed ? 'justify-center' : ''}`}>
-            <div
-              className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
-              style={{
-                background: 'rgba(230,48,48,0.12)',
-                border: '1px solid rgba(230,48,48,0.2)',
-                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)',
-              }}
-            >
-              <span className="text-xs font-bold" style={{ color: '#e63030' }}>{initial}</span>
-            </div>
-            {!collapsed && (
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold truncate" style={{ color: 'rgba(255,255,255,0.75)' }}>
-                  {user?.name || 'Usuario'}
-                </p>
-                {isAdmin && (
-                  <span
-                    className="inline-block text-[10px] font-medium px-1.5 py-0.5 rounded-md leading-none mt-0.5"
-                    style={{ background: 'rgba(230,48,48,0.15)', color: '#e63030', border: '1px solid rgba(230,48,48,0.25)' }}
-                  >
-                    admin
-                  </span>
-                )}
+          <div className="flex flex-col items-center mt-4 pt-6 border-t border-white/5 w-full gap-4 shrink-0">
+            <div className="flex flex-col items-center gap-1 cursor-default group">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#171a23] border border-white/10 shadow-inner overflow-hidden relative">
+                 <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'Admin')}&background=1a1d27&color=e63030&bold=true`} alt="Avatar" className="w-full h-full object-cover" />
               </div>
-            )}
-            {!collapsed && (
-              <button
-                onClick={handleLogout}
-                title="Cerrar sesión"
-                className="p-1.5 rounded-lg transition-all cursor-pointer"
-                style={{ color: 'rgba(255,255,255,0.25)' }}
-                onMouseEnter={e => { e.currentTarget.style.color = '#e63030'; e.currentTarget.style.background = 'rgba(230,48,48,0.10)'; }}
-                onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.25)'; e.currentTarget.style.background = 'transparent'; }}
-              >
-                <IconLogout />
-              </button>
-            )}
-          </div>
-          {collapsed && (
+              {isAdmin && <span className="text-[8px] font-black uppercase text-red-500 tracking-widest mt-1 opacity-80">ADMIN</span>}
+            </div>
+            
             <button
               onClick={handleLogout}
+              className="p-3.5 rounded-2xl bg-[#13151c] text-white/30 border border-white/5 hover:text-red-500 hover:border-red-500/30 hover:bg-red-500/10 transition-all mb-2 shadow-sm"
               title="Cerrar sesión"
-              className="mt-1 mx-auto p-1.5 rounded-lg transition-all cursor-pointer"
-              style={{ color: 'rgba(255,255,255,0.25)' }}
-              onMouseEnter={e => { e.currentTarget.style.color = '#e63030'; e.currentTarget.style.background = 'rgba(230,48,48,0.10)'; }}
-              onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.25)'; e.currentTarget.style.background = 'transparent'; }}
             >
               <IconLogout />
             </button>
-          )}
+          </div>
         </div>
       </aside>
 
       {/* ── Main content ─────────────────────────────────────────────── */}
-      <main className="flex-1 min-w-0 p-6 overflow-auto">
+      <main className="flex-1 min-w-0 p-8 sm:p-10 overflow-auto h-screen relative">
         {children}
       </main>
     </div>
