@@ -29,23 +29,19 @@ function KPI({ label, value, accent, icon }) {
   const isUp = Math.random() > 0.5; // Simulate a trend for aesthetics
   return (
     <div
-      className="glass-card float-in p-5 flex flex-col gap-3 relative overflow-hidden group transition-all"
+      className="glass-card float-in p-5 flex flex-col gap-3 relative overflow-hidden group transition-all duration-300 hover:-translate-y-2"
       style={accent ? { borderColor: `${accent}28` } : {}}
-      onMouseEnter={e => e.currentTarget.style.boxShadow = `0 8px 32px ${accent ? accent+'15' : 'rgba(255,255,255,0.05)'}`}
+      onMouseEnter={e => e.currentTarget.style.boxShadow = `0 15px 40px ${accent ? accent+'25' : 'rgba(255,255,255,0.08)'}`}
       onMouseLeave={e => e.currentTarget.style.boxShadow = 'var(--shadow-card)'}
     >
-      <div className="absolute top-0 right-0 p-4 opacity-10 transform translate-x-2 -translate-y-2 group-hover:scale-110 transition-transform duration-500" style={{ color: accent || 'rgba(255,255,255,0.8)' }}>
-        <div style={{ transform: 'scale(3)' }}>{Icons[icon]}</div>
-      </div>
-      
       <div className="flex items-center gap-3">
-        <div className="flex items-center justify-center w-8 h-8 rounded-lg" style={{ background: accent ? `${accent}15` : 'rgba(255,255,255,0.05)', color: accent || 'rgba(255,255,255,0.7)', border: `1px solid ${accent ? accent+'30' : 'rgba(255,255,255,0.1)'}` }}>
+        <div className="flex items-center justify-center w-8 h-8 rounded-lg group-hover:scale-110 transition-transform duration-300" style={{ background: accent ? `${accent}15` : 'rgba(255,255,255,0.05)', color: accent || 'rgba(255,255,255,0.7)', border: `1px solid ${accent ? accent+'30' : 'rgba(255,255,255,0.1)'}` }}>
           {Icons[icon]}
         </div>
-        <p className="text-xs tracking-wide" style={{ color: 'rgba(255,255,255,0.65)' }}>{label}</p>
+        <p className="text-xs tracking-wide transition-colors duration-300 group-hover:text-white" style={{ color: 'rgba(255,255,255,0.65)' }}>{label}</p>
       </div>
       <div className="flex items-end gap-2 mt-1">
-        <p className="text-3xl font-bold tabular-nums tracking-tight" style={{ color: 'rgba(255,255,255,0.95)' }}>{value}</p>
+        <p className="text-3xl font-bold tabular-nums tracking-tight transform origin-left transition-transform duration-300 group-hover:scale-105" style={{ color: 'rgba(255,255,255,0.95)' }}>{value}</p>
         <div className="text-[10px] font-medium mb-1 px-1.5 py-0.5 rounded" style={{ background: isUp ? 'rgba(16,185,129,0.1)' : 'rgba(245,158,11,0.1)', color: isUp ? '#10b981' : '#f59e0b' }}>
           {isUp ? '+12%' : '~0%'}
         </div>
