@@ -1,78 +1,329 @@
+import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
+/* ── SVG Icons ─────────────────────────────────────────────────────────── */
+const IconDealers = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+);
+const IconAnalytics = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
+    <line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/>
+  </svg>
+);
+const IconPlayground = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+  </svg>
+);
+const IconChannels = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+  </svg>
+);
+const IconAPIs = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+    <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+  </svg>
+);
+const IconSkills = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/>
+    <path d="M15.54 8.46a5 5 0 010 7.07M8.46 8.46a5 5 0 000 7.07"/>
+  </svg>
+);
+const IconKnowledge = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+  </svg>
+);
+const IconBot = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/>
+    <path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/>
+  </svg>
+);
+const IconChevron = ({ open }) => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+    style={{ transform: open ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 220ms cubic-bezier(0.25,0.46,0.45,0.94)' }}>
+    <polyline points="6 9 12 15 18 9"/>
+  </svg>
+);
+const IconLogout = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+  </svg>
+);
+
+/* ── Nav config ────────────────────────────────────────────────────────── */
 const NAV_LINKS = [
-  { to: '/dealers', label: 'Dealers', icon: '🏢' },
-  { to: '/analytics', label: 'Analytics', icon: '📊' },
-  { to: '/playground', label: 'Playground', icon: '🧪' },
-  { to: '/skills', label: 'Skills', icon: '⚡' },
+  { to: '/dealers',    label: 'Dealers',    Icon: IconDealers },
+  { to: '/analytics',  label: 'Analytics',  Icon: IconAnalytics },
+  { to: '/playground', label: 'Playground', Icon: IconPlayground },
+  { to: '/channels',   label: 'Canales',    Icon: IconChannels },
+  { to: '/apis',       label: 'APIs',       Icon: IconAPIs },
+  {
+    label: 'Asistente',
+    Icon: IconBot,
+    prefix: '/assistant',
+    children: [
+      { to: '/assistant/skills',    label: 'Skills',            Icon: IconSkills },
+      { to: '/assistant/knowledge', label: 'Base de conocimiento', Icon: IconKnowledge },
+    ],
+  },
 ];
 
+/* ── Dropdown item ─────────────────────────────────────────────────────── */
+function DropdownNav({ link, currentPath, collapsed }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+  const isActive = currentPath.startsWith(link.prefix);
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        title={collapsed ? link.label : undefined}
+        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-medium transition-all duration-200 ease-smooth cursor-pointer ${
+          isActive
+            ? 'bg-brand-gradient text-white shadow-float'
+            : 'text-slate-600 hover:bg-white/60 hover:shadow-glass-sm'
+        }`}
+        style={isActive ? { background: 'linear-gradient(135deg, #4f78ff, #a78bfa)' } : {}}
+      >
+        <span className={`shrink-0 ${isActive ? 'text-white' : 'text-slate-500'}`}>
+          <link.Icon />
+        </span>
+        {!collapsed && (
+          <>
+            <span className="flex-1 text-left truncate">{link.label}</span>
+            <span className={isActive ? 'text-white/70' : 'text-slate-400'}>
+              <IconChevron open={open} />
+            </span>
+          </>
+        )}
+      </button>
+
+      {open && !collapsed && (
+        <div className="mt-1 ml-3 space-y-0.5 animate-slide-down">
+          {link.children.map((child) => {
+            const childActive = currentPath.startsWith(child.to);
+            return (
+              <Link
+                key={child.to}
+                to={child.to}
+                onClick={() => setOpen(false)}
+                className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm transition-all duration-200 ${
+                  childActive
+                    ? 'text-brand-600 font-semibold bg-brand-50/80'
+                    : 'text-slate-500 hover:text-slate-700 hover:bg-white/50'
+                }`}
+              >
+                <span className={childActive ? 'text-brand-500' : 'text-slate-400'}>
+                  <child.Icon />
+                </span>
+                <span className="truncate">{child.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── Layout ────────────────────────────────────────────────────────────── */
 export default function Layout({ children }) {
   const { user, logout, isAdmin } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const [collapsed, setCollapsed] = useState(false);
 
   function handleLogout() {
     logout();
     navigate('/login');
   }
 
-  return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
-      {/* Topbar */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-          {/* Brand */}
-          <div className="flex items-center gap-6">
-            <Link to="/dealers" className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-md bg-brand-600 flex items-center justify-center">
-                <span className="text-xs font-bold text-white">C</span>
-              </div>
-              <span className="font-semibold text-slate-800 text-sm">Carbot</span>
-            </Link>
+  const sidebarWidth = collapsed ? '72px' : '240px';
+  const initial = (user?.name || 'U').charAt(0).toUpperCase();
 
-            {/* Nav */}
-            <nav className="hidden sm:flex items-center gap-1">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition ${
-                    location.pathname.startsWith(link.to)
-                      ? 'bg-brand-50 text-brand-700'
-                      : 'text-slate-600 hover:bg-slate-100'
-                  }`}
+  return (
+    <div className="flex min-h-screen" style={{ background: 'var(--bg-base)', backgroundImage: 'var(--bg-mesh)', backgroundAttachment: 'fixed' }}>
+
+      {/* ── Sidebar ─────────────────────────────────────────────────── */}
+      <aside
+        style={{
+          width: sidebarWidth,
+          minWidth: sidebarWidth,
+          transition: 'width 280ms cubic-bezier(0.25, 0.46, 0.45, 0.94), min-width 280ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        }}
+        className="sticky top-0 h-screen flex flex-col z-30 overflow-hidden"
+      >
+        {/* Glass panel behind sidebar */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'var(--glass-bg-strong)',
+            backdropFilter: 'var(--glass-blur)',
+            WebkitBackdropFilter: 'var(--glass-blur)',
+            borderRight: '1px solid var(--glass-border)',
+            boxShadow: '4px 0 24px rgba(0,0,0,0.06)',
+          }}
+        />
+
+        <div className="relative flex flex-col h-full p-3 gap-1">
+          {/* Brand + collapse toggle */}
+          <div className="flex items-center justify-between px-1 py-2 mb-2">
+            {!collapsed && (
+              <Link to="/dealers" className="flex items-center gap-2.5 group">
+                <div
+                  className="w-8 h-8 rounded-xl flex items-center justify-center shadow-float shrink-0"
+                  style={{ background: 'linear-gradient(135deg, #4f78ff, #a78bfa)' }}
                 >
-                  <span>{link.icon}</span>
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
+                  <span className="text-xs font-bold text-white tracking-wide">C</span>
+                </div>
+                <span className="font-bold text-slate-800 text-sm tracking-tight">Carbot</span>
+              </Link>
+            )}
+            {collapsed && (
+              <Link to="/dealers" className="mx-auto">
+                <div
+                  className="w-8 h-8 rounded-xl flex items-center justify-center shadow-float"
+                  style={{ background: 'linear-gradient(135deg, #4f78ff, #a78bfa)' }}
+                >
+                  <span className="text-xs font-bold text-white">C</span>
+                </div>
+              </Link>
+            )}
+            {!collapsed && (
+              <button
+                onClick={() => setCollapsed(true)}
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-white/60 transition-all"
+                title="Colapsar"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <path d="M11 17l-5-5 5-5"/><path d="M18 17l-5-5 5-5"/>
+                </svg>
+              </button>
+            )}
+            {collapsed && (
+              <button
+                onClick={() => setCollapsed(false)}
+                className="absolute -right-3 top-16 w-6 h-6 rounded-full bg-white shadow-glass-sm border border-white/80 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-all"
+                title="Expandir"
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                  <path d="M13 17l5-5-5-5"/><path d="M6 17l5-5-5-5"/>
+                </svg>
+              </button>
+            )}
           </div>
 
-          {/* User */}
-          <div className="flex items-center gap-3">
-            <span className="text-xs text-slate-500 hidden sm:block">
-              {user?.name}
-              {isAdmin && (
-                <span className="ml-1 text-xs bg-brand-100 text-brand-700 px-1.5 py-0.5 rounded">admin</span>
-              )}
-            </span>
+          {/* Divider */}
+          <div className="h-px mx-1 mb-2 rounded-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(79,120,255,0.2), transparent)' }} />
+
+          {/* Nav items */}
+          <nav className="flex-1 flex flex-col gap-0.5 overflow-y-auto overflow-x-hidden">
+            {NAV_LINKS.map((link) =>
+              link.children ? (
+                <DropdownNav
+                  key={link.label}
+                  link={link}
+                  currentPath={location.pathname}
+                  collapsed={collapsed}
+                />
+              ) : (
+                <NavItem
+                  key={link.to}
+                  link={link}
+                  active={location.pathname.startsWith(link.to)}
+                  collapsed={collapsed}
+                />
+              )
+            )}
+          </nav>
+
+          {/* Divider */}
+          <div className="h-px mx-1 mt-2 mb-3 rounded-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(79,120,255,0.2), transparent)' }} />
+
+          {/* User footer */}
+          <div className={`flex items-center gap-2.5 px-1 ${collapsed ? 'justify-center' : ''}`}>
+            <div
+              className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 shadow-glass-sm"
+              style={{ background: 'linear-gradient(135deg, #4f78ff22, #a78bfa22)', border: '1px solid rgba(79,120,255,0.2)' }}
+            >
+              <span className="text-xs font-bold text-brand-600">{initial}</span>
+            </div>
+            {!collapsed && (
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-semibold text-slate-700 truncate">{user?.name || 'Usuario'}</p>
+                {isAdmin && (
+                  <span className="inline-block text-[10px] font-medium px-1.5 py-0.5 rounded-md bg-brand-50 text-brand-600 leading-none mt-0.5">
+                    admin
+                  </span>
+                )}
+              </div>
+            )}
+            {!collapsed && (
+              <button
+                onClick={handleLogout}
+                title="Cerrar sesión"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-all cursor-pointer"
+              >
+                <IconLogout />
+              </button>
+            )}
+          </div>
+          {collapsed && (
             <button
               onClick={handleLogout}
-              className="text-xs text-slate-500 hover:text-slate-800 transition px-2 py-1 rounded hover:bg-slate-100"
+              title="Cerrar sesión"
+              className="mt-1 mx-auto p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-all cursor-pointer"
             >
-              Salir
+              <IconLogout />
             </button>
-          </div>
+          )}
         </div>
-      </header>
+      </aside>
 
-      {/* Page content */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6">
+      {/* ── Main content ─────────────────────────────────────────────── */}
+      <main className="flex-1 min-w-0 p-6 overflow-auto">
         {children}
       </main>
     </div>
+  );
+}
+
+/* ── Single nav item ───────────────────────────────────────────────────── */
+function NavItem({ link, active, collapsed }) {
+  return (
+    <Link
+      to={link.to}
+      title={collapsed ? link.label : undefined}
+      className={`flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-medium transition-all duration-200 ease-smooth ${
+        active
+          ? 'text-white shadow-float'
+          : 'text-slate-600 hover:bg-white/60 hover:shadow-glass-sm hover:text-slate-800'
+      } ${collapsed ? 'justify-center' : ''}`}
+      style={active ? { background: 'linear-gradient(135deg, #4f78ff, #a78bfa)' } : {}}
+    >
+      <span className={`shrink-0 ${active ? 'text-white' : 'text-slate-400 group-hover:text-slate-600'}`}>
+        <link.Icon />
+      </span>
+      {!collapsed && <span className="truncate">{link.label}</span>}
+    </Link>
   );
 }

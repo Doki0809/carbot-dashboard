@@ -8,6 +8,9 @@ import DealerLogs from './pages/dealer/DealerLogs';
 import Analytics from './pages/Analytics';
 import Playground from './pages/Playground';
 import Skills from './pages/Skills';
+import KnowledgeBase from './pages/KnowledgeBase';
+import Channels from './pages/Channels';
+import APIs from './pages/APIs';
 
 function RequireAuth({ children }) {
   const { user } = useAuth();
@@ -32,7 +35,14 @@ export default function App() {
                 <Route path="dealer/:id/logs" element={<DealerLogs />} />
                 <Route path="analytics" element={<Analytics />} />
                 <Route path="playground" element={<Playground />} />
-                <Route path="skills" element={<Skills />} />
+                <Route path="channels" element={<Channels />} />
+                <Route path="apis" element={<APIs />} />
+                {/* Legacy redirect */}
+                <Route path="skills" element={<Navigate to="/assistant/skills" replace />} />
+                {/* Asistente section */}
+                <Route path="assistant/skills" element={<Skills />} />
+                <Route path="assistant/knowledge" element={<KnowledgeBase />} />
+                <Route path="assistant" element={<Navigate to="/assistant/skills" replace />} />
                 <Route path="*" element={<Navigate to="/dealers" replace />} />
               </Routes>
             </Layout>

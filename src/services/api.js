@@ -66,6 +66,78 @@ export async function deleteSkill(id) {
   return request('DELETE', `/api/skills/${id}`);
 }
 
+// ─── Knowledge base ───────────────────────────────────────────────────────────
+
+export async function listGlobalKnowledge(includeInactive = false) {
+  const data = await request('GET', `/api/knowledge/global?includeInactive=${includeInactive}`);
+  return data.entries;
+}
+
+export async function getGlobalKnowledgeEntry(id) {
+  const data = await request('GET', `/api/knowledge/global/${id}`);
+  return data.entry;
+}
+
+export async function createGlobalKnowledge(entry) {
+  return request('POST', '/api/knowledge/global', entry);
+}
+
+export async function updateGlobalKnowledge(id, fields) {
+  return request('PATCH', `/api/knowledge/global/${id}`, fields);
+}
+
+export async function deleteGlobalKnowledge(id) {
+  return request('DELETE', `/api/knowledge/global/${id}`);
+}
+
+// ─── Channels ────────────────────────────────────────────────────────────────
+
+export async function listChannels() {
+  const data = await request('GET', '/api/admin/channels');
+  return data.channels;
+}
+
+export async function getChannel(type) {
+  const data = await request('GET', `/api/admin/channels/${type}`);
+  return data.channel;
+}
+
+export async function saveChannel(type, config) {
+  const data = await request('POST', `/api/admin/channels/${type}`, config);
+  return data.channel;
+}
+
+export async function testChannel(type) {
+  return request('POST', `/api/admin/channels/${type}/test`);
+}
+
+export async function disconnectChannel(type) {
+  return request('DELETE', `/api/admin/channels/${type}`);
+}
+
+// ─── APIs ─────────────────────────────────────────────────────────────────────
+
+export async function listApis() {
+  const data = await request('GET', '/api/admin/apis');
+  return data.apis;
+}
+
+export async function createApi(api) {
+  return request('POST', '/api/admin/apis', api);
+}
+
+export async function updateApi(id, fields) {
+  return request('PATCH', `/api/admin/apis/${id}`, fields);
+}
+
+export async function deleteApi(id) {
+  return request('DELETE', `/api/admin/apis/${id}`);
+}
+
+export async function testApi(id) {
+  return request('POST', `/api/admin/apis/${id}/test`);
+}
+
 // ─── Analytics ───────────────────────────────────────────────────────────────
 
 export async function getAnalyticsSummary() {
