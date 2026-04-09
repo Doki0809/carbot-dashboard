@@ -208,19 +208,17 @@ export default function Layout({ children }) {
             )}
           </nav>
 
-          {/* User footer con iconos de configuración referenciales */}
-          <div className="flex flex-col items-center mt-2 w-full gap-5 shrink-0">
-            <button className="text-white/20 hover:text-white/60 transition-colors">
-              <IconTrash />
-            </button>
-            <button className="text-[#eab308] hover:opacity-80 transition-opacity">
-              <IconSun />
-            </button>
-            <button onClick={handleLogout} title="Cerrar sesión" className="text-white/20 hover:text-white/60 transition-colors">
+          {/* User footer */}
+          <div className="flex flex-col items-center mt-auto w-full gap-4 shrink-0">
+            <button 
+              onClick={handleLogout} 
+              title="Cerrar sesión" 
+              className="text-white/30 hover:text-[#ff4d4d] transition-all p-3 rounded-2xl hover:bg-white/5 flex items-center justify-center"
+            >
               <IconLogout />
             </button>
-            <div className="w-10 h-10 mt-1 rounded-full overflow-hidden border-2 border-white/10">
-               <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'Admin')}&background=1a1d27&color=e63030&bold=true`} alt="Avatar" className="w-full h-full object-cover" />
+            <div className="w-12 h-12 rounded-[1.1rem] overflow-hidden shadow-lg border border-white/10">
+               <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'Admin')}&background=151720&color=ff4d4d&bold=true`} alt="Avatar" className="w-full h-full object-cover" />
             </div>
           </div>
         </div>
