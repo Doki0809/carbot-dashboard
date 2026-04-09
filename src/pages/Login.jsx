@@ -114,12 +114,11 @@ export default function Login() {
         @keyframes errorShake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 60%{transform:translateX(6px)} }
         @keyframes logoFloat  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 
-        /* ── Mobile: apila verticalmente ── */
+        /* ── Mobile: solo muestra el formulario ── */
         @media (max-width: 640px) {
-          .lc-card  { flex-direction: column !important; width: 100% !important; max-width: 100% !important; min-height: 100dvh !important; border-radius: 0 !important; border: none !important; }
-          .lc-left  { width: 100% !important; border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.06) !important; padding: 36px 24px 24px !important; gap: 20px !important; }
-          .lc-right { width: 100% !important; padding: 28px 24px 48px !important; }
-          .lc-logo  { width: 110px !important; height: 110px !important; }
+          .lc-card  { width: 100% !important; max-width: 100% !important; min-height: 100dvh !important; border-radius: 0 !important; border: none !important; }
+          .lc-left  { display: none !important; }
+          .lc-right { width: 100% !important; padding: 48px 24px 60px !important; justify-content: center !important; }
         }
       `}</style>
 
