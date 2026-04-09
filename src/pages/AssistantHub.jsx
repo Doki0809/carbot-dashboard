@@ -3,91 +3,135 @@ import { Link } from 'react-router-dom';
 
 /* ── SVG Icons ─────────────────────────────────────────────────────────── */
 const IconPlayground = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
   </svg>
 );
 
 const IconSkills = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/>
     <path d="M15.54 8.46a5 5 0 010 7.07M8.46 8.46a5 5 0 000 7.07"/>
   </svg>
 );
 
 const IconKnowledge = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
   </svg>
 );
 
 export default function AssistantHub() {
-  const cards = [
+  const modules = [
     {
       to: '/assistant/playground',
-      title: 'Área de prueba',
-      desc: 'Prueba la interacción en tiempo real con el Asistente.',
+      title: 'Zona Pruebas',
+      subtitle: 'SIMULADOR EN TIEMPO REAL',
+      desc: 'Entorno aislado para interactuar con Missy. Evalúa respuestas, lógica de negocio y personalidad antes de producción.',
       icon: <IconPlayground />,
-      color: '#4287f5'
+      color: '#3b82f6',
+      bgGlow: 'rgba(59, 130, 246, 0.15)',
+      status: 'OPERATIVO'
     },
     {
       to: '/assistant/skills',
-      title: 'Skills',
-      desc: 'Administra y configura las habilidades y acciones específicas.',
+      title: 'Habilidades',
+      subtitle: 'ACCIONES DEL SISTEMA',
+      desc: 'Configura las capacidades instrumentales del bot. Permite conectar APIs internas y manipular datos del negocio.',
       icon: <IconSkills />,
-      color: '#22c55e'
+      color: '#10b981',
+      bgGlow: 'rgba(16, 185, 129, 0.15)',
+      status: 'EN LÍNEA'
     },
     {
       to: '/assistant/knowledge',
-      title: 'Base de conocimiento',
-      desc: 'Edita la información global que usa Missy para responder.',
+      title: 'Cerebro',
+      subtitle: 'MEMORIA GLOBAL',
+      desc: 'Motor de conocimiento donde residen reglas, precios y flujos de negocio. Missy lo consulta en cada intervención.',
       icon: <IconKnowledge />,
-      color: '#f59e0b'
+      color: '#f59e0b',
+      bgGlow: 'rgba(245, 158, 11, 0.15)',
+      status: 'SINCRONIZADO'
     }
   ];
 
   return (
-    <div className="space-y-8 animate-fade-in relative max-w-6xl mx-auto py-8">
-      {/* Mega Hero Banner Minimalista */}
-      <div 
-        className="w-full float-in relative overflow-hidden py-10 px-10 sm:px-12 mb-10 shadow-2xl flex flex-col sm:flex-row items-center justify-between"
-        style={{ 
-          background: 'linear-gradient(90deg, #ff3b45 0%, #ff1a2b 100%)',
-          borderRadius: '2.5rem',
-          boxShadow: '0 20px 40px rgba(255,59,69,0.3), inset 0 1px 0 rgba(255,255,255,0.3)'
-        }}
-      >
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-white opacity-5 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-black opacity-[0.06] rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
-        
-        <div className="relative z-10 w-full">
-          <h1 className="text-[44px] font-[900] tracking-tighter text-white leading-[1.05]">
-            Módulos del Asistente
-          </h1>
-          <p className="text-white/80 text-[15px] font-[400] tracking-wide mt-3">
-            Selecciona la configuración que deseas gestionar o pon a prueba el modelo actual.
-          </p>
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-6rem)] animate-fade-in relative z-10 w-full max-w-[1400px] mx-auto py-10">
+      
+      {/* Luz ambiente central */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-red-500/5 blur-[150px] rounded-full pointer-events-none -z-10"></div>
+      
+      <div className="text-center mb-16 relative">
+        <div className="inline-block mb-6 px-5 py-2 rounded-full border border-red-500/20 bg-red-500/10 text-red-500 text-[10px] font-black uppercase tracking-[0.4em] shadow-[0_0_20px_rgba(255,0,0,0.2)]">
+          Panel Neuronal AI
         </div>
+        <h1 className="text-6xl sm:text-[80px] font-[900] tracking-tighter text-white drop-shadow-2xl mb-4 leading-none inline-flex items-center gap-4">
+          Núcleo Missy
+        </h1>
+        <p className="text-white/40 text-lg sm:text-xl font-medium tracking-wider max-w-2xl mx-auto mt-4 px-4">
+          Selecciona un submódulo para configurar la inteligencia del asistente.
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {cards.map((card) => (
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full px-4 sm:px-0">
+        {modules.map((mod) => (
           <Link
-            key={card.to}
-            to={card.to}
-            className="group relative flex flex-col p-8 glass-card transition-all"
-            style={{ background: '#13151c', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.05)' }}
+            key={mod.to}
+            to={mod.to}
+            className="group relative flex flex-col p-12 overflow-hidden transition-all duration-500 h-[450px]"
+            style={{ 
+              background: '#0e1015', 
+              borderRadius: '2.5rem', 
+              border: '1px solid rgba(255,255,255,0.03)',
+              boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)'
+            }}
           >
-            <div className="absolute -bottom-8 -right-8 pointer-events-none group-hover:scale-110 group-hover:-translate-y-2 group-hover:-translate-x-2 transition-all duration-700" style={{ color: 'rgba(255,255,255,0.03)' }}>
-              <div style={{ transform: 'scale(8)' }}>{card.icon}</div>
-            </div>
+            {/* Destello interno en Hover */}
+            <div 
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" 
+              style={{ background: `radial-gradient(circle at 50% 0%, ${mod.bgGlow} 0%, transparent 70%)` }}
+            ></div>
             
-            <div className="w-14 h-14 rounded-full flex items-center justify-center relative z-10 mb-6" style={{ background: '#1c1f2b', border: '1px solid rgba(255,255,255,0.05)', color: card.color }}>
-              {card.icon}
+            {/* Icono gigante marca de agua */}
+            <div className="absolute -bottom-12 -right-12 pointer-events-none opacity-20 group-hover:opacity-40 group-hover:rotate-12 group-hover:scale-125 transition-all duration-1000 ease-out" style={{ color: mod.color }}>
+              <div style={{ transform: 'scale(12)' }}>{mod.icon}</div>
             </div>
 
-            <h2 className="text-[22px] font-[900] text-white tracking-tight leading-none mb-3 relative z-10">{card.title}</h2>
-            <p className="text-white/50 text-[13px] font-[500] leading-relaxed relative z-10">{card.desc}</p>
+            {/* Cabecera (Icono + Textos) */}
+            <div className="relative z-10 flex flex-col">
+              <div className="flex items-center justify-between mb-8">
+                <div className="w-20 h-20 rounded-[1.5rem] flex items-center justify-center shadow-inner transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-2 group-hover:rotate-3" 
+                     style={{ background: '#151720', border: '1px solid rgba(255,255,255,0.05)', color: mod.color, boxShadow: `0 10px 30px -10px ${mod.bgGlow}` }}>
+                  {mod.icon}
+                </div>
+                
+                <div className="px-3 py-1.5 rounded-full border border-white/5 bg-[#12141a] flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: mod.color }}></div>
+                  <span className="text-[9px] font-black uppercase tracking-widest text-white/50">{mod.status}</span>
+                </div>
+              </div>
+
+              <p className="text-[10px] font-black uppercase tracking-[0.25em] mb-2" style={{ color: mod.color }}>
+                {mod.subtitle}
+              </p>
+              <h2 className="text-4xl font-[900] tracking-tighter text-white leading-none">
+                {mod.title}
+              </h2>
+            </div>
+            
+            {/* Contenido inferior */}
+            <div className="relative z-10 mt-auto pt-8 border-t border-white/5">
+              <p className="text-white/40 text-[15px] font-medium leading-relaxed mb-6">
+                {mod.desc}
+              </p>
+              
+              <div className="flex items-center gap-3 text-[12px] font-black uppercase tracking-widest transition-colors" style={{ color: mod.color }}>
+                <span>Ir al Panel</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover:translate-x-3 transition-transform duration-300">
+                  <line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </div>
+            </div>
           </Link>
         ))}
       </div>
