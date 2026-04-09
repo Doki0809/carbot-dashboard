@@ -156,7 +156,7 @@ export default function Layout({ children }) {
       </aside>
 
       {/* ── Main content ────────────────────────────────────────────── */}
-      <main className="flex-1 min-w-0 overflow-auto h-screen relative bg-[#090a0f] px-4 md:px-8 py-6 md:py-10 pb-28 md:pb-10">
+      <main className="flex-1 min-w-0 overflow-x-hidden overflow-y-auto h-screen relative bg-[#090a0f] px-4 md:px-8 py-6 md:py-10 pb-28 md:pb-10">
 
         {/* Mobile top bar: logo + logout + avatar */}
         <div className="flex md:hidden items-center justify-between mb-6">
