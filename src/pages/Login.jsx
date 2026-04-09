@@ -37,14 +37,17 @@ function Loader({ onDone }) {
       opacity: exit ? 0 : 1,
       pointerEvents: exit ? 'none' : 'all',
     }}>
-      <div style={{
-        width: 72, height: 72, borderRadius: 20,
-        overflow: 'hidden',
-        boxShadow: '0 0 40px rgba(230,48,48,0.5)',
-        animation: 'logoPulse 1.4s ease-in-out infinite',
-      }}>
-        <img src="/3.png" alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-      </div>
+      <img
+        src="/3.png"
+        alt="Logo"
+        style={{
+          width: 140,
+          height: 140,
+          objectFit: 'contain',
+          filter: 'drop-shadow(0 0 30px rgba(230,48,48,0.6)) drop-shadow(0 0 60px rgba(230,48,48,0.3))',
+          animation: 'logoPulse 1.4s ease-in-out infinite',
+        }}
+      />
       <div style={{ width: 160, height: 2, background: 'rgba(255,255,255,0.08)', borderRadius: 9999, overflow: 'hidden' }}>
         <div style={{
           height: '100%', borderRadius: 9999,
