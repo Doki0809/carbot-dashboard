@@ -12,7 +12,6 @@ const SLIDES = [
   { quote: 'Tu agencia en modo turbo, siempre.', sub: 'Integrada con tu CRM, WhatsApp y procesos — lista desde el día uno.' },
 ];
 
-/* Spinner SVG */
 function SpinIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style={{ animation: 'loginSpin 0.7s linear infinite' }}>
@@ -22,7 +21,6 @@ function SpinIcon() {
   );
 }
 
-/* Loader */
 function Loader({ onDone }) {
   const [exit, setExit] = useState(false);
   useEffect(() => {
@@ -30,25 +28,21 @@ function Loader({ onDone }) {
     return () => clearTimeout(t);
   }, [onDone]);
   return (
-    <div
-      style={{
-        position: 'fixed', inset: 0, zIndex: 100,
-        background: '#080808',
-        display: 'flex', flexDirection: 'column',
-        alignItems: 'center', justifyContent: 'center', gap: 24,
-        transition: 'opacity 0.6s ease',
-        opacity: exit ? 0 : 1,
-        pointerEvents: exit ? 'none' : 'all',
-      }}
-    >
-      <div
-        style={{
-          width: 72, height: 72, borderRadius: 20,
-          overflow: 'hidden',
-          boxShadow: '0 0 40px rgba(230,48,48,0.5)',
-          animation: 'logoPulse 1.4s ease-in-out infinite',
-        }}
-      >
+    <div style={{
+      position: 'fixed', inset: 0, zIndex: 100,
+      background: '#080808',
+      display: 'flex', flexDirection: 'column',
+      alignItems: 'center', justifyContent: 'center', gap: 24,
+      transition: 'opacity 0.6s ease',
+      opacity: exit ? 0 : 1,
+      pointerEvents: exit ? 'none' : 'all',
+    }}>
+      <div style={{
+        width: 72, height: 72, borderRadius: 20,
+        overflow: 'hidden',
+        boxShadow: '0 0 40px rgba(230,48,48,0.5)',
+        animation: 'logoPulse 1.4s ease-in-out infinite',
+      }}>
         <img src="/3.png" alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       </div>
       <div style={{ width: 160, height: 2, background: 'rgba(255,255,255,0.08)', borderRadius: 9999, overflow: 'hidden' }}>
@@ -67,7 +61,7 @@ function Loader({ onDone }) {
 
 export default function Login() {
   const { login } = useAuth();
-  const navigate   = useNavigate();
+  const navigate  = useNavigate();
 
   const [ready,    setReady]    = useState(false);
   const [email,    setEmail]    = useState('');
@@ -109,16 +103,24 @@ export default function Login() {
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        @keyframes logoPulse { 0%,100%{box-shadow:0 0 30px rgba(230,48,48,0.4);transform:scale(1)} 50%{box-shadow:0 0 60px rgba(230,48,48,0.7);transform:scale(1.06)} }
-        @keyframes barFill { from{width:0%} to{width:100%} }
-        @keyframes blink { 0%,100%{opacity:0.3} 50%{opacity:0.7} }
-        @keyframes glowDrift { from{transform:translate(-50%,-50%) scale(1)} to{transform:translate(-50%,-55%) scale(1.15)} }
-        @keyframes loginCardEnter { to{opacity:1;transform:translateY(0) scale(1)} }
+        @keyframes logoPulse  { 0%,100%{box-shadow:0 0 30px rgba(230,48,48,0.4);transform:scale(1)} 50%{box-shadow:0 0 60px rgba(230,48,48,0.7);transform:scale(1.06)} }
+        @keyframes barFill    { from{width:0%} to{width:100%} }
+        @keyframes blink      { 0%,100%{opacity:0.3} 50%{opacity:0.7} }
+        @keyframes glowDrift  { from{transform:translate(-50%,-50%) scale(1)} to{transform:translate(-50%,-55%) scale(1.15)} }
+        @keyframes loginCardEnter  { to{opacity:1;transform:translateY(0) scale(1)} }
         @keyframes loginSlideEnter { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes loginSlideExit { from{opacity:1;transform:translateY(0)} to{opacity:0;transform:translateY(-14px)} }
-        @keyframes loginSpin { to{transform:rotate(360deg)} }
+        @keyframes loginSlideExit  { from{opacity:1;transform:translateY(0)} to{opacity:0;transform:translateY(-14px)} }
+        @keyframes loginSpin  { to{transform:rotate(360deg)} }
         @keyframes errorShake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 60%{transform:translateX(6px)} }
-        @keyframes logoFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+        @keyframes logoFloat  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+        /* ── Mobile: apila verticalmente ── */
+        @media (max-width: 640px) {
+          .lc-card  { flex-direction: column !important; width: 100% !important; max-width: 100% !important; min-height: 100dvh !important; border-radius: 0 !important; border: none !important; }
+          .lc-left  { width: 100% !important; border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.06) !important; padding: 36px 24px 24px !important; gap: 20px !important; }
+          .lc-right { width: 100% !important; padding: 28px 24px 48px !important; }
+          .lc-logo  { width: 110px !important; height: 110px !important; }
+        }
       `}</style>
 
       {!ready && <Loader onDone={() => setReady(true)} />}
@@ -130,30 +132,16 @@ export default function Login() {
         fontFamily: "'Inter', system-ui, sans-serif",
         overflow: 'hidden', position: 'relative',
       }}>
-        {/* BG Glow */}
+        {/* BG Glows */}
         <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
-          <div style={{
-            position: 'absolute', width: 600, height: 600, borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(230,48,48,0.12) 0%, transparent 70%)',
-            top: '50%', left: '25%', transform: 'translate(-50%,-50%)',
-            animation: 'glowDrift 8s ease-in-out infinite alternate',
-          }} />
-          <div style={{
-            position: 'absolute', width: 400, height: 400, borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(230,48,48,0.07) 0%, transparent 70%)',
-            top: '50%', left: '75%', transform: 'translate(-50%,-50%)',
-            animation: 'glowDrift 10s ease-in-out infinite alternate-reverse',
-          }} />
+          <div style={{ position: 'absolute', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(230,48,48,0.12) 0%, transparent 70%)', top: '50%', left: '25%', transform: 'translate(-50%,-50%)', animation: 'glowDrift 8s ease-in-out infinite alternate' }} />
+          <div style={{ position: 'absolute', width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(230,48,48,0.07) 0%, transparent 70%)', top: '50%', left: '75%', transform: 'translate(-50%,-50%)', animation: 'glowDrift 10s ease-in-out infinite alternate-reverse' }} />
         </div>
         {/* BG Grid */}
-        <div style={{
-          position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0,
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)',
-          backgroundSize: '48px 48px',
-        }} />
+        <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, backgroundImage: 'linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
 
         {/* Card */}
-        <div style={{
+        <div className="lc-card" style={{
           position: 'relative', zIndex: 10,
           display: 'flex',
           width: 1050, maxWidth: 'calc(100vw - 32px)',
@@ -168,14 +156,11 @@ export default function Login() {
           animation: 'loginCardEnter 0.7s cubic-bezier(0.16,1,0.3,1) forwards',
           opacity: 0, transform: 'translateY(24px) scale(0.98)',
         }}>
-          {/* Red top border accent */}
-          <div style={{
-            position: 'absolute', top: 0, left: 0, right: 0, height: 1,
-            background: 'linear-gradient(90deg, transparent, rgba(230,48,48,0.6), transparent)',
-          }} />
+          {/* Top red accent line */}
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'linear-gradient(90deg, transparent, rgba(230,48,48,0.6), transparent)' }} />
 
-          {/* LEFT PANEL */}
-          <div style={{
+          {/* ── LEFT PANEL (hero/branding) ── */}
+          <div className="lc-left" style={{
             width: '50%',
             display: 'flex', flexDirection: 'column',
             alignItems: 'center', justifyContent: 'center',
@@ -184,13 +169,9 @@ export default function Login() {
             borderRight: '1px solid rgba(255,255,255,0.06)',
             background: 'linear-gradient(145deg, rgba(230,48,48,0.06) 0%, transparent 60%)',
           }}>
-            {/* Logo */}
+            {/* Logo + name */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, marginBottom: 20 }}>
-              <div style={{
-                width: 140, height: 140,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                animation: 'logoFloat 5s ease-in-out infinite',
-              }}>
+              <div className="lc-logo" style={{ width: 140, height: 140, display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'logoFloat 5s ease-in-out infinite' }}>
                 <img src="/3.png" alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', filter: 'drop-shadow(0 15px 35px rgba(230,48,48,0.7))' }} />
               </div>
               <div>
@@ -205,34 +186,25 @@ export default function Login() {
                 display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'center',
                 animation: phase === 'enter' ? 'loginSlideEnter 0.4s cubic-bezier(0.16,1,0.3,1) forwards' : 'loginSlideExit 0.3s ease forwards',
               }}>
-                <p style={{ fontSize: 15, fontWeight: 600, color: '#F0F0FF', lineHeight: 1.45, maxWidth: 280 }}>
-                  &ldquo;{SLIDES[slide].quote}&rdquo;
-                </p>
-                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', lineHeight: 1.6, maxWidth: 270 }}>
-                  {SLIDES[slide].sub}
-                </p>
+                <p style={{ fontSize: 15, fontWeight: 600, color: '#F0F0FF', lineHeight: 1.45, maxWidth: 280 }}>&ldquo;{SLIDES[slide].quote}&rdquo;</p>
+                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', lineHeight: 1.6, maxWidth: 270 }}>{SLIDES[slide].sub}</p>
               </div>
             </div>
 
-            {/* Dots */}
+            {/* Slide dots */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               {SLIDES.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => goTo(i)}
-                  aria-label={`Slide ${i + 1}`}
-                  style={{
-                    height: 5, width: i === slide ? 20 : 5,
-                    borderRadius: 9999, border: 'none', cursor: 'pointer', padding: 0,
-                    background: i === slide ? '#E63030' : 'rgba(255,255,255,0.15)',
-                    transition: 'all 0.35s cubic-bezier(0.16,1,0.3,1)',
-                    boxShadow: i === slide ? '0 0 8px rgba(230,48,48,0.5)' : 'none',
-                  }}
-                />
+                <button key={i} onClick={() => goTo(i)} aria-label={`Slide ${i + 1}`} style={{
+                  height: 5, width: i === slide ? 20 : 5,
+                  borderRadius: 9999, border: 'none', cursor: 'pointer', padding: 0,
+                  background: i === slide ? '#E63030' : 'rgba(255,255,255,0.15)',
+                  transition: 'all 0.35s cubic-bezier(0.16,1,0.3,1)',
+                  boxShadow: i === slide ? '0 0 8px rgba(230,48,48,0.5)' : 'none',
+                }} />
               ))}
             </div>
 
-            {/* Stats */}
+            {/* Stats pills */}
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 8 }}>
               {[['500+ Dealers'], ['1M+ Leads'], ['3x Conversión']].map(([label]) => (
                 <div key={label} style={{
@@ -250,20 +222,12 @@ export default function Login() {
             </div>
           </div>
 
-          {/* RIGHT PANEL */}
-          <div style={{
+          {/* ── RIGHT PANEL (form) ── */}
+          <div className="lc-right" style={{
             flex: 1,
             display: 'flex', flexDirection: 'column', justifyContent: 'center',
             padding: '48px 44px',
           }}>
-            {/* Mobile logo — hidden on desktop via inline style */}
-            <div style={{ display: 'none', flexDirection: 'column', alignItems: 'center', gap: 8, marginBottom: 24 }} className="mobile-logo-login">
-              <div style={{ width: 80, height: 80 }}>
-                <img src="/3.png" alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', filter: 'drop-shadow(0 10px 20px rgba(230,48,48,0.5))' }} />
-              </div>
-              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.35)' }}>CarBot System</p>
-            </div>
-
             {/* Step bar */}
             <div style={{ display: 'flex', gap: 6, marginBottom: 28 }}>
               {[0,1,2].map(i => (
@@ -286,78 +250,44 @@ export default function Login() {
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               {/* Email */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <label htmlFor="email" style={{ fontSize: 10, fontWeight: 600, color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.10em' }}>
-                  Correo
-                </label>
+                <label htmlFor="email" style={{ fontSize: 10, fontWeight: 600, color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.10em' }}>Correo</label>
                 <input
                   id="email" type="email" required autoFocus autoComplete="email"
                   placeholder="tu@correo.com"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  style={{
-                    width: '100%',
-                    border: '1px solid rgba(255,255,255,0.09)',
-                    borderRadius: 12,
-                    background: 'rgba(255,255,255,0.04)',
-                    padding: '13px 16px',
-                    fontSize: 14, fontFamily: 'inherit',
-                    color: '#F8F8FF',
-                    outline: 'none',
-                    transition: 'border-color 0.2s, background 0.2s, box-shadow 0.2s',
-                  }}
+                  value={email} onChange={e => setEmail(e.target.value)}
+                  style={{ width: '100%', boxSizing: 'border-box', border: '1px solid rgba(255,255,255,0.09)', borderRadius: 12, background: 'rgba(255,255,255,0.04)', padding: '13px 16px', fontSize: 14, fontFamily: 'inherit', color: '#F8F8FF', outline: 'none', transition: 'border-color 0.2s, background 0.2s, box-shadow 0.2s' }}
                   onFocus={e => { e.target.style.borderColor = 'rgba(230,48,48,0.5)'; e.target.style.background = 'rgba(255,255,255,0.06)'; e.target.style.boxShadow = '0 0 0 3px rgba(230,48,48,0.08)'; }}
-                  onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.09)'; e.target.style.background = 'rgba(255,255,255,0.04)'; e.target.style.boxShadow = 'none'; }}
+                  onBlur={e  => { e.target.style.borderColor = 'rgba(255,255,255,0.09)'; e.target.style.background = 'rgba(255,255,255,0.04)'; e.target.style.boxShadow = 'none'; }}
                 />
               </div>
 
               {/* Password */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <label htmlFor="password" style={{ fontSize: 10, fontWeight: 600, color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.10em' }}>
-                  Contraseña
-                </label>
+                <label htmlFor="password" style={{ fontSize: 10, fontWeight: 600, color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.10em' }}>Contraseña</label>
                 <input
                   id="password" type="password" required autoComplete="current-password"
                   placeholder="••••••••"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  style={{
-                    width: '100%',
-                    border: '1px solid rgba(255,255,255,0.09)',
-                    borderRadius: 12,
-                    background: 'rgba(255,255,255,0.04)',
-                    padding: '13px 16px',
-                    fontSize: 14, fontFamily: 'inherit',
-                    color: '#F8F8FF',
-                    outline: 'none',
-                    transition: 'border-color 0.2s, background 0.2s, box-shadow 0.2s',
-                  }}
+                  value={password} onChange={e => setPassword(e.target.value)}
+                  style={{ width: '100%', boxSizing: 'border-box', border: '1px solid rgba(255,255,255,0.09)', borderRadius: 12, background: 'rgba(255,255,255,0.04)', padding: '13px 16px', fontSize: 14, fontFamily: 'inherit', color: '#F8F8FF', outline: 'none', transition: 'border-color 0.2s, background 0.2s, box-shadow 0.2s' }}
                   onFocus={e => { e.target.style.borderColor = 'rgba(230,48,48,0.5)'; e.target.style.background = 'rgba(255,255,255,0.06)'; e.target.style.boxShadow = '0 0 0 3px rgba(230,48,48,0.08)'; }}
-                  onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.09)'; e.target.style.background = 'rgba(255,255,255,0.04)'; e.target.style.boxShadow = 'none'; }}
+                  onBlur={e  => { e.target.style.borderColor = 'rgba(255,255,255,0.09)'; e.target.style.background = 'rgba(255,255,255,0.04)'; e.target.style.boxShadow = 'none'; }}
                 />
               </div>
 
               {/* Error */}
               {error && (
-                <div style={{
-                  borderRadius: 10,
-                  border: '1px solid rgba(230,48,48,0.25)',
-                  background: 'rgba(230,48,48,0.08)',
-                  padding: '9px 13px',
-                  fontSize: 12, color: '#FF8080',
-                  animation: 'errorShake 0.35s ease',
-                }}>
+                <div style={{ borderRadius: 10, border: '1px solid rgba(230,48,48,0.25)', background: 'rgba(230,48,48,0.08)', padding: '9px 13px', fontSize: 12, color: '#FF8080', animation: 'errorShake 0.35s ease' }}>
                   {error}
                 </div>
               )}
 
               {/* Submit */}
               <button
-                type="submit"
-                disabled={loading}
+                type="submit" disabled={loading}
                 style={{
                   marginTop: 6,
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                  width: '100%', border: 'none', borderRadius: 13,
+                  width: '100%', boxSizing: 'border-box', border: 'none', borderRadius: 13,
                   background: loading ? 'rgba(230,48,48,0.55)' : 'linear-gradient(135deg, #E63030, #cc1f1f)',
                   color: '#fff', fontSize: 14, fontWeight: 600, fontFamily: 'inherit',
                   padding: '14px 20px', cursor: loading ? 'not-allowed' : 'pointer',
@@ -367,16 +297,7 @@ export default function Login() {
                 onMouseEnter={e => { if (!loading) { e.currentTarget.style.boxShadow = '0 6px 32px rgba(230,48,48,0.55), inset 0 1px 0 rgba(255,255,255,0.16)'; e.currentTarget.style.transform = 'translateY(-1px)'; } }}
                 onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 4px 20px rgba(230,48,48,0.35), inset 0 1px 0 rgba(255,255,255,0.12)'; e.currentTarget.style.transform = 'translateY(0)'; }}
               >
-                {loading ? (
-                  <><SpinIcon /> Verificando…</>
-                ) : (
-                  <>
-                    Continuar
-                    <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
-                    </svg>
-                  </>
-                )}
+                {loading ? <><SpinIcon /> Verificando…</> : <>Continuar <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" /></svg></>}
               </button>
             </form>
 
@@ -385,13 +306,6 @@ export default function Login() {
             </p>
           </div>
         </div>
-
-        {/* Mobile responsive style */}
-        <style>{`
-          @media (max-width: 640px) {
-            .mobile-logo-login { display: flex !important; }
-          }
-        `}</style>
       </div>
     </>
   );
