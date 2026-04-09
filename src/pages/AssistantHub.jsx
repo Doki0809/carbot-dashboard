@@ -38,16 +38,6 @@ const IconAPIs = () => (
 export default function AssistantHub() {
   const modules = [
     {
-      to: '/assistant/playground',
-      title: 'Zona Pruebas',
-      subtitle: 'SIMULADOR EN TIEMPO REAL',
-      desc: 'Entorno aislado para interactuar con Missy. Evalúa respuestas, lógica de negocio y personalidad antes de producción.',
-      icon: <IconPlayground />,
-      color: '#3b82f6',
-      bgGlow: 'rgba(59, 130, 246, 0.15)',
-      status: 'OPERATIVO'
-    },
-    {
       to: '/assistant/skills',
       title: 'Habilidades',
       subtitle: 'ACCIONES DEL SISTEMA',
@@ -76,6 +66,16 @@ export default function AssistantHub() {
       color: '#ec4899',
       bgGlow: 'rgba(236, 72, 153, 0.15)',
       status: 'CONFIGURABLE'
+    },
+    {
+      to: '/assistant/playground',
+      title: 'Zona Pruebas',
+      subtitle: 'SIMULADOR EN TIEMPO REAL',
+      desc: 'Entorno aislado para interactuar con Missy. Evalúa respuestas, lógica de negocio y personalidad antes de producción.',
+      icon: <IconPlayground />,
+      color: '#3b82f6',
+      bgGlow: 'rgba(59, 130, 246, 0.15)',
+      status: 'OPERATIVO'
     }
   ];
 
@@ -100,7 +100,7 @@ export default function AssistantHub() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full px-4 sm:px-0">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full px-4 sm:px-0">
         {modules.map((mod) => (
           <Link
             key={mod.to}
