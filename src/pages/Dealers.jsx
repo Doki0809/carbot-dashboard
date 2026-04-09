@@ -108,7 +108,7 @@ export default function Dealers() {
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-black opacity-[0.06] rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2 pointer-events-none transition-transform duration-1000 group-hover:scale-110"></div>
         
         <div className="relative z-10 w-full sm:w-2/3">
-          <h1 className="text-4xl sm:text-[44px] font-[900] tracking-tighter text-white leading-[1.05] whitespace-nowrap overflow-hidden text-ellipsis">
+          <h1 className="text-3xl sm:text-[44px] font-[900] tracking-tighter text-white leading-[1.1]">
             Bienvenido al mundo de Missy
           </h1>
           <p className="text-white/80 text-[13px] sm:text-[15px] font-[400] tracking-wide mt-2">
