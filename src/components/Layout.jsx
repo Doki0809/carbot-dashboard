@@ -85,7 +85,6 @@ const NAV_LINKS = [
   { to: '/dealers',    label: 'DEALERS',    Icon: IconDealers },
   { to: '/analytics',  label: 'METRICS',    Icon: IconAnalytics },
   { to: '/channels',   label: 'CANALES',    Icon: IconChannels },
-  { to: '/apis',       label: 'APIS',       Icon: IconAPIs },
   {
     to: '/assistant',
     label: 'ASISTEN',

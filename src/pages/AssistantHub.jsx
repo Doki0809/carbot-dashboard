@@ -28,6 +28,13 @@ const IconKnowledge = () => (
   </svg>
 );
 
+const IconAPIs = () => (
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+    <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+  </svg>
+);
+
 export default function AssistantHub() {
   const modules = [
     {
@@ -59,6 +66,16 @@ export default function AssistantHub() {
       color: '#f59e0b',
       bgGlow: 'rgba(245, 158, 11, 0.15)',
       status: 'SINCRONIZADO'
+    },
+    {
+      to: '/assistant/apis',
+      title: 'Conexión APIs',
+      subtitle: 'INTEGRACIÓN EXTERNA',
+      desc: 'Conecta APIs de terceros o microservicios que la IA pueda llamar dinámicamente para procesar tareas complejas.',
+      icon: <IconAPIs />,
+      color: '#ec4899',
+      bgGlow: 'rgba(236, 72, 153, 0.15)',
+      status: 'CONFIGURABLE'
     }
   ];
 
@@ -83,7 +100,7 @@ export default function AssistantHub() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full px-4 sm:px-0">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full px-4 sm:px-0">
         {modules.map((mod) => (
           <Link
             key={mod.to}
