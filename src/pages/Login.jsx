@@ -41,10 +41,11 @@ function Loader({ onDone }) {
         src="/3.png"
         alt="Logo"
         style={{
-          width: 140,
-          height: 140,
+          width: 160,
+          height: 160,
           objectFit: 'contain',
-          filter: 'drop-shadow(0 0 30px rgba(230,48,48,0.6)) drop-shadow(0 0 60px rgba(230,48,48,0.3))',
+          mixBlendMode: 'screen',
+          filter: 'drop-shadow(0 0 20px rgba(230,48,48,0.7))',
           animation: 'logoPulse 1.4s ease-in-out infinite',
         }}
       />
