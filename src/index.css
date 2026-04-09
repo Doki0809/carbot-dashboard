@@ -7,17 +7,15 @@
    ───────────────────────────────────────────────────────────────────────── */
 :root {
   /* Background */
-  --bg-base: #0a0a0a;
-  --bg-mesh: radial-gradient(ellipse at 20% 30%, rgba(230,48,48,0.10) 0%, transparent 55%),
-             radial-gradient(ellipse at 80% 70%, rgba(180,20,20,0.08) 0%, transparent 50%),
-             radial-gradient(ellipse at 50% 100%, rgba(230,48,48,0.06) 0%, transparent 50%);
+  --bg-base: #11131a;
+  --bg-mesh: none;
 
-  /* Glass surfaces — dark */
-  --glass-bg:          rgba(255, 255, 255, 0.04);
-  --glass-bg-hover:    rgba(255, 255, 255, 0.07);
-  --glass-bg-strong:   rgba(20, 20, 20, 0.90);
-  --glass-bg-card:     rgba(255, 255, 255, 0.03);
-  --glass-border:      rgba(255, 255, 255, 0.08);
+  /* Modded Heavy surfaces — dark */
+  --glass-bg:          rgba(255, 255, 255, 0.05); /* keep some glass for generic buttons */
+  --glass-bg-hover:    rgba(255, 255, 255, 0.08);
+  --glass-bg-strong:   #11131a;
+  --glass-bg-card:     #171a23; /* Heavy matte card as requested */
+  --glass-border:      rgba(255, 255, 255, 0.04);
   --glass-border-red:  rgba(230, 48, 48, 0.25);
   --glass-blur:        blur(24px) saturate(160%);
   --glass-blur-sm:     blur(12px) saturate(140%);

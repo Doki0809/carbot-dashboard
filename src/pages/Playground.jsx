@@ -92,7 +92,7 @@ export default function Playground() {
       {/* Header */}
       <div className="flex items-center justify-between mb-4 float-in">
         <div>
-          <h1 className="text-xl font-bold" style={{ color: 'rgba(255,255,255,0.95)' }}>Playground</h1>
+          <h1 className="text-xl font-bold" style={{ color: 'rgba(255,255,255,0.95)' }}>Área de prueba</h1>
           <p className="text-sm mt-0.5" style={{ color: 'rgba(255,255,255,0.65)' }}>Prueba el bot en tiempo real</p>
         </div>
         {messages.length > 0 && (

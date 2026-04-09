@@ -74,7 +74,6 @@ const IconExpand = () => (
 const NAV_LINKS = [
   { to: '/dealers',    label: 'Dealers',    Icon: IconDealers },
   { to: '/analytics',  label: 'Analytics',  Icon: IconAnalytics },
-  { to: '/playground', label: 'Playground', Icon: IconPlayground },
   { to: '/channels',   label: 'Canales',    Icon: IconChannels },
   { to: '/apis',       label: 'APIs',       Icon: IconAPIs },
   {
@@ -82,6 +81,7 @@ const NAV_LINKS = [
     Icon: IconBot,
     prefix: '/assistant',
     children: [
+      { to: '/assistant/playground', label: 'Área de prueba',       Icon: IconPlayground },
       { to: '/assistant/skills',    label: 'Skills',              Icon: IconSkills },
       { to: '/assistant/knowledge', label: 'Base de conocimiento', Icon: IconKnowledge },
     ],

@@ -34,12 +34,13 @@ export default function App() {
                 <Route path="dealer/:id" element={<DealerDetail />} />
                 <Route path="dealer/:id/logs" element={<DealerLogs />} />
                 <Route path="analytics" element={<Analytics />} />
-                <Route path="playground" element={<Playground />} />
                 <Route path="channels" element={<Channels />} />
                 <Route path="apis" element={<APIs />} />
                 {/* Legacy redirect */}
                 <Route path="skills" element={<Navigate to="/assistant/skills" replace />} />
+                <Route path="playground" element={<Navigate to="/assistant/playground" replace />} />
                 {/* Asistente section */}
+                <Route path="assistant/playground" element={<Playground />} />
                 <Route path="assistant/skills" element={<Skills />} />
                 <Route path="assistant/knowledge" element={<KnowledgeBase />} />
                 <Route path="assistant" element={<Navigate to="/assistant/skills" replace />} />
