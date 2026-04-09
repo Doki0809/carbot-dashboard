@@ -43,8 +43,8 @@ export default function AssistantHub() {
       subtitle: 'ACCIONES DEL SISTEMA',
       desc: 'Configura las capacidades instrumentales del bot. Permite conectar APIs internas y manipular datos del negocio.',
       icon: <IconSkills />,
-      color: '#10b981',
-      bgGlow: 'rgba(16, 185, 129, 0.15)',
+      color: '#3b82f6',
+      bgGlow: 'rgba(59, 130, 246, 0.15)',
       status: 'EN LÍNEA'
     },
     {
@@ -73,8 +73,8 @@ export default function AssistantHub() {
       subtitle: 'SIMULADOR EN TIEMPO REAL',
       desc: 'Entorno aislado para interactuar con Missy. Evalúa respuestas, lógica de negocio y personalidad antes de producción.',
       icon: <IconPlayground />,
-      color: '#3b82f6',
-      bgGlow: 'rgba(59, 130, 246, 0.15)',
+      color: '#10b981',
+      bgGlow: 'rgba(16, 185, 129, 0.15)',
       status: 'OPERATIVO'
     }
   ];
