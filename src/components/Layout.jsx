@@ -61,8 +61,10 @@ function NavItem({ link, active }) {
 function MobileNav({ pathname }) {
   return (
     <nav
-      className="md:hidden fixed bottom-5 left-1/2 z-50 flex items-center gap-0.5 px-2 py-2"
+      className="md:hidden fixed z-50 flex items-center gap-0.5 px-2 py-2"
       style={{
+        bottom: 'calc(env(safe-area-inset-bottom, 0px) + 20px)',
+        left: '1/2',
         transform: 'translateX(-50%)',
         background: 'rgba(14,16,21,0.94)',
         backdropFilter: 'blur(24px)',
@@ -156,13 +158,13 @@ export default function Layout({ children }) {
       </aside>
 
       {/* ── Main content ────────────────────────────────────────────── */}
-      <main className="flex-1 min-w-0 overflow-x-hidden overflow-y-auto h-screen relative bg-[#090a0f] px-4 md:px-8 py-6 md:py-10 pb-28 md:pb-10">
+      <main className="flex-1 min-w-0 overflow-x-hidden overflow-y-auto h-screen relative bg-[#090a0f] px-4 md:px-8 py-6 md:py-10 pb-28 md:pb-10" style={{ paddingTop: 'max(env(safe-area-inset-top, 0px) + 12px, 1.5rem)' }}>
 
         {/* Mobile top bar: logo + logout + avatar */}
         <div className="flex md:hidden items-center justify-between mb-6">
           <Link to="/dealers">
             <img
-              src="/3.png"
+              src="/logo.png"
               alt="Logo"
               className="h-10 w-auto object-contain"
               style={{ filter: 'drop-shadow(0px 4px 8px rgba(255,0,0,0.5))' }}
