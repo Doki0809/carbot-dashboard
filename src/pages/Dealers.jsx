@@ -101,12 +101,11 @@ export default function Dealers() {
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-black opacity-[0.06] rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
         
         <div className="relative z-10 w-full sm:w-2/3">
-          <h1 className="text-[40px] font-[900] tracking-tight text-white leading-[1.1]">
-            Bienvenido al mundo de Missy para<br/>
-            <span className="italic opacity-90">PANEL ADMINISTRATIVO</span>
+          <h1 className="text-[44px] font-[900] tracking-tighter text-white leading-[1.05]">
+            Bienvenido al mundo de Missy
           </h1>
-          <p className="text-white/95 text-base font-medium tracking-wide mt-4">
-            Hola, <span className="font-bold">Jean</span>. Listos para supervisar a Missy y su equipo hoy.
+          <p className="text-white/80 text-[15px] font-[400] tracking-wide mt-3">
+            Hola, este es el panel administrativo, listo para supervisar a missy y su equipo.
           </p>
         </div>
         
@@ -114,8 +113,8 @@ export default function Dealers() {
           <button
             onClick={load}
             disabled={loading}
-            className="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl text-[11px] font-[800] uppercase tracking-wider text-white transition-all shadow-[0_8px_20px_rgba(255,0,0,0.3)] hover:scale-105"
-            style={{ background: '#ff5555', border: '1px solid rgba(255,255,255,0.2)' }}
+            className="flex items-center gap-2 px-6 py-3 rounded-2xl text-[12px] font-bold uppercase tracking-wider text-white transition-all shadow-[0_8px_20px_rgba(255,0,0,0.3)] hover:scale-105"
+            style={{ background: '#ff4d4d', border: 'none' }}
           >
             {loading ? <Spinner size="sm" /> : Icons.refresh}
             ACTUALIZAR DATOS

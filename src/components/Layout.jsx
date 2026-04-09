@@ -55,8 +55,18 @@ const IconChevron = ({ open }) => (
   </svg>
 );
 const IconLogout = () => (
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+  </svg>
+);
+const IconSun = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+  </svg>
+);
+const IconTrash = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
   </svg>
 );
 const IconCollapse = () => (
@@ -97,21 +107,20 @@ function DropdownNav({ link, currentPath }) {
     <div className="relative mb-3 flex flex-col items-center">
       <button
         onClick={() => setOpen((v) => !v)}
-        className={`w-[85px] h-[85px] flex flex-col items-center justify-center gap-2 rounded-3xl transition-all duration-300 shadow-md border ${
+        className={`w-[72px] h-[72px] flex flex-col items-center justify-center gap-1.5 rounded-[1.25rem] transition-all duration-300 ${
           isActive
-            ? 'bg-gradient-to-br from-[#f42c2c] to-[#e61d1d] text-white border-transparent'
-            : 'bg-[#171a23] text-white/40 border-white/5 hover:text-white/90 hover:bg-[#1a1d27] hover:border-white/10'
+            ? 'bg-[#ff3b45] text-white shadow-[0_8px_16px_rgba(255,59,69,0.3)]'
+            : 'bg-transparent text-white/40 hover:text-white/80 hover:bg-white/5'
         }`}
-        style={isActive ? { boxShadow: '0 8px 24px rgba(230,48,48,0.3), inset 0 2px 0 rgba(255,255,255,0.2)' } : {}}
       >
-        <span className={`shrink-0 transition-transform duration-300 ${isActive ? 'scale-125 drop-shadow-md' : ''}`}>
+        <span className={`shrink-0 ${isActive ? 'scale-110' : ''}`}>
           <link.Icon />
         </span>
-        <span className="text-[10px] font-black uppercase tracking-widest mt-1">{link.label}</span>
+        <span className="text-[9px] font-[800] uppercase tracking-wider">{link.label}</span>
       </button>
 
       {open && (
-        <div className="flex flex-col gap-2 mt-3 animate-slide-down items-center w-full">
+        <div className="flex flex-col gap-1 mt-2 animate-slide-down items-center w-full">
           {link.children.map((child) => {
             const childActive = currentPath.startsWith(child.to);
             return (
@@ -119,16 +128,16 @@ function DropdownNav({ link, currentPath }) {
                 key={child.to}
                 to={child.to}
                 onClick={() => setOpen(false)}
-                className={`flex flex-col items-center justify-center w-[75px] h-[75px] rounded-2xl transition-all duration-200 border ${
+                className={`flex flex-col items-center justify-center w-[64px] h-[64px] rounded-2xl transition-all duration-200 ${
                   childActive
-                    ? 'bg-red-500/10 text-brand-400 border-red-500/20'
-                    : 'bg-[#12141a] text-white/30 hover:text-white/70 border-transparent hover:bg-white/5'
+                    ? 'bg-red-500/10 text-[#ff3b45]'
+                    : 'bg-transparent text-white/30 hover:text-white/70 hover:bg-white/5'
                 }`}
               >
-                <span className={`mb-1 transition-transform ${childActive ? 'scale-110 drop-shadow-md text-brand-400' : ''}`}>
+                <span className={`mb-1 ${childActive ? 'scale-110 drop-shadow-md text-[#ff3b45]' : ''}`}>
                   <child.Icon />
                 </span>
-                <span className="text-[9px] font-bold uppercase tracking-widest">{child.label}</span>
+                <span className="text-[8px] font-bold uppercase tracking-wider">{child.label}</span>
               </Link>
             );
           })}
@@ -143,17 +152,16 @@ function NavItem({ link, active }) {
   return (
     <Link
       to={link.to}
-      className={`mb-3 w-[85px] h-[85px] flex flex-col items-center justify-center gap-2 rounded-3xl transition-all duration-300 shadow-md border ${
+      className={`mb-3 w-[72px] h-[72px] flex flex-col items-center justify-center gap-1.5 rounded-[1.25rem] transition-all duration-300 ${
         active
-          ? 'bg-gradient-to-br from-[#f42c2c] to-[#e61d1d] text-white border-transparent'
-          : 'bg-[#171a23] text-white/40 border-white/5 hover:text-white/90 hover:bg-[#1a1d27] hover:border-white/10'
+          ? 'bg-[#ff3b45] text-white shadow-[0_8px_16px_rgba(255,59,69,0.3)]'
+          : 'bg-transparent text-white/40 hover:text-white/80 hover:bg-white/5'
       }`}
-      style={active ? { boxShadow: '0 8px 24px rgba(230,48,48,0.3), inset 0 2px 0 rgba(255,255,255,0.2)' } : {}}
     >
-      <span className={`shrink-0 transition-transform duration-300 ${active ? 'scale-125 drop-shadow-md' : ''}`}>
+      <span className={`shrink-0 ${active ? 'scale-110' : ''}`}>
         <link.Icon />
       </span>
-      <span className="text-[10px] font-black uppercase tracking-widest mt-1">{link.label}</span>
+      <span className="text-[9px] font-[800] uppercase tracking-wider">{link.label}</span>
     </Link>
   );
 }
@@ -170,20 +178,19 @@ export default function Layout({ children }) {
   }
 
   return (
-    <div className="flex min-h-screen bg-[#0f1117] relative text-white">
+    <div className="flex min-h-screen bg-[#090a0f] relative text-white" style={{ fontFamily: "'Outfit', 'Plus Jakarta Sans', sans-serif" }}>
       {/* ── Sidebar estrecha CRM ────────────────────────────────────── */}
-      <aside className="sticky top-0 h-screen w-[120px] min-w-[120px] flex flex-col z-30 overflow-hidden bg-[#08090d] border-r border-[#1a1d28] shadow-2xl">
+      <aside className="sticky top-0 h-screen w-[95px] min-w-[95px] flex flex-col z-30 overflow-hidden bg-[#0e1015] border-r border-transparent shadow-2xl">
         <div className="relative flex flex-col h-full items-center py-6 gap-2">
           {/* Brand header */}
           <Link to="/dealers" className="flex items-center justify-center mb-8">
-            <div className="w-14 h-14 rounded-3xl flex items-center justify-center overflow-hidden bg-[#151720] border border-white/10 shadow-lg relative group transition-transform hover:scale-105">
-               <div className="absolute inset-0 bg-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-               <img src="/3.png" alt="Logo" className="w-[60%] h-[60%] object-contain drop-shadow-lg" />
+            <div className="w-12 h-12 flex items-center justify-center">
+               <img src="/3.png" alt="Logo" className="w-[80%] h-[80%] object-contain" style={{ filter: 'drop-shadow(0px 4px 6px rgba(255,0,0,0.4))' }} />
             </div>
           </Link>
 
-          {/* Menú Scrollable Oculto */}
-          <nav className="flex-1 flex flex-col items-center w-full px-2 overflow-y-auto scrollbar-hide py-1">
+          {/* Menú Scrollable */}
+          <nav className="flex-1 flex flex-col items-center w-full overflow-y-auto scrollbar-hide py-1">
             {NAV_LINKS.map((link) =>
               link.children ? (
                 <DropdownNav
@@ -201,28 +208,26 @@ export default function Layout({ children }) {
             )}
           </nav>
 
-          {/* User footer */}
-          <div className="flex flex-col items-center mt-4 pt-6 border-t border-white/5 w-full gap-4 shrink-0">
-            <div className="flex flex-col items-center gap-1 cursor-default group">
-              <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[#171a23] border border-white/10 shadow-inner overflow-hidden relative">
-                 <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'Admin')}&background=1a1d27&color=e63030&bold=true`} alt="Avatar" className="w-full h-full object-cover" />
-              </div>
-              {isAdmin && <span className="text-[8px] font-black uppercase text-red-500 tracking-widest mt-1 opacity-80">ADMIN</span>}
-            </div>
-            
-            <button
-              onClick={handleLogout}
-              className="p-3.5 rounded-2xl bg-[#13151c] text-white/30 border border-white/5 hover:text-red-500 hover:border-red-500/30 hover:bg-red-500/10 transition-all mb-2 shadow-sm"
-              title="Cerrar sesión"
-            >
+          {/* User footer con iconos de configuración referenciales */}
+          <div className="flex flex-col items-center mt-2 w-full gap-5 shrink-0">
+            <button className="text-white/20 hover:text-white/60 transition-colors">
+              <IconTrash />
+            </button>
+            <button className="text-[#eab308] hover:opacity-80 transition-opacity">
+              <IconSun />
+            </button>
+            <button onClick={handleLogout} title="Cerrar sesión" className="text-white/20 hover:text-white/60 transition-colors">
               <IconLogout />
             </button>
+            <div className="w-10 h-10 mt-1 rounded-full overflow-hidden border-2 border-white/10">
+               <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'Admin')}&background=1a1d27&color=e63030&bold=true`} alt="Avatar" className="w-full h-full object-cover" />
+            </div>
           </div>
         </div>
       </aside>
 
       {/* ── Main content ─────────────────────────────────────────────── */}
-      <main className="flex-1 min-w-0 p-8 sm:p-10 overflow-auto h-screen relative">
+      <main className="flex-1 min-w-0 px-8 py-10 overflow-auto h-screen relative bg-[#090a0f]">
         {children}
       </main>
     </div>
