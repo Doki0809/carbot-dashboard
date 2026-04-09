@@ -38,14 +38,13 @@ function Loader({ onDone }) {
       pointerEvents: exit ? 'none' : 'all',
     }}>
       <img
-        src="/3.png"
+        src="/logo.png"
         alt="Logo"
         style={{
           width: 160,
           height: 160,
           objectFit: 'contain',
-          mixBlendMode: 'screen',
-          filter: 'drop-shadow(0 0 20px rgba(230,48,48,0.7))',
+          filter: 'drop-shadow(0 0 25px rgba(230,48,48,0.6))',
           animation: 'logoPulse 1.4s ease-in-out infinite',
         }}
       />
@@ -177,7 +176,7 @@ export default function Login() {
             {/* Logo + name */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, marginBottom: 20 }}>
               <div className="lc-logo" style={{ width: 140, height: 140, display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'logoFloat 5s ease-in-out infinite' }}>
-                <img src="/3.png" alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', filter: 'drop-shadow(0 15px 35px rgba(230,48,48,0.7))' }} />
+                <img src="/logo.png" alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', filter: 'drop-shadow(0 15px 35px rgba(230,48,48,0.7))' }} />
               </div>
               <div>
                 <p style={{ fontSize: 26, fontWeight: 800, color: '#fff', letterSpacing: '-0.5px', textAlign: 'center', marginBottom: 2 }}>Missy</p>
