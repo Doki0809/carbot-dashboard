@@ -374,38 +374,36 @@ export default function Channels() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-3 float-in stagger-1">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 float-in stagger-1">
         {[
-          { label: 'Canales disponibles', value: 3,                              accent: '#3b82f6', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> },
+          { label: 'Canales disponibles', value: 3, accent: '#3b82f6', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> },
           { label: 'Conectados',          value: loading ? '—' : connectedCount, accent: '#10b981', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg> },
           { label: 'Desconectados',       value: loading ? '—' : 3 - connectedCount, accent: '#f59e0b', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> },
         ].map(({ label, value, accent, icon }) => (
-          <div 
+          <div
             key={label}
-            className="group relative flex flex-col p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] cursor-default"
+            className="group relative flex flex-col p-4 sm:p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] cursor-default"
             style={{ background: '#0e1015', borderRadius: '2rem', border: '1px solid rgba(255,255,255,0.03)' }}
           >
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" 
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                  style={{ background: `radial-gradient(circle at 50% 0%, ${accent}25 0%, transparent 70%)` }} />
-            
             <div className="absolute -bottom-6 -right-6 pointer-events-none opacity-10 group-hover:opacity-20 group-hover:rotate-12 group-hover:scale-125 transition-all duration-1000 ease-out" style={{ color: accent }}>
               <div style={{ transform: 'scale(5)' }}>{icon}</div>
             </div>
-
-            <div className="flex items-center gap-4 relative z-10 mb-4">
-               <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-inner transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-1 group-hover:rotate-3" 
-                    style={{ background: '#151720', border: '1px solid rgba(255,255,255,0.05)', color: accent, boxShadow: `0 10px 30px -10px ${accent}40` }}>
-                  <div className="w-6 h-6">{icon}</div>
-               </div>
-               <p className="text-[11px] font-black uppercase tracking-widest text-white/50">{label}</p>
+            <div className="flex items-start gap-2 sm:gap-3 relative z-10 mb-3">
+              <div className="w-9 h-9 sm:w-12 sm:h-12 shrink-0 rounded-2xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-1"
+                   style={{ background: '#151720', border: '1px solid rgba(255,255,255,0.05)', color: accent, boxShadow: `0 10px 30px -10px ${accent}40` }}>
+                <div className="w-4 h-4 sm:w-6 sm:h-6">{icon}</div>
+              </div>
+              <p className="text-[9px] sm:text-[11px] font-black uppercase tracking-widest text-white/50 leading-tight pt-1">{label}</p>
             </div>
-            
-            <p className="text-4xl font-[900] tracking-tighter text-white leading-none relative z-10 transition-transform duration-300 group-hover:scale-105 origin-left">
+            <p className="text-3xl sm:text-4xl font-[900] tracking-tighter text-white leading-none relative z-10 transition-transform duration-300 group-hover:scale-105 origin-left">
               {value}
             </p>
           </div>
         ))}
       </div>
+
 
       {/* Error */}
       {error && (
