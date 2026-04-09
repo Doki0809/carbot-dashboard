@@ -166,23 +166,37 @@ function SkillCard({ skill, onEdit, onDelete, onToggle, deleting }) {
   const [expanded, setExpanded] = useState(false);
   const tStyle = TRIGGER_STYLES[skill.trigger] || { bg: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.5)', border: 'rgba(255,255,255,0.10)' };
 
+  const iconSvg = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+    </svg>
+  );
+
   return (
-    <div className="overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(255,255,255,0.05)] group relative" 
-         style={{ background: '#0e1015', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.03)', opacity: skill.enabled ? 1 : 0.45 }}>
-      {/* Background glow base on hover */}
-      <div className="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+    <div className="overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] group relative" 
+         style={{ background: '#0e1015', borderRadius: '2rem', border: '1px solid rgba(255,255,255,0.03)', opacity: skill.enabled ? 1 : 0.45 }}>
       
-      <div className="flex items-center gap-4 px-5 py-4 relative z-10">
-        <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(230,48,48,0.3)]"
-          style={{ background: 'rgba(230,48,48,0.10)', border: '1px solid rgba(230,48,48,0.18)' }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e63030" strokeWidth="2" strokeLinecap="round">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-          </svg>
+      {/* 3D Radial Glow */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" 
+           style={{ background: `radial-gradient(circle at 10% 50%, rgba(230,48,48,0.15) 0%, transparent 60%)` }} />
+           
+      {/* Watermark SVG */}
+      <div className="absolute -bottom-8 -right-8 pointer-events-none opacity-[0.03] group-hover:opacity-[0.15] group-hover:rotate-12 group-hover:scale-125 transition-all duration-1000 ease-out" style={{ color: '#e63030' }}>
+        <div style={{ transform: 'scale(4)' }}>{iconSvg}</div>
+      </div>
+      
+      <div className="flex items-center gap-5 px-6 py-5 relative z-10">
+        
+        {/* Colossal Icon Box */}
+        <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-inner transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:-translate-y-1"
+          style={{ background: 'rgba(230,48,48,0.10)', border: '1px solid rgba(230,48,48,0.18)', color: '#e63030', boxShadow: '0 10px 30px -10px rgba(230,48,48,0.4)' }}>
+          <div className="w-6 h-6">{iconSvg}</div>
         </div>
+
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap mb-1">
-            <span className="font-semibold truncate transition-colors duration-300 group-hover:text-white" style={{ color: 'rgba(255,255,255,0.85)' }}>{skill.name}</span>
-            <span className="text-[10px] font-semibold rounded-full px-2 py-0.5"
+          <div className="flex items-center gap-3 flex-wrap mb-1">
+            <span className="text-xl font-bold truncate transition-colors duration-300 group-hover:text-white" style={{ color: 'rgba(255,255,255,0.85)' }}>{skill.name}</span>
+            <span className="text-[10px] uppercase font-black tracking-widest rounded-full px-2.5 py-0.5"
               style={{ background: tStyle.bg, color: tStyle.color, border: `1px solid ${tStyle.border}` }}>
               {TRIGGER_LABELS[skill.trigger] || skill.trigger}
             </span>
@@ -193,18 +207,18 @@ function SkillCard({ skill, onEdit, onDelete, onToggle, deleting }) {
           </div>
           {skill.description && <p className="text-xs mt-0.5 truncate" style={{ color: 'rgba(255,255,255,0.38)' }}>{skill.description}</p>}
         </div>
-        <div className="flex items-center gap-1 shrink-0">
+        <div className="flex items-center gap-1.5 shrink-0">
           {[
-            { onClick: onToggle,  icon: <div className="w-3.5 h-3.5 rounded-full" style={{ background: skill.enabled ? '#10b981' : 'rgba(255,255,255,0.2)', boxShadow: skill.enabled ? '0 0 4px rgba(16,185,129,0.5)' : 'none' }} />, title: skill.enabled ? 'Deshabilitar' : 'Habilitar' },
+            { onClick: onToggle,  icon: <div className="w-3 h-3 rounded-full" style={{ background: skill.enabled ? '#10b981' : 'rgba(255,255,255,0.2)', boxShadow: skill.enabled ? '0 0 8px rgba(16,185,129,0.8)' : 'none' }} />, title: skill.enabled ? 'Deshabilitar' : 'Habilitar' },
             { onClick: onEdit,    icon: <IconEdit />,   title: 'Editar' },
             { onClick: onDelete,  icon: deleting ? '…' : <IconTrash />, title: 'Eliminar', danger: true, disabled: deleting },
             { onClick: () => setExpanded(v => !v), icon: <IconChevron open={expanded} />, title: 'Expandir' },
           ].map((btn, i) => (
             <button key={i} onClick={btn.onClick} disabled={btn.disabled} title={btn.title}
-              className="flex items-center justify-center w-8 h-8 rounded-xl transition-all disabled:opacity-40"
-              style={{ color: 'rgba(255,255,255,0.35)' }}
-              onMouseEnter={e => { e.currentTarget.style.background = btn.danger ? 'rgba(230,48,48,0.10)' : 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = btn.danger ? '#e63030' : 'rgba(255,255,255,0.70)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(255,255,255,0.35)'; }}>
+              className="flex items-center justify-center w-10 h-10 rounded-xl transition-all disabled:opacity-40"
+              style={{ color: 'rgba(255,255,255,0.40)' }}
+              onMouseEnter={e => { e.currentTarget.style.background = btn.danger ? 'rgba(230,48,48,0.15)' : 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = btn.danger ? '#ff8080' : 'rgba(255,255,255,0.9)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(255,255,255,0.40)'; }}>
               {btn.icon}
             </button>
           ))}
@@ -294,11 +308,11 @@ export default function Skills() {
     <div className="space-y-6">
       <div className="flex items-center justify-between float-in">
         <div>
-          <h1 className="text-xl font-bold" style={{ color: 'rgba(255,255,255,0.92)' }}>Skills</h1>
-          <p className="text-sm mt-0.5" style={{ color: 'rgba(255,255,255,0.38)' }}>Habilidades que usa Missy al responder</p>
+          <h1 className="text-3xl font-[900] tracking-tighter" style={{ color: 'rgba(255,255,255,0.95)' }}>Skills</h1>
+          <p className="text-sm mt-1" style={{ color: 'rgba(255,255,255,0.45)' }}>Habilidades que usa Missy al responder</p>
         </div>
         <button onClick={() => setEditing({ skill: emptySkill(), isNew: true })} disabled={!!editing}
-          className="btn-red flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold disabled:opacity-40">
+          className="btn-red flex items-center gap-2 px-5 py-3 rounded-2xl text-xs uppercase tracking-wider font-bold transition-transform hover:scale-105 shadow-[0_10px_20px_rgba(230,48,48,0.3)] disabled:opacity-40 disabled:hover:scale-100">
           <IconPlus /> Nueva skill
         </button>
       </div>

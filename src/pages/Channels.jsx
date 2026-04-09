@@ -125,35 +125,41 @@ function ChannelCard({ type, channel, onSelect, selected }) {
   return (
     <button
       onClick={() => onSelect(isSelected ? null : type)}
-      className="w-full text-left p-4 transition-all"
+      className="w-full text-left p-6 transition-all hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] group relative overflow-hidden"
       style={{
-        background: '#0e1015', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.03)',
+        background: '#0e1015', borderRadius: '2rem', border: '1px solid rgba(255,255,255,0.03)',
         ...(isSelected ? {
           borderColor: `${meta.accent}35`,
-          boxShadow: `0 0 0 1px ${meta.accent}25, var(--shadow-card)`,
+          boxShadow: `0 0 0 1px ${meta.accent}25, 0 20px 40px rgba(0,0,0,0.5)`,
         } : {})
       }}
     >
-      <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
-          style={{ background: `${meta.accent}12`, border: `1px solid ${meta.accent}25`, color: meta.accent }}>
-          {meta.icon}
+      {/* 3D Radial Glow */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" 
+           style={{ background: `radial-gradient(circle at 10% 50%, ${meta.accent}15 0%, transparent 60%)` }} />
+           
+      {isSelected && (
+        <div className="absolute inset-0 pointer-events-none" 
+             style={{ background: `radial-gradient(circle at 10% 50%, ${meta.accent}10 0%, transparent 80%)` }} />
+      )}
+
+      {/* Watermark SVG */}
+      <div className="absolute -bottom-8 -right-8 pointer-events-none opacity-5 group-hover:opacity-20 group-hover:rotate-12 group-hover:scale-125 transition-all duration-1000 ease-out" style={{ color: meta.accent }}>
+        <div style={{ transform: 'scale(4)' }}>{meta.icon}</div>
+      </div>
+
+      <div className="flex items-center gap-5 relative z-10">
+        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl shadow-inner transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:-translate-y-1"
+             style={{ background: 'rgba(255,255,255,0.05)', color: meta.accent, border: '1px solid rgba(255,255,255,0.08)', boxShadow: `0 10px 30px -10px ${meta.accent}40` }}>
+          <div className="w-7 h-7">{meta.icon}</div>
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2">
-            <span className="font-semibold text-sm" style={{ color: 'rgba(255,255,255,0.85)' }}>{meta.label}</span>
+          <div className="flex items-center justify-between gap-3 mb-1">
+            <span className="font-bold text-xl truncate transition-colors duration-300 group-hover:text-white" style={{ color: 'rgba(255,255,255,0.85)' }}>{meta.label}</span>
             <ChannelStatus status={status} />
           </div>
-          <p className="text-xs mt-0.5 truncate" style={{ color: 'rgba(255,255,255,0.38)' }}>{meta.description}</p>
-          {channel?.message_count > 0 && (
-            <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.28)' }}>
-              {channel.message_count.toLocaleString()} mensajes
-            </p>
-          )}
+          <p className="text-sm truncate" style={{ color: 'rgba(255,255,255,0.38)' }}>{meta.description}</p>
         </div>
-        <span style={{ color: 'rgba(255,255,255,0.30)' }}>
-          <IconChevron open={isSelected} />
-        </span>
       </div>
     </button>
   );
@@ -358,10 +364,8 @@ export default function Channels() {
       {/* Header */}
       <div className="flex items-center justify-between float-in">
         <div>
-          <h1 className="text-xl font-bold" style={{ color: 'rgba(255,255,255,0.92)' }}>Canales</h1>
-          <p className="text-sm mt-0.5" style={{ color: 'rgba(255,255,255,0.38)' }}>
-            Conecta y gestiona los canales de mensajería del bot
-          </p>
+          <h1 className="text-3xl font-[900] tracking-tighter" style={{ color: 'rgba(255,255,255,0.95)' }}>Canales de Atención</h1>
+          <p className="text-sm mt-1" style={{ color: 'rgba(255,255,255,0.45)' }}>Conecta el bot a otras plataformas</p>
         </div>
         <button onClick={load} disabled={loading} className="btn-ghost flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium">
           <IconRefresh />

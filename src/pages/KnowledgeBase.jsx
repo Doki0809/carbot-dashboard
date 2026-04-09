@@ -121,23 +121,38 @@ function EntryEditor({ entry, onSave, onCancel, saving }) {
 function EntryCard({ entry, onEdit, onDelete, deleting }) {
   const [expanded, setExpanded] = useState(false);
   const sStyle = SOURCE_STYLES[entry.source_type] || { bg: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.5)', border: 'rgba(255,255,255,0.10)' };
+  
+  const iconSvg = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+      <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+    </svg>
+  );
 
   return (
-    <div className="overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(255,255,255,0.05)] group relative" 
-         style={{ background: '#0e1015', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.03)', opacity: entry.is_active ? 1 : 0.45 }}>
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none" style={{ background: `linear-gradient(to right, ${sStyle.color}, transparent)`, zIndex: 0 }} />
-      <div className="flex items-center gap-4 px-5 py-4 relative z-10">
-        <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110"
-          style={{ background: sStyle.bg, border: `1px solid ${sStyle.border}` }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={sStyle.color} strokeWidth="2" strokeLinecap="round">
-            <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
-          </svg>
+    <div className="overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] group relative" 
+         style={{ background: '#0e1015', borderRadius: '2rem', border: '1px solid rgba(255,255,255,0.03)', opacity: entry.is_active ? 1 : 0.45 }}>
+      
+      {/* 3D Radial Glow */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" 
+           style={{ background: `radial-gradient(circle at 10% 50%, ${sStyle.color}15 0%, transparent 60%)` }} />
+      
+      {/* Watermark SVG */}
+      <div className="absolute -bottom-8 -right-8 pointer-events-none opacity-5 group-hover:opacity-20 group-hover:rotate-12 group-hover:scale-125 transition-all duration-1000 ease-out" style={{ color: sStyle.color }}>
+        <div style={{ transform: 'scale(4)' }}>{iconSvg}</div>
+      </div>
+
+      <div className="flex items-center gap-5 px-6 py-5 relative z-10">
+        
+        {/* Colossal Icon Box */}
+        <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-inner transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:-translate-y-1"
+          style={{ background: sStyle.bg, border: `1px solid ${sStyle.border}`, color: sStyle.color, boxShadow: `0 10px 30px -10px ${sStyle.color}40` }}>
+          <div className="w-6 h-6">{iconSvg}</div>
         </div>
 
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap mb-1">
-            <span className="font-semibold truncate transition-colors duration-300 group-hover:text-white" style={{ color: 'rgba(255,255,255,0.85)' }}>{entry.title}</span>
-            <span className="text-[10px] font-semibold rounded-full px-2 py-0.5"
+          <div className="flex items-center gap-3 flex-wrap mb-1">
+            <span className="text-xl font-bold truncate transition-colors duration-300 group-hover:text-white" style={{ color: 'rgba(255,255,255,0.85)' }}>{entry.title}</span>
+            <span className="text-[10px] uppercase font-black tracking-widest rounded-full px-2.5 py-0.5"
               style={{ background: sStyle.bg, color: sStyle.color, border: `1px solid ${sStyle.border}` }}>
               {entry.source_type}
             </span>
@@ -160,17 +175,17 @@ function EntryCard({ entry, onEdit, onDelete, deleting }) {
           )}
         </div>
 
-        <div className="flex items-center gap-1 shrink-0">
+        <div className="flex items-center gap-1.5 shrink-0">
           {[
             { onClick: onEdit,   icon: <IconEdit />,   title: 'Editar' },
             { onClick: onDelete, icon: deleting ? '…' : <IconTrash />, title: 'Eliminar', danger: true, disabled: deleting },
             { onClick: () => setExpanded(v => !v), icon: <IconChevron open={expanded} />, title: 'Expandir' },
           ].map((btn, i) => (
             <button key={i} onClick={btn.onClick} disabled={btn.disabled} title={btn.title}
-              className="flex items-center justify-center w-8 h-8 rounded-xl transition-all disabled:opacity-40"
-              style={{ color: 'rgba(255,255,255,0.35)' }}
-              onMouseEnter={e => { e.currentTarget.style.background = btn.danger ? 'rgba(230,48,48,0.10)' : 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = btn.danger ? '#e63030' : 'rgba(255,255,255,0.70)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(255,255,255,0.35)'; }}>
+              className="flex items-center justify-center w-10 h-10 rounded-xl transition-all disabled:opacity-40"
+              style={{ color: 'rgba(255,255,255,0.4)' }}
+              onMouseEnter={e => { e.currentTarget.style.background = btn.danger ? 'rgba(230,48,48,0.15)' : 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = btn.danger ? '#ff8080' : 'rgba(255,255,255,0.9)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(255,255,255,0.4)'; }}>
               {btn.icon}
             </button>
           ))}
@@ -245,11 +260,11 @@ export default function KnowledgeBase() {
       {/* Header */}
       <div className="flex items-center justify-between float-in">
         <div>
-          <h1 className="text-xl font-bold" style={{ color: 'rgba(255,255,255,0.92)' }}>Base de conocimiento</h1>
-          <p className="text-sm mt-0.5" style={{ color: 'rgba(255,255,255,0.38)' }}>Información global que Missy usa al responder</p>
+          <h1 className="text-3xl font-[900] tracking-tighter" style={{ color: 'rgba(255,255,255,0.95)' }}>Base de conocimiento</h1>
+          <p className="text-sm mt-1" style={{ color: 'rgba(255,255,255,0.45)' }}>Información global que Missy consume al responder</p>
         </div>
         <button onClick={() => setEditing({ entry: emptyEntry(), isNew: true })} disabled={!!editing}
-          className="btn-red flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold disabled:opacity-40">
+          className="btn-red flex items-center gap-2 px-5 py-3 rounded-2xl text-xs uppercase tracking-wider font-bold transition-transform hover:scale-105 shadow-[0_10px_20px_rgba(230,48,48,0.3)] disabled:opacity-40 disabled:hover:scale-100">
           <IconPlus /> Nueva entrada
         </button>
       </div>
@@ -289,10 +304,19 @@ export default function KnowledgeBase() {
       </div>
 
       {/* Info banner */}
-      <div className="rounded-xl px-5 py-3 text-sm float-in stagger-2"
-        style={{ background: 'rgba(79,120,255,0.07)', border: '1px solid rgba(79,120,255,0.18)', color: 'rgba(255,255,255,0.60)' }}>
-        <strong style={{ color: 'rgba(255,255,255,0.80)' }}>¿Cómo funciona?</strong> El bot busca automáticamente en esta base para cada mensaje e inyecta el contexto más relevante.
-        Usa el tag <span className="font-mono px-1 rounded text-xs" style={{ background: 'rgba(230,48,48,0.12)', color: '#e63030' }}>identity</span> en entradas que deben estar siempre disponibles.
+      <div className="px-6 py-5 text-sm float-in stagger-2 relative overflow-hidden group hover:shadow-[0_15px_30px_rgba(79,120,255,0.15)] transition-all duration-500"
+        style={{ background: '#0e1015', borderRadius: '1.5rem', border: '1px solid rgba(79,120,255,0.15)' }}>
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style={{ background: 'radial-gradient(circle at 10% 50%, rgba(79,120,255,0.1) 0%, transparent 50%)' }} />
+        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-4">
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-inner" style={{ background: 'rgba(79,120,255,0.12)', color: '#818cf8', border: '1px solid rgba(79,120,255,0.25)', boxShadow: '0 0 20px rgba(79,120,255,0.15)' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          </div>
+          <div style={{ color: 'rgba(255,255,255,0.60)' }} className="leading-relaxed">
+            <strong style={{ color: 'rgba(255,255,255,0.90)' }} className="text-base">¿Cómo funciona?</strong><br/>
+            El bot busca automáticamente en esta base para cada mensaje e inyecta el contexto más relevante.
+            Usa el tag <span className="font-mono px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-widest ml-1" style={{ background: 'rgba(230,48,48,0.12)', color: '#e63030', border: '1px solid rgba(230,48,48,0.2)' }}>identity</span> en entradas que deben estar completamente fijas en su memoria base.
+          </div>
+        </div>
       </div>
 
       {error && <ErrorMessage message={error} onRetry={load} />}

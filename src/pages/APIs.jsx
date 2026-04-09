@@ -271,27 +271,40 @@ function ApiCard({ api, onEdit, onDelete, onToggle, onTest, deleting, testing })
   const fullUrl = `${api.base_url || ''}${api.endpoint || ''}`;
   const mStyle  = METHOD_STYLES[api.method] || { bg: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.5)', border: 'rgba(255,255,255,0.10)' };
 
+  const iconSvg = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+      <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+      <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+    </svg>
+  );
+
   return (
     <div
-      className="overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(255,255,255,0.05)] group relative"
-      style={{ background: '#0e1015', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.03)', opacity: api.enabled ? 1 : 0.45 }}
+      className="overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] group relative"
+      style={{ background: '#0e1015', borderRadius: '2rem', border: '1px solid rgba(255,255,255,0.03)', opacity: api.enabled ? 1 : 0.45 }}
     >
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none" style={{ background: `linear-gradient(to right, ${mStyle.color}, transparent)`, zIndex: 0 }} />
-      <div className="flex items-center gap-4 px-5 py-4 relative z-10">
-        {/* Icon */}
-        <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110"
-          style={{ background: mStyle.bg, border: `1px solid ${mStyle.border}` }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={mStyle.color} strokeWidth="2" strokeLinecap="round">
-            <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
-            <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
-          </svg>
+      {/* 3D Radial Glow */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" 
+           style={{ background: `radial-gradient(circle at 10% 50%, ${mStyle.color}15 0%, transparent 60%)` }} />
+           
+      {/* Watermark SVG */}
+      <div className="absolute -bottom-8 -right-8 pointer-events-none opacity-5 group-hover:opacity-20 group-hover:rotate-12 group-hover:scale-125 transition-all duration-1000 ease-out" style={{ color: mStyle.color }}>
+        <div style={{ transform: 'scale(4)' }}>{iconSvg}</div>
+      </div>
+
+      <div className="flex items-center gap-5 px-6 py-5 relative z-10">
+        
+        {/* Colossal Icon Box */}
+        <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-inner transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:-translate-y-1"
+          style={{ background: mStyle.bg, border: `1px solid ${mStyle.border}`, color: mStyle.color, boxShadow: `0 10px 30px -10px ${mStyle.color}40` }}>
+          <div className="w-6 h-6">{iconSvg}</div>
         </div>
 
         {/* Info */}
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap mb-1">
-            <span className="font-semibold truncate transition-colors duration-300 group-hover:text-white" style={{ color: 'rgba(255,255,255,0.85)' }}>{api.name}</span>
-            <span className="text-[10px] font-bold rounded-md px-1.5 py-0.5"
+          <div className="flex items-center gap-3 flex-wrap mb-1">
+            <span className="text-xl font-bold truncate transition-colors duration-300 group-hover:text-white" style={{ color: 'rgba(255,255,255,0.85)' }}>{api.name}</span>
+            <span className="text-[10px] uppercase font-black tracking-widest rounded-md px-2.5 py-0.5"
               style={{ background: mStyle.bg, color: mStyle.color, border: `1px solid ${mStyle.border}` }}>
               {api.method}
             </span>
@@ -308,21 +321,21 @@ function ApiCard({ api, onEdit, onDelete, onToggle, onTest, deleting, testing })
         </div>
 
         {/* Actions */}
-        <div className="flex items-center gap-1 shrink-0">
+        <div className="flex items-center gap-1.5 shrink-0">
           {[
             { onClick: handleTest, disabled: testing, icon: testing ? <Spinner size="sm" /> : <IconTest />, title: 'Probar' },
             { onClick: onToggle, icon: (
-              <div className="w-3.5 h-3.5 rounded-full" style={{ background: api.enabled ? '#10b981' : 'rgba(255,255,255,0.2)', boxShadow: api.enabled ? '0 0 4px rgba(16,185,129,0.5)' : 'none' }} />
+              <div className="w-3 h-3 rounded-full" style={{ background: api.enabled ? '#10b981' : 'rgba(255,255,255,0.2)', boxShadow: api.enabled ? '0 0 8px rgba(16,185,129,0.8)' : 'none' }} />
             ), title: api.enabled ? 'Deshabilitar' : 'Habilitar' },
             { onClick: onEdit, icon: <IconEdit />, title: 'Editar' },
             { onClick: onDelete, disabled: deleting, icon: deleting ? '…' : <IconTrash />, title: 'Eliminar', danger: true },
             { onClick: () => setExpanded(v => !v), icon: <IconChevron open={expanded} />, title: expanded ? 'Colapsar' : 'Expandir' },
           ].map((btn, i) => (
             <button key={i} onClick={btn.onClick} disabled={btn.disabled} title={btn.title}
-              className="flex items-center justify-center w-8 h-8 rounded-xl transition-all disabled:opacity-40"
-              style={{ color: 'rgba(255,255,255,0.35)' }}
-              onMouseEnter={e => { e.currentTarget.style.background = btn.danger ? 'rgba(230,48,48,0.10)' : 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = btn.danger ? '#e63030' : 'rgba(255,255,255,0.70)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(255,255,255,0.35)'; }}
+              className="flex items-center justify-center w-10 h-10 rounded-xl transition-all disabled:opacity-40"
+              style={{ color: 'rgba(255,255,255,0.40)' }}
+              onMouseEnter={e => { e.currentTarget.style.background = btn.danger ? 'rgba(230,48,48,0.15)' : 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = btn.danger ? '#ff8080' : 'rgba(255,255,255,0.9)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(255,255,255,0.40)'; }}
             >
               {btn.icon}
             </button>
@@ -445,14 +458,14 @@ export default function APIs() {
       {/* Header */}
       <div className="flex items-center justify-between float-in">
         <div>
-          <h1 className="text-xl font-bold" style={{ color: 'rgba(255,255,255,0.92)' }}>APIs</h1>
-          <p className="text-sm mt-0.5" style={{ color: 'rgba(255,255,255,0.38)' }}>
+          <h1 className="text-3xl font-[900] tracking-tighter" style={{ color: 'rgba(255,255,255,0.95)' }}>APIs</h1>
+          <p className="text-sm mt-1" style={{ color: 'rgba(255,255,255,0.45)' }}>
             Conecta APIs externas que el bot puede usar al responder
           </p>
         </div>
         <button onClick={() => setEditing({ api: emptyApi(), isNew: true })}
           disabled={!!editing}
-          className="btn-red flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold disabled:opacity-40">
+          className="btn-red flex items-center gap-2 px-5 py-3 rounded-2xl text-xs uppercase tracking-wider font-bold transition-transform hover:scale-105 shadow-[0_10px_20px_rgba(230,48,48,0.3)] disabled:opacity-40 disabled:hover:scale-100">
           <IconPlus /> Nueva API
         </button>
       </div>
