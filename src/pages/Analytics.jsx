@@ -25,23 +25,34 @@ const Icons = {
 };
 
 /* ── KPI card ────────────────────────────────────────────────────────────── */
-function KPI({ label, value, accent, icon }) {
+function KPI({ label, value, accent = '#3b82f6', icon }) {
   const isUp = Math.random() > 0.5; // Simulate a trend for aesthetics
   return (
     <div
-      className="glass-card float-in p-5 flex flex-col gap-3 relative overflow-hidden group transition-all duration-300 hover:-translate-y-2"
-      style={accent ? { borderColor: `${accent}28` } : {}}
-      onMouseEnter={e => e.currentTarget.style.boxShadow = `0 15px 40px ${accent ? accent+'25' : 'rgba(255,255,255,0.08)'}`}
-      onMouseLeave={e => e.currentTarget.style.boxShadow = 'var(--shadow-card)'}
+      className="group relative flex flex-col p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] cursor-default float-in"
+      style={{ background: '#0e1015', borderRadius: '2rem', border: '1px solid rgba(255,255,255,0.03)' }}
     >
-      <div className="flex items-center gap-3">
-        <div className="flex items-center justify-center w-8 h-8 rounded-lg group-hover:scale-110 transition-transform duration-300" style={{ background: accent ? `${accent}15` : 'rgba(255,255,255,0.05)', color: accent || 'rgba(255,255,255,0.7)', border: `1px solid ${accent ? accent+'30' : 'rgba(255,255,255,0.1)'}` }}>
-          {Icons[icon]}
-        </div>
-        <p className="text-xs tracking-wide transition-colors duration-300 group-hover:text-white" style={{ color: 'rgba(255,255,255,0.65)' }}>{label}</p>
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" 
+           style={{ background: `radial-gradient(circle at 50% 0%, ${accent}25 0%, transparent 70%)` }} />
+      
+      <div className="absolute -bottom-6 -right-6 pointer-events-none opacity-10 group-hover:opacity-20 group-hover:rotate-12 group-hover:scale-125 transition-all duration-1000 ease-out" style={{ color: accent }}>
+        <div style={{ transform: 'scale(5)' }}>{Icons[icon]}</div>
       </div>
-      <div className="flex items-end gap-2 mt-1">
-        <p className="text-3xl font-bold tabular-nums tracking-tight transform origin-left transition-transform duration-300 group-hover:scale-105" style={{ color: 'rgba(255,255,255,0.95)' }}>{value}</p>
+
+      <div className="flex items-center gap-4 relative z-10 mb-4">
+         <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-inner transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-1 group-hover:rotate-3" 
+              style={{ background: '#151720', border: '1px solid rgba(255,255,255,0.05)', color: accent, boxShadow: `0 10px 30px -10px ${accent}40` }}>
+            <div className="w-6 h-6">{Icons[icon]}</div>
+         </div>
+         <div className="flex flex-col">
+           <p className="text-[11px] font-black uppercase tracking-widest text-white/50">{label}</p>
+         </div>
+      </div>
+      
+      <div className="flex items-end gap-2 relative z-10 transition-transform duration-300 group-hover:scale-105 origin-left">
+        <p className="text-4xl font-[900] tracking-tighter text-white leading-none">
+          {value}
+        </p>
         <div className="text-[10px] font-medium mb-1 px-1.5 py-0.5 rounded" style={{ background: isUp ? 'rgba(16,185,129,0.1)' : 'rgba(245,158,11,0.1)', color: isUp ? '#10b981' : '#f59e0b' }}>
           {isUp ? '+12%' : '~0%'}
         </div>

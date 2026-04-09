@@ -256,17 +256,33 @@ export default function KnowledgeBase() {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-3 float-in stagger-1">
         {[
-          { label: 'Entradas totales', value: entries.length,                accent: undefined },
-          { label: 'Activas',          value: activeCount,                   accent: '#10b981' },
-          { label: 'Inactivas',        value: entries.length - activeCount,  accent: '#f59e0b' },
-        ].map(({ label, value, accent }) => (
-          <div key={label} 
-               className="glass-card p-5 flex flex-col gap-2 group transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(255,255,255,0.06)] relative overflow-hidden" 
-               style={accent ? { borderColor: `${accent}28` } : {}}>
-            {accent && <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none" style={{ background: `linear-gradient(to right, ${accent}, transparent)` }} />}
-            <div className="w-1.5 h-1.5 rounded-full transition-transform duration-300 group-hover:scale-150" style={{ background: accent || 'rgba(255,255,255,0.20)', boxShadow: accent ? `0 0 8px ${accent}` : 'none' }} />
-            <p className="text-2xl font-bold tabular-nums transition-transform duration-300 group-hover:scale-105 origin-left" style={{ color: accent || 'rgba(255,255,255,0.90)' }}>{value}</p>
-            <p className="text-xs transition-colors duration-300 group-hover:text-white" style={{ color: 'rgba(255,255,255,0.38)' }}>{label}</p>
+          { label: 'Entradas totales', value: entries.length,                accent: '#3b82f6', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> },
+          { label: 'Activas',          value: activeCount,                   accent: '#10b981', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg> },
+          { label: 'Inactivas',        value: entries.length - activeCount,  accent: '#f59e0b', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg> },
+        ].map(({ label, value, accent, icon }) => (
+          <div 
+            key={label}
+            className="group relative flex flex-col p-6 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] cursor-default"
+            style={{ background: '#0e1015', borderRadius: '2rem', border: '1px solid rgba(255,255,255,0.03)' }}
+          >
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" 
+                 style={{ background: `radial-gradient(circle at 50% 0%, ${accent}25 0%, transparent 70%)` }} />
+            
+            <div className="absolute -bottom-6 -right-6 pointer-events-none opacity-10 group-hover:opacity-20 group-hover:rotate-12 group-hover:scale-125 transition-all duration-1000 ease-out" style={{ color: accent }}>
+              <div style={{ transform: 'scale(5)' }}>{icon}</div>
+            </div>
+
+            <div className="flex items-center gap-4 relative z-10 mb-4">
+               <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-inner transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-1 group-hover:rotate-3" 
+                    style={{ background: '#151720', border: '1px solid rgba(255,255,255,0.05)', color: accent, boxShadow: `0 10px 30px -10px ${accent}40` }}>
+                  <div className="w-6 h-6">{icon}</div>
+               </div>
+               <p className="text-[11px] font-black uppercase tracking-widest text-white/50">{label}</p>
+            </div>
+            
+            <p className="text-4xl font-[900] tracking-tighter text-white leading-none relative z-10 transition-transform duration-300 group-hover:scale-105 origin-left">
+              {value}
+            </p>
           </div>
         ))}
       </div>
