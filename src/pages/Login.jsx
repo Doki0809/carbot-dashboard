@@ -114,11 +114,13 @@ export default function Login() {
         @keyframes errorShake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 60%{transform:translateX(6px)} }
         @keyframes logoFloat  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 
-        /* ── Mobile: solo muestra el formulario ── */
+        /* ── Mobile: apila verticalmente, oculta solo carousel/stats ── */
         @media (max-width: 640px) {
-          .lc-card  { width: 100% !important; max-width: 100% !important; min-height: 100dvh !important; border-radius: 0 !important; border: none !important; }
-          .lc-left  { display: none !important; }
-          .lc-right { width: 100% !important; padding: 48px 24px 60px !important; justify-content: center !important; }
+          .lc-card    { flex-direction: column !important; width: 100% !important; max-width: 100% !important; min-height: 100dvh !important; border-radius: 0 !important; border: none !important; }
+          .lc-left    { width: 100% !important; border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.06) !important; padding: 28px 24px 20px !important; gap: 16px !important; }
+          .lc-right   { width: 100% !important; padding: 28px 24px 60px !important; }
+          .lc-logo    { width: 100px !important; height: 100px !important; }
+          .lc-carousel, .lc-dots, .lc-stats { display: none !important; }
         }
       `}</style>
 
@@ -180,7 +182,7 @@ export default function Login() {
             </div>
 
             {/* Carousel */}
-            <div style={{ minHeight: 110, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', width: '100%' }}>
+            <div className="lc-carousel" style={{ minHeight: 110, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', width: '100%' }}>
               <div key={slide} style={{
                 display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'center',
                 animation: phase === 'enter' ? 'loginSlideEnter 0.4s cubic-bezier(0.16,1,0.3,1) forwards' : 'loginSlideExit 0.3s ease forwards',
@@ -191,7 +193,7 @@ export default function Login() {
             </div>
 
             {/* Slide dots */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <div className="lc-dots" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               {SLIDES.map((_, i) => (
                 <button key={i} onClick={() => goTo(i)} aria-label={`Slide ${i + 1}`} style={{
                   height: 5, width: i === slide ? 20 : 5,
@@ -204,7 +206,7 @@ export default function Login() {
             </div>
 
             {/* Stats pills */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 8 }}>
+            <div className="lc-stats" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 8 }}>
               {[['500+ Dealers'], ['1M+ Leads'], ['3x Conversión']].map(([label]) => (
                 <div key={label} style={{
                   display: 'flex', alignItems: 'center', gap: 5,
