@@ -64,7 +64,7 @@ function MobileNav({ pathname }) {
       className="md:hidden fixed z-50 flex items-center gap-0.5 px-2 py-2"
       style={{
         bottom: 'calc(env(safe-area-inset-bottom, 0px) + 20px)',
-        left: '1/2',
+        left: '50%',
         transform: 'translateX(-50%)',
         background: 'rgba(14,16,21,0.94)',
         backdropFilter: 'blur(24px)',
