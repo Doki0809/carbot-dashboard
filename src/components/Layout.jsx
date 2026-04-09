@@ -100,13 +100,13 @@ function NavItem({ link, active }) {
   return (
     <Link
       to={link.to}
-      className={`mb-3 w-[72px] h-[72px] flex flex-col items-center justify-center gap-1.5 rounded-[1.25rem] transition-all duration-300 ${
+      className={`mb-4 w-[72px] h-[72px] flex flex-col items-center justify-center gap-1.5 rounded-[1.25rem] transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-xl ${
         active
-          ? 'bg-[#ff3b45] text-white shadow-[0_8px_16px_rgba(255,59,69,0.3)]'
-          : 'bg-transparent text-white/40 hover:text-white/80 hover:bg-white/5'
+          ? 'bg-[#ff3b45] text-white shadow-[0_8px_16px_rgba(255,59,69,0.4)]'
+          : 'bg-transparent text-white/40 hover:text-white hover:bg-white/10'
       }`}
     >
-      <span className={`shrink-0 ${active ? 'scale-110' : ''}`}>
+      <span className={`shrink-0 transition-transform duration-300 ${active ? 'scale-110' : 'group-hover:scale-110'}`}>
         <link.Icon />
       </span>
       <span className="text-[9px] font-[800] uppercase tracking-wider">{link.label}</span>

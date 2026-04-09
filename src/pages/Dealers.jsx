@@ -19,18 +19,23 @@ const Icons = {
 /* ── Stat card ──────────────────────────────────────────────────────────── */
 function StatCard({ label, value, accent, icon }) {
   return (
-    <div className="glass-card float-in flex flex-col relative overflow-hidden group transition-all" style={{ background: '#13151c', padding: '1.5rem', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.05)' }}>
-      <div className="absolute bottom-2 right-2 pointer-events-none transition-transform duration-700" style={{ color: 'rgba(255,255,255,0.04)' }}>
-        <div style={{ transform: 'scale(4.5)', transformOrigin: 'bottom right' }}>{icon}</div>
-      </div>
-      
-      <div className="w-11 h-11 rounded-full flex items-center justify-center relative z-10" style={{ background: '#1c1f2b', border: '1px solid rgba(255,255,255,0.05)', color: accent || 'rgba(255,255,255,0.8)' }}>
+    <div 
+      className="glass-card float-in flex flex-col relative overflow-hidden group transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] cursor-pointer" 
+      style={{ background: '#13151c', padding: '1.5rem', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.05)' }}
+    >
+      {/* Efecto Glow en Hover */}
+      <div 
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" 
+        style={{ background: `radial-gradient(circle at 60% 0%, ${accent || '#fff'}15 0%, transparent 60%)` }}
+      ></div>
+
+      <div className="w-11 h-11 rounded-full flex items-center justify-center relative z-10 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]" style={{ background: '#1c1f2b', border: '1px solid rgba(255,255,255,0.05)', color: accent || 'rgba(255,255,255,0.8)' }}>
         {icon}
       </div>
       
       <div className="flex flex-col mt-6 relative z-10">
-        <p className="text-[10px] font-[800] uppercase tracking-widest mb-1" style={{ color: 'rgba(255,255,255,0.5)' }}>{label}</p>
-        <p className="text-[44px] font-[900] tabular-nums tracking-tighter leading-none" style={{ color: 'rgba(255,255,255,0.95)' }}>{value}</p>
+        <p className="text-[10px] font-[800] uppercase tracking-widest mb-1 transition-colors duration-300 group-hover:text-white/80" style={{ color: 'rgba(255,255,255,0.5)' }}>{label}</p>
+        <p className="text-[44px] font-[900] tabular-nums tracking-tighter leading-none transition-transform duration-300 origin-left group-hover:scale-[1.03]" style={{ color: 'rgba(255,255,255,0.95)' }}>{value}</p>
       </div>
     </div>
   );
@@ -90,15 +95,15 @@ export default function Dealers() {
     <div className="space-y-8 pb-10">
       {/* Mega Hero Banner */}
       <div 
-        className="w-full float-in relative overflow-hidden py-10 px-10 sm:px-12 mb-8 shadow-2xl flex flex-col sm:flex-row items-center justify-between"
+        className="w-full float-in relative overflow-hidden py-10 px-10 sm:px-12 mb-8 flex flex-col sm:flex-row items-center justify-between group transition-all duration-700 hover:shadow-[0_30px_60px_rgba(255,59,69,0.3)] hover:-translate-y-1"
         style={{ 
           background: 'linear-gradient(90deg, #ff3b45 0%, #ff1a2b 100%)',
           borderRadius: '2.5rem',
           boxShadow: '0 20px 40px rgba(255,59,69,0.3), inset 0 1px 0 rgba(255,255,255,0.3)'
         }}
       >
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-white opacity-5 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-black opacity-[0.06] rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-white opacity-5 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3 pointer-events-none transition-transform duration-1000 group-hover:scale-110"></div>
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-black opacity-[0.06] rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2 pointer-events-none transition-transform duration-1000 group-hover:scale-110"></div>
         
         <div className="relative z-10 w-full sm:w-2/3">
           <h1 className="text-[44px] font-[900] tracking-tighter text-white leading-[1.05]">
