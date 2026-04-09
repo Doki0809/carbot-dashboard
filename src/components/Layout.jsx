@@ -61,7 +61,7 @@ function NavItem({ link, active }) {
 function MobileNav({ pathname }) {
   return (
     <nav
-      className="md:hidden fixed bottom-5 left-1/2 z-50 flex items-center gap-1 px-3 py-2"
+      className="md:hidden fixed bottom-5 left-1/2 z-50 flex items-center gap-0.5 px-2 py-2"
       style={{
         transform: 'translateX(-50%)',
         background: 'rgba(14,16,21,0.94)',
@@ -78,10 +78,10 @@ function MobileNav({ pathname }) {
           <Link
             key={link.to}
             to={link.to}
-            className="flex items-center justify-center transition-all duration-300"
+            className="flex flex-col items-center justify-center gap-1 transition-all duration-300"
             style={{
-              width: '52px',
-              height: '48px',
+              width: '62px',
+              height: '52px',
               borderRadius: '1.5rem',
               background: active ? '#ff3b45' : 'transparent',
               color: active ? '#fff' : 'rgba(255,255,255,0.4)',
@@ -89,7 +89,10 @@ function MobileNav({ pathname }) {
               transform: active ? 'translateY(-3px) scale(1.05)' : 'none',
             }}
           >
-            <link.Icon size={22} />
+            <link.Icon size={20} />
+            <span style={{ fontSize: '8px', fontWeight: 800, letterSpacing: '0.05em', textTransform: 'uppercase', lineHeight: 1 }}>
+              {link.label}
+            </span>
           </Link>
         );
       })}
@@ -155,7 +158,7 @@ export default function Layout({ children }) {
       {/* ── Main content ────────────────────────────────────────────── */}
       <main className="flex-1 min-w-0 overflow-auto h-screen relative bg-[#090a0f] px-4 md:px-8 py-6 md:py-10 pb-28 md:pb-10">
 
-        {/* Mobile top bar: logo + avatar */}
+        {/* Mobile top bar: logo + logout + avatar */}
         <div className="flex md:hidden items-center justify-between mb-6">
           <Link to="/dealers">
             <img
@@ -165,12 +168,24 @@ export default function Layout({ children }) {
               style={{ filter: 'drop-shadow(0px 4px 8px rgba(255,0,0,0.5))' }}
             />
           </Link>
-          <div className="w-9 h-9 rounded-xl overflow-hidden border border-white/10">
-            <img
-              src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'Admin')}&background=151720&color=ff4d4d&bold=true`}
-              alt="Avatar"
-              className="w-full h-full object-cover"
-            />
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleLogout}
+              title="Cerrar sesión"
+              className="w-9 h-9 rounded-xl flex items-center justify-center"
+              style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.07)' }}
+              onMouseEnter={e => { e.currentTarget.style.color = '#ff4d4d'; e.currentTarget.style.background = 'rgba(255,77,77,0.1)'; }}
+              onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.4)'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; }}
+            >
+              <IconLogout />
+            </button>
+            <div className="w-9 h-9 rounded-xl overflow-hidden border border-white/10">
+              <img
+                src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'Admin')}&background=151720&color=ff4d4d&bold=true`}
+                alt="Avatar"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
         </div>
 
