@@ -87,65 +87,13 @@ const NAV_LINKS = [
   { to: '/channels',   label: 'CANALES',    Icon: IconChannels },
   { to: '/apis',       label: 'APIS',       Icon: IconAPIs },
   {
+    to: '/assistant',
     label: 'ASISTEN',
     Icon: IconBot,
-    prefix: '/assistant',
-    children: [
-      { to: '/assistant/playground', label: 'PRUEBA',       Icon: IconPlayground },
-      { to: '/assistant/skills',     label: 'SKILLS',       Icon: IconSkills },
-      { to: '/assistant/knowledge',  label: 'CONOCIM',      Icon: IconKnowledge },
-    ],
   },
 ];
 
-/* ── Dropdown item ─────────────────────────────────────────────────────── */
-function DropdownNav({ link, currentPath }) {
-  const [open, setOpen] = useState(false);
-  const isActive = currentPath.startsWith(link.prefix);
 
-  return (
-    <div className="relative mb-3 flex flex-col items-center">
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className={`w-[72px] h-[72px] flex flex-col items-center justify-center gap-1.5 rounded-[1.25rem] transition-all duration-300 ${
-          isActive
-            ? 'bg-[#ff3b45] text-white shadow-[0_8px_16px_rgba(255,59,69,0.3)]'
-            : 'bg-transparent text-white/40 hover:text-white/80 hover:bg-white/5'
-        }`}
-      >
-        <span className={`shrink-0 ${isActive ? 'scale-110' : ''}`}>
-          <link.Icon />
-        </span>
-        <span className="text-[9px] font-[800] uppercase tracking-wider">{link.label}</span>
-      </button>
-
-      {open && (
-        <div className="flex flex-col gap-1 mt-2 animate-slide-down items-center w-full">
-          {link.children.map((child) => {
-            const childActive = currentPath.startsWith(child.to);
-            return (
-              <Link
-                key={child.to}
-                to={child.to}
-                onClick={() => setOpen(false)}
-                className={`flex flex-col items-center justify-center w-[64px] h-[64px] rounded-2xl transition-all duration-200 ${
-                  childActive
-                    ? 'bg-red-500/10 text-[#ff3b45]'
-                    : 'bg-transparent text-white/30 hover:text-white/70 hover:bg-white/5'
-                }`}
-              >
-                <span className={`mb-1 ${childActive ? 'scale-110 drop-shadow-md text-[#ff3b45]' : ''}`}>
-                  <child.Icon />
-                </span>
-                <span className="text-[8px] font-bold uppercase tracking-wider">{child.label}</span>
-              </Link>
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
-}
 
 /* ── Single nav item ───────────────────────────────────────────────────── */
 function NavItem({ link, active }) {
@@ -191,21 +139,13 @@ export default function Layout({ children }) {
 
           {/* Menú Scrollable */}
           <nav className="flex-1 flex flex-col items-center w-full overflow-y-auto scrollbar-hide py-1">
-            {NAV_LINKS.map((link) =>
-              link.children ? (
-                <DropdownNav
-                  key={link.label}
-                  link={link}
-                  currentPath={location.pathname}
-                />
-              ) : (
+            {NAV_LINKS.map((link) => (
                 <NavItem
                   key={link.to}
                   link={link}
                   active={location.pathname.startsWith(link.to)}
                 />
-              )
-            )}
+            ))}
           </nav>
 
           {/* User footer */}

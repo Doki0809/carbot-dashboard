@@ -11,6 +11,7 @@ import Skills from './pages/Skills';
 import KnowledgeBase from './pages/KnowledgeBase';
 import Channels from './pages/Channels';
 import APIs from './pages/APIs';
+import AssistantHub from './pages/AssistantHub';
 
 function RequireAuth({ children }) {
   const { user } = useAuth();
@@ -43,7 +44,7 @@ export default function App() {
                 <Route path="assistant/playground" element={<Playground />} />
                 <Route path="assistant/skills" element={<Skills />} />
                 <Route path="assistant/knowledge" element={<KnowledgeBase />} />
-                <Route path="assistant" element={<Navigate to="/assistant/skills" replace />} />
+                <Route path="assistant" element={<AssistantHub />} />
                 <Route path="*" element={<Navigate to="/dealers" replace />} />
               </Routes>
             </Layout>
