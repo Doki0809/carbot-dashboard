@@ -21,25 +21,27 @@ function StatCard({ label, value, accent, icon }) {
   return (
     <div 
       className="glass-card float-in flex flex-col relative overflow-hidden group transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] cursor-pointer" 
-      style={{ background: '#13151c', padding: '1.5rem', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.05)' }}
+      style={{ background: '#13151c', padding: 'clamp(1rem, 4vw, 1.5rem)', borderRadius: '1.5rem', border: '1px solid rgba(255,255,255,0.05)' }}
     >
-      {/* Efecto Glow en Hover */}
+      {/* Glow */}
       <div 
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" 
         style={{ background: `radial-gradient(circle at 60% 0%, ${accent || '#fff'}15 0%, transparent 60%)` }}
-      ></div>
+      />
 
-      <div className="w-11 h-11 rounded-full flex items-center justify-center relative z-10 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]" style={{ background: '#1c1f2b', border: '1px solid rgba(255,255,255,0.05)', color: accent || 'rgba(255,255,255,0.8)' }}>
+      <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center relative z-10 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6"
+           style={{ background: '#1c1f2b', border: '1px solid rgba(255,255,255,0.05)', color: accent || 'rgba(255,255,255,0.8)' }}>
         {icon}
       </div>
       
-      <div className="flex flex-col mt-6 relative z-10">
-        <p className="text-[10px] font-[800] uppercase tracking-widest mb-1 transition-colors duration-300 group-hover:text-white/80" style={{ color: 'rgba(255,255,255,0.5)' }}>{label}</p>
-        <p className="text-[44px] font-[900] tabular-nums tracking-tighter leading-none transition-transform duration-300 origin-left group-hover:scale-[1.03]" style={{ color: 'rgba(255,255,255,0.95)' }}>{value}</p>
+      <div className="flex flex-col mt-4 relative z-10">
+        <p className="text-[9px] sm:text-[10px] font-[800] uppercase tracking-widest mb-1 transition-colors duration-300 group-hover:text-white/80" style={{ color: 'rgba(255,255,255,0.5)' }}>{label}</p>
+        <p className="text-3xl sm:text-[44px] font-[900] tabular-nums tracking-tighter leading-none transition-transform duration-300 origin-left group-hover:scale-[1.03]" style={{ color: 'rgba(255,255,255,0.95)' }}>{value}</p>
       </div>
     </div>
   );
 }
+
 
 /* ── Table header cell ─────────────────────────────────────────────────── */
 function Th({ children }) {
@@ -106,11 +108,11 @@ export default function Dealers() {
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-black opacity-[0.06] rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2 pointer-events-none transition-transform duration-1000 group-hover:scale-110"></div>
         
         <div className="relative z-10 w-full sm:w-2/3">
-          <h1 className="text-[44px] font-[900] tracking-tighter text-white leading-[1.05]">
+          <h1 className="text-2xl sm:text-[44px] font-[900] tracking-tighter text-white leading-[1.05] whitespace-nowrap overflow-hidden text-ellipsis">
             Bienvenido al mundo de Missy
           </h1>
-          <p className="text-white/80 text-[15px] font-[400] tracking-wide mt-3">
-            Hola, este es el panel administrativo, listo para supervisar a missy y su equipo.
+          <p className="text-white/80 text-[13px] sm:text-[15px] font-[400] tracking-wide mt-2">
+            Panel administrativo listo para supervisar a Missy.
           </p>
         </div>
         
@@ -128,7 +130,7 @@ export default function Dealers() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <StatCard label="INVENTARIO DEALERS" value={dealers.length}                 icon={Icons.users} accent="#4287f5" />
         <StatCard label="DEALERS ACTIVOS"    value={activeCount}    accent="#22c55e" icon={Icons.dollar} />
         <StatCard label="DEALERS INACTIVOS"  value={pausedCount}    accent="#f59e0b" icon={Icons.box} />
